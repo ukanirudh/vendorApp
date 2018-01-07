@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import { Button } from 'semantic-ui-react';
 import './App.css';
+import LoginForm from './authentication/LoginForm';
 
 class App extends Component {
   render() {
@@ -11,8 +13,10 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
+          <Button secondary>Secondary</Button>
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+        <LoginForm />
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 const LoginForm = () => (
   <div className='login-form'>
@@ -22,8 +22,7 @@ const LoginForm = () => (
     >
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' color='teal' textAlign='center'>
-          <Image src='/logo.png' />
-          {' '}Log-in to your account
+          Log-in to your account
         </Header>
         <Form size='large'>
           <Segment stacked>

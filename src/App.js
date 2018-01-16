@@ -7,9 +7,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <p className="App-intro">
-          <Button secondary>Secondary</Button>
-        </p>
         <AuthenticationModule />
       </div>
     );

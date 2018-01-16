@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Container, Divider, Grid, Header, List, Segment } from 'semantic-ui-react'
+import { Container, Divider, Grid, Header, List, Segment, Button } from 'semantic-ui-react'
 
 /*Imported components*/
 import AppHeader from '../../commonComponents/AppHeader'
-import LoginForm from './LoginForm'
 
 class Authentication extends Component {
   render() {
@@ -11,10 +10,37 @@ class Authentication extends Component {
       <div>
         <AppHeader />
         <Container text style={{ marginTop: '7em' }}>
-          <Header as='h1'>Semantic UI React Fixed Template</Header>
-          <p>This is a basic fixed menu template using fixed size containers.</p>
-          <p>A text container is used for the main container, which is useful for single column layouts.</p>
-          <LoginForm />
+          <h2> Login As </h2>
+          <Segment.Group horizontal>
+            <Segment>
+              <Button animated='fade' size='massive' color='blue'>
+                <Button.Content visible>
+                  Vendor
+                </Button.Content>
+                <Button.Content hidden>
+                  Login in
+                </Button.Content>
+              </Button>
+              <Divider horizontal>Or</Divider>
+              <Button color='black'>
+                Sign Up
+              </Button>
+            </Segment>
+            <Segment>
+              <Button animated='fade' size='massive' color='blue'>
+                <Button.Content visible >
+                  Client
+                </Button.Content>
+                <Button.Content hidden >
+                  Login in
+                </Button.Content>
+              </Button>
+              <Divider horizontal>Or</Divider>
+              <Button color='black'>
+                Sign Up
+              </Button>
+            </Segment>
+          </Segment.Group>
         </Container>
 
         <Segment

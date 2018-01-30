@@ -1,10 +1,28 @@
 import React, { Component } from 'react'
 import { Container, Divider, Grid, Header, List, Segment, Button } from 'semantic-ui-react'
+import CreateBrowserHistory from '../../commonComponents/CreateBrowserHistory'
 
 /*Imported components*/
-import AppHeader from '../../commonComponents/AppHeader'
+import { AppHeader } from '../../commonComponents'
+import './authentication.css'
 
 class Authentication extends Component {
+  vendorLogin = () => {
+    CreateBrowserHistory.push({ pathname: "/login/vendor" })
+  }
+
+  vendorSignup = () => {
+      console.log('vendorSignup')
+  }
+
+  clientLogin = () => {
+      CreateBrowserHistory.push({ pathname: "/login/client" })
+  }
+
+  clientSignup = () => {
+      console.log('clientSignup')
+  }
+
   render() {
     return (
       <div>
@@ -13,7 +31,7 @@ class Authentication extends Component {
           <h2> Login As </h2>
           <Segment.Group horizontal>
             <Segment>
-              <Button animated='fade' size='massive' color='blue'>
+              <Button animated='fade' size='massive' color='blue' onClick={this.vendorLogin}>
                 <Button.Content visible>
                   Vendor
                 </Button.Content>
@@ -22,12 +40,12 @@ class Authentication extends Component {
                 </Button.Content>
               </Button>
               <Divider horizontal>Or</Divider>
-              <Button color='black'>
+              <Button color='black' onClick={this.vendorSignup}>
                 Sign Up
               </Button>
             </Segment>
             <Segment>
-              <Button animated='fade' size='massive' color='blue'>
+              <Button animated='fade' size='massive' color='blue' onClick={this.clientLogin}>
                 <Button.Content visible >
                   Client
                 </Button.Content>
@@ -36,7 +54,7 @@ class Authentication extends Component {
                 </Button.Content>
               </Button>
               <Divider horizontal>Or</Divider>
-              <Button color='black'>
+              <Button color='black' onClick={this.clientSignup}>
                 Sign Up
               </Button>
             </Segment>

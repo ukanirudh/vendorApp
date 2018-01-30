@@ -5,15 +5,14 @@ import { Route, Switch } from 'react-router-dom';
  */
 import App from '../App';
 import Login from '../scenes/Authentication/LoginForm';
+import VendorSignUpForm from '../scenes/Authentication/VendorSignUpForm'
 
 const Routes = () => {
     return (
       <main>
         <Switch>
           <Route exact path='/' component={App}/>
-        </Switch>
-        <Switch>
-          <Route path='/login' component={Login}/>
+          <Route path="/login" component={Login}></Route>
         </Switch>
       </main>
     );

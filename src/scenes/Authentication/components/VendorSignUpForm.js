@@ -2,27 +2,26 @@ import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 
-class ClientSignUpForm extends Component {
+class VendorSignUpForm extends Component {
 
   vendorSignup = () => {
-      console.log('ClientSignUpForm')
+      console.log('vendorSignup')
   }
 
   render() {
     return (
-      <div>
-        <Header as='h2' color='teal' textAlign='center'>
-          ClientSignUpForm
-        </Header>
         <Grid
-          textAlign='center'
+          columns={3}
+          centered
           style={{ height: '100%' }}
           verticalAlign='middle'
         >
-          <Grid.Column className='login-form-grid'>
+          <Grid.Row>
             <Header as='h2' color='teal' textAlign='center'>
-              Log-in to your account
+              Vendor Sign up
             </Header>
+          </Grid.Row>
+          <Grid.Column className='login-form-grid'>
             <Form size='large'>
               <Segment stacked>
                 <Form.Input
@@ -33,12 +32,16 @@ class ClientSignUpForm extends Component {
                 />
                 <Form.Input
                   fluid
-                  icon='lock'
+                  icon='user'
                   iconPosition='left'
-                  placeholder='Password'
-                  type='password'
+                  placeholder='Name'
                 />
-
+                <Form.Input
+                  fluid
+                  icon='user'
+                  iconPosition='left'
+                  placeholder='Phone Number'
+                />
                 <Button color='teal' fluid size='large'>Login</Button>
               </Segment>
             </Form>
@@ -47,9 +50,8 @@ class ClientSignUpForm extends Component {
             </Message>
           </Grid.Column>
         </Grid>
-      </div>
     )
   }
 }
 
-export default ClientSignUpForm
+export default VendorSignUpForm

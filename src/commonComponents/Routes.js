@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
  * Import all page components here
  */
 import App from '../App';
-import LoginContainer from '../scenes/Authentication/LoginFormContainer';
+import LoginFormContainer from '../scenes/Authentication/LoginFormContainer';
 import SignUpContainer from '../scenes/Authentication/SignUpFormContainer';
 
 const Routes = () => {
@@ -12,7 +12,7 @@ const Routes = () => {
       <main>
         <Switch>
           <Route exact path='/' component={App}/>
-          <Route path="/login" component={LoginContainer}></Route>
+          <Route path="/login" component={LoginFormContainer}></Route>
           <Route path="/signup" component={SignUpContainer}></Route>
         </Switch>
       </main>

@@ -8,19 +8,29 @@ import './authentication.css'
 
 class Authentication extends Component {
   vendorLogin = () => {
-    CreateBrowserHistory.push({ pathname: "/login/vendor" })
+    CreateBrowserHistory.push({
+      pathname: "/login",
+      search: "?type=vendor"
+    })
   }
 
   vendorSignup = () => {
-      console.log('vendorSignup')
+    CreateBrowserHistory.push({
+      pathname: "/signup/vendor"
+    })
   }
 
   clientLogin = () => {
-      CreateBrowserHistory.push({ pathname: "/login/client" })
+    CreateBrowserHistory.push({
+      pathname: "/login",
+      search: "?type=client"
+    })
   }
 
   clientSignup = () => {
-      console.log('clientSignup')
+    CreateBrowserHistory.push({
+      pathname: "/signup/client"
+    })
   }
 
   render() {

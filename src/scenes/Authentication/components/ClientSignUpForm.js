@@ -63,7 +63,7 @@ class ClientSignUpForm extends Component {
               label={<label>I agree to the Terms and Conditions</label>}
               />
 
-              <Button disabled = {! this.state.checked} color='teal' fluid size='large' onClick={this.onClientSignUp}>Sing Up!</Button>
+              <Button disabled = {! this.state.checked} color='teal' fluid size='large' onClick={this.onClientSignUp}>Sign Up!</Button>
             </Segment>
           </Form>
         </Grid.Column>

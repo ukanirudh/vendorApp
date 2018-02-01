@@ -4,7 +4,7 @@ import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 class ClientSignUpForm extends Component {
 
-  vendorSignup = () => {
+  onClientSignUp = () => {
       console.log('ClientSignUpForm')
   }
 
@@ -14,7 +14,7 @@ class ClientSignUpForm extends Component {
       <Grid
         columns={3}
         centered
-        style={{ height: '100%' }}
+        style={{ height: '100%', marginTop: 45 }}
         verticalAlign='middle'
       >
         <Grid.Row>
@@ -27,7 +27,7 @@ class ClientSignUpForm extends Component {
             <Segment stacked>
               <Form.Input
                 fluid
-                icon='user'
+                icon='mail'
                 iconPosition='left'
                 placeholder='E-mail address'
               />
@@ -39,17 +39,14 @@ class ClientSignUpForm extends Component {
               />
               <Form.Input
                 fluid
-                icon='user'
+                icon='phone'
                 iconPosition='left'
                 placeholder='Phone Number'
               />
 
-              <Button color='teal' fluid size='large'>Login</Button>
+              <Button color='teal' fluid size='large' onClick={this.onClientSignUp}>Sing Up!</Button>
             </Segment>
           </Form>
-          <Message>
-            New to us? <a href='#'>Sign Up</a>
-          </Message>
         </Grid.Column>
       </Grid>
     )

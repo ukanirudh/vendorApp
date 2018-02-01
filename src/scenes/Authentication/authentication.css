@@ -7,3 +7,11 @@ body > div > div > div.login-form {
 .login-form-grid {
   /*max-width: 450px;*/
 }
+
+.user-type-grid {
+  height: 100px;
+}
+
+.user-type-content {
+  height: inherit;
+}

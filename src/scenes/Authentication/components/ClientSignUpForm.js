@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment,Checkbox} from 'semantic-ui-react'
 
 
 class ClientSignUpForm extends Component {
 
   onClientSignUp = () => {
       console.log('ClientSignUpForm')
+  }
+
+   handleChange() {
+    this.setState({
+      checked: !this.state.checked
+    })
+  } 
+
+  
+  constructor(props) {
+    super(props);
+    this.state = { checked: false };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   render() {
@@ -23,7 +36,7 @@ class ClientSignUpForm extends Component {
           </Header>
         </Grid.Row>
         <Grid.Column className='login-form-grid'>
-          <Form size='large'>
+          <Form size='large' >
             <Segment stacked>
               <Form.Input
                 fluid
@@ -43,8 +56,14 @@ class ClientSignUpForm extends Component {
                 iconPosition='left'
                 placeholder='Phone Number'
               />
+              <Form.Field
+              checked={ this.state.checked } 
+              onChange={ this.handleChange } 
+              control={Checkbox}
+              label={<label>I agree to the Terms and Conditions</label>}
+              />
 
-              <Button color='teal' fluid size='large' onClick={this.onClientSignUp}>Sing Up!</Button>
+              <Button disabled = {! this.state.checked} color='teal' fluid size='large' onClick={this.onClientSignUp}>Sing Up!</Button>
             </Segment>
           </Form>
         </Grid.Column>

@@ -4,8 +4,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 /*Routing functionality*/
 //import parent routes and create route history
-import { Router } from 'react-router-dom';
-import { CreateBrowserHistory, Routes } from './commonComponents'
+import { Router, Route, Switch } from 'react-router-dom';
+import { CreateBrowserHistory } from './commonComponents'
 
 /*CSS*/
 import './index.css';
@@ -16,6 +16,10 @@ import App from './App';
 
 ReactDOM.render(
   <Router history={CreateBrowserHistory}>
-    <Routes />
+    <main>
+      <Switch>
+        <Route path='/' component={App}/>
+      </Switch>
+    </main>
   </Router>, document.getElementById('root'));
 registerServiceWorker();

@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
+import { Route } from 'react-router-dom';
+
+/*Import components*/
+import { ApplicationHomePage } from './commonComponents'
 import AuthenticationModule from './scenes/Authentication';
+import VendorHome from './scenes/vendor/VendorHome';
+import ClientHome from './scenes/client/ClientHome';
+
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <AuthenticationModule />
+        <Route exact path='/' component={ApplicationHomePage}/>
+        <Route path="/authorization" component={AuthenticationModule}></Route>
+        <Route path="/vendorHome" component={VendorHome}></Route>
+        <Route path="/clientHome" component={ClientHome}></Route>
       </div>
     );
   }

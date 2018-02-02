@@ -9,9 +9,16 @@ body > div > div > div.login-form {
 }
 
 .user-type-grid {
-  height: 100px;
+  /*height: 100px;*/
 }
 
 .user-type-content {
   height: inherit;
+  background: #4B79A1 !important;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #283E51, #4B79A1) !important;  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #283E51, #4B79A1) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.user-type-content .header {
+  color: white !important;
 }

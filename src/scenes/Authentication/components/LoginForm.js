@@ -4,17 +4,24 @@ import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 class LoginForm extends Component {
 
-  vendorSignup = () => {
+  componentWillMount () {
+    this.setState({ userType: '' })
+  }
+
+  componentDidMount () {
+    const { userType } = this.props
+    this.setState({ userType })
+  }
+
+  onLogin = () => {
   }
 
   render() {
-    const { userType } = this.props
-    console.log(userType)
     return (
       <Grid
         columns={3}
         centered
-        style={{ height: '100%' }}
+        style={{ height: '100%', marginTop: 45 }}
         verticalAlign='middle'
       >
         <Grid.Row>
@@ -38,12 +45,9 @@ class LoginForm extends Component {
                 placeholder='Password'
                 type='password'
               />
-              <Button color='teal' fluid size='large'>Login</Button>
+              <Button color='teal' fluid size='large' onClick={this.onLogin}>Login</Button>
             </Segment>
           </Form>
-          <Message>
-            New to us? <a href='#'>Sign Up</a>
-          </Message>
         </Grid.Column>
       </Grid>
     )

@@ -1,6 +1,6 @@
 import CreateBrowserHistory from './CreateBrowserHistory';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import Routes from './Routes';
+import ApplicationHomePage from './ApplicationHomePage';
 
-export { CreateBrowserHistory, AppHeader, AppFooter, Routes }
+export { CreateBrowserHistory, AppHeader, AppFooter, ApplicationHomePage }

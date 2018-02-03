@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom';
 
 /*Imported components*/
-import { AppHeader, AppFooter } from '../../commonComponents'
 import LoginForm from './components/LoginForm'
 
 class LoginFormContainer extends Component {
@@ -17,9 +15,7 @@ class LoginFormContainer extends Component {
     }
     return (
       <div className='login-form'>
-        <AppHeader />
         <LoginForm userType={type}/>
-        <AppFooter />
       </div>
     )
   }

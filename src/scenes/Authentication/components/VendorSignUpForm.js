@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-
+import axios from 'axios'
 
 class VendorSignUpForm extends Component {
 
   onVendorRegistration = () => {
-      console.log('vendorSignup')
+    console.log('vendorSignup')
+    // axios({
+    //   method: 'post',
+    //   url: '/signup',
+    //   data: {
+    //     username: 'anirudhuk.93@gmail.com',
+    //     password: 'secret',
+    //     type: 'vendor'
+    //   }
+    // });
   }
 
   render() {
@@ -28,7 +37,7 @@ class VendorSignUpForm extends Component {
                   fluid
                   icon='mail'
                   iconPosition='left'
-                  placeholder='E-mail address'
+                  placeholder='E-mail address/username'
                 />
                 <Form.Input
                   fluid

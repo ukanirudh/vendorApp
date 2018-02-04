@@ -3,7 +3,6 @@ import { Button, Form, Grid, Header, Message, Segment,Checkbox} from 'semantic-u
 
 
 class ClientSignUpForm extends Component {
-
   onClientSignUp = () => {
       console.log('ClientSignUpForm');
       const { name, email, password, phone } = this.state
@@ -99,9 +98,6 @@ class ClientSignUpForm extends Component {
               control={Checkbox}
               label={<label>I agree to the Terms and Conditions</label>}
               />
-
-              
-
               <Button disabled = {! this.state.checked} color='teal' fluid size='large' onClick={this.onClientSignUp}  >Sign Up!</Button>
             </Segment>
           </Form>

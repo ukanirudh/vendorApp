@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment,Checkbox} from 'semantic-ui-react'
+import axios from 'axios'
 
 
 class ClientSignUpForm extends Component {

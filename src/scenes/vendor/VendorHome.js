@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import {
   Button,
   Container,
-  Divider,
   Grid,
   Header,
   Icon,
@@ -22,6 +21,7 @@ import CompletedBids from './bids/CompletedBids'
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
  */
+import './vendor.css'
 const HomepageHeading = ({ mobile }) => (
   <Container text>
     <Header
@@ -166,7 +166,7 @@ ResponsiveContainer.propTypes = {
 
 const VendorHome = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: '8em 0em' }} vertical>
+    <Segment style={{ padding: '6em 0em' }} vertical>
       <RecentBids />
       <CompletedBids />
     </Segment>

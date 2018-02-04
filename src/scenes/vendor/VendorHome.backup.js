@@ -16,8 +16,6 @@ import {
   Visibility,
 } from 'semantic-ui-react'
 
-import RecentBids from './bids/RecentBids'
-import CompletedBids from './bids/CompletedBids'
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
@@ -87,7 +85,8 @@ class DesktopContainer extends Component {
                 <Menu.Item as='a'>Company</Menu.Item>
                 <Menu.Item as='a'>Careers</Menu.Item>
                 <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed}>Profile</Button>
+                  <Button as='a' inverted={!fixed}>Log in</Button>
+                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Up</Button>
                 </Menu.Item>
               </Container>
             </Menu>
@@ -104,6 +103,53 @@ class DesktopContainer extends Component {
 DesktopContainer.propTypes = {
   children: PropTypes.node,
 }
+
+class TabletContainer extends Component {
+  state = {}
+
+  hideFixedMenu = () => this.setState({ fixed: false })
+  showFixedMenu = () => this.setState({ fixed: true })
+
+  render() {
+    const { children } = this.props
+    const { fixed } = this.state
+
+    return (
+      <Responsive { ...Responsive.onlyTablet} >
+        <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
+          <Segment inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em' }} vertical>
+            <Menu
+              fixed={fixed ? 'top' : null}
+              inverted={!fixed}
+              pointing={!fixed}
+              secondary={!fixed}
+              size='large'
+            >
+              <Container>
+                <Menu.Item as='a' active>Home</Menu.Item>
+                <Menu.Item as='a'>Work</Menu.Item>
+                <Menu.Item as='a'>Company</Menu.Item>
+                <Menu.Item as='a'>Careers</Menu.Item>
+                <Menu.Item position='right'>
+                  <Button as='a' inverted={!fixed}>Log in</Button>
+                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Up</Button>
+                </Menu.Item>
+              </Container>
+            </Menu>
+            <HomepageHeading />
+          </Segment>
+        </Visibility>
+
+        {children}
+      </Responsive>
+    )
+  }
+}
+
+TabletContainer.propTypes = {
+  children: PropTypes.node,
+}
+
 
 class MobileContainer extends Component {
   state = {}
@@ -134,7 +180,8 @@ class MobileContainer extends Component {
                     <Icon name='sidebar' />
                   </Menu.Item>
                   <Menu.Item position='right'>
-                    <Button as='a' inverted>Profile</Button>
+                    <Button as='a' inverted>Log in</Button>
+                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>Sign Up</Button>
                   </Menu.Item>
                 </Menu>
               </Container>
@@ -157,6 +204,7 @@ const ResponsiveContainer = ({ children }) => (
   <div>
     <DesktopContainer>{children}</DesktopContainer>
     <MobileContainer>{children}</MobileContainer>
+    <TabletContainer>{children}</TabletContainer>
   </div>
 )
 
@@ -164,11 +212,9 @@ ResponsiveContainer.propTypes = {
   children: PropTypes.node,
 }
 
-const VendorHome = () => (
+const VendorHomeBackup = () => (
   <ResponsiveContainer>
     <Segment style={{ padding: '8em 0em' }} vertical>
-      <RecentBids />
-      <CompletedBids />
       <Grid container stackable verticalAlign='middle'>
         <Grid.Row>
           <Grid.Column width={8}>
@@ -273,4 +319,4 @@ const VendorHome = () => (
     </Segment>
   </ResponsiveContainer>
 )
-export default VendorHome
+export default VendorHomeBackup

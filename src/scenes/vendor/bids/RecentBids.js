@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, Card, Image, Button, Segment, Header } from 'semantic-ui-react'
+import { Grid, Card, Button, Segment, Header } from 'semantic-ui-react'
 
 class RecentBids extends Component {
   render() {
     return (
-      <Segment>
+      <Segment className='dashboard-bids-container'>
         <Header as='h2' textAlign='center'>
           3 MOST RECENT BIDS
         </Header>

@@ -7,6 +7,15 @@ class ClientSignUpForm extends Component {
       console.log('ClientSignUpForm');
       const { name, email, password, phone } = this.state
       console.log(name, email, password, phone)
+       axios({
+       method: 'post',
+       url: '/signup',
+       data: {
+         username: email,
+         password: password,
+         type: 'client'
+       }
+    });
   }
 
   handleChangeForTerms = () => {

@@ -20,14 +20,16 @@ class ClientSignUpForm extends Component {
   }
 
   handleChangeForTerms = () => {
-    this.setState({
+       this.setState({
       checked: !this.state.checked
     })
   } 
+
+
   componentWillMount() {
     this.setState({
-      checked: false,
-      name: '', email: '',password: '',phone: '', confimPassword:''
+      
+      name: '', email: '',password: '',phone: '', confimPassword:'',checked: false,
     })
   }
 
@@ -35,7 +37,7 @@ class ClientSignUpForm extends Component {
 
   render() {
     //console.log(this.props)
-    const { name= '', email= '',password= '',confimPassword='',phone= '' } = this.state
+    const { name= '', email= '',password= '',confimPassword='',phone= '',checked= false} = this.state
     return (
       <Grid
         columns={3}
@@ -103,8 +105,9 @@ class ClientSignUpForm extends Component {
                 onChange={this.handleChange}
               />
               <Form.Field
-              checked={ this.state.checked } 
+              checked={ checked } 
               onChange={ this.handleChangeForTerms } 
+              name= 'checked'
               control={Checkbox}
               label={<label>I agree to the Terms and Conditions</label>}
               />

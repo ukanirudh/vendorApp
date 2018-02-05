@@ -10,7 +10,7 @@ class AunthenticationAndRegistrationApi {
 			}
 	  }
 
-		static applicantLogin( email, password ) {
+		static applicantLogin( payloadData ) {
 			//var baseUrl = global.devHost ;
 			const signInUrl = '/login';
 			const headers = this.requestHeaders();
@@ -19,12 +19,7 @@ class AunthenticationAndRegistrationApi {
 				method: 'POST',
 				url: signInUrl,
 				headers: headers,
-				data: JSON.stringify({
-					"user":{
-						"email":email,
-						"password":password
-					}
-				})
+				data: payloadData
 			}).then(function (response) {
 				return response;
 			}).catch(function (error) {

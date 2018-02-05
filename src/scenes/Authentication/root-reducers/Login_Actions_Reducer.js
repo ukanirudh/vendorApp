@@ -1,9 +1,9 @@
 import AunthenticationAndRegistrationApi from '../Authentication_Api';
 
-export function submitLoginDispatch( user, password) {
+export function submitLoginDispatch( payload) {
 
   return function(dispatch) {
-    return AunthenticationAndRegistrationApi.applicantLogin( user, password).then(response => {
+    return AunthenticationAndRegistrationApi.applicantLogin( payload).then(response => {
       //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
         dispatch(submitLogin(response));
@@ -65,15 +65,16 @@ export function handleError(error) {
 }
 
 const INITIAL_STATE = {
-	current_user_profile: {}
+  current_user_profile: {},
+  registrationSuccessStatus: true
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case "SUBMIT_LOGIN":
-			//console.log(action.payload);
-			localStorage.setItem("userprofile", JSON.stringify(action.payload.data.user) );
+			console.log(action.payload);
+			//localStorage.setItem("userprofile", JSON.stringify(action.payload.data.user) );
 			if( action.payload.data.user.user_type === "applicant" ) {
 				// browserHistory.push({
 				// 	pathname: '/userprofile',
@@ -86,7 +87,7 @@ export default function reducer(state = INITIAL_STATE, action) {
 				// 	state: { stateData: action.payload.data.user }
 				// });
 			}
-			return { ...state , registrationSuccessStatus: action.payload.status };
+			return state;
 
      case "FORGOT_PASSWORD":
 	    //console.log(action.payload);

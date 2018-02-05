@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment,Checkbox} from 'semantic-ui-react'
-import axios from 'axios'
+import { connect } from "react-redux";
+import { submitClientSingUpDispatch } from "../root-reducers/SignUp_Actions_Reducer";
+import { bindActionCreators } from "redux";
 
 
 class ClientSignUpForm extends Component {
@@ -8,15 +10,12 @@ class ClientSignUpForm extends Component {
       console.log('ClientSignUpForm');
       const { name, email, password, phone } = this.state
       console.log(name, email, password, phone)
-       axios({
-       method: 'post',
-       url: '/signup',
-       data: {
-         username: email,
-         password: password,
-         type: 'client'
-       }
-    });
+      const data = {
+      name,
+      password,
+      type:'vendor'
+    }
+    this.props.submitClientSingUpDispatch( data );
   }
 
   handleChangeForTerms = () => {
@@ -120,4 +119,21 @@ class ClientSignUpForm extends Component {
   }
 }
 
-export default ClientSignUpForm
+//map store state to component state
+function mapStateToProps(state) {
+  return { current_user_profile: state.current_user_profile };
+}
+
+
+
+//map store dispatch function to component props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ submitClientSingUpDispatch }, dispatch);
+}
+
+
+
+//conect our component with store state and store dispatch functions
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientSignUpForm);
+

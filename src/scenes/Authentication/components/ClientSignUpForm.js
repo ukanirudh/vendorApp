@@ -8,12 +8,12 @@ import { bindActionCreators } from "redux";
 class ClientSignUpForm extends Component {
   onClientSignUp = () => {
       console.log('ClientSignUpForm');
-      const { name, email, password, phone } = this.state
-      console.log(name, email, password, phone)
+      const { name, username, password, phone } = this.state
+      console.log(name, username, password, phone)
       const data = {
-      name,
+      username,
       password,
-      type:'vendor'
+      type:'client'
     }
     this.props.submitClientSingUpDispatch( data );
   }
@@ -28,7 +28,7 @@ class ClientSignUpForm extends Component {
   componentWillMount() {
     this.setState({
       
-      name: '', email: '',password: '',phone: '', confimPassword:'',checked: false,
+      name: '', username: '',password: '',phone: '', confimPassword:'',checked: false,
     })
   }
 
@@ -36,7 +36,7 @@ class ClientSignUpForm extends Component {
 
   render() {
     //console.log(this.props)
-    const { name= '', email= '',password= '',confimPassword='',phone= '',checked= false} = this.state
+    const { name= '', username= '',password= '',confimPassword='',phone= '',checked= false} = this.state
     return (
       <Grid
         columns={3}
@@ -68,8 +68,8 @@ class ClientSignUpForm extends Component {
                 fluid
                 icon='mail'
                 iconPosition='left'
-                name= 'email'
-                value={email}
+                name= 'username'
+                value={username}
                 placeholder='E-mail address'
                 onChange={this.handleChange}
               />

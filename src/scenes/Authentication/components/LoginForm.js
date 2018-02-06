@@ -71,7 +71,7 @@ class LoginForm extends Component {
 
 //map store state to component state
 function mapStateToProps(state) {
-  return { current_user_profile: state.current_user_profile };
+  return { current_user: state.current_user };
 }
 
 //map store dispatch function to component props

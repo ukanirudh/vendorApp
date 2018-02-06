@@ -1,4 +1,5 @@
 import AunthenticationAndRegistrationApi from '../Authentication_Api';
+import { CreateBrowserHistory } from '../../../commonComponents'
 
 export function submitLoginDispatch( payload) {
 
@@ -65,7 +66,7 @@ export function handleError(error) {
 }
 
 const INITIAL_STATE = {
-  current_user_profile: {},
+  current_user: {},
   registrationSuccessStatus: true
 }
 
@@ -74,20 +75,20 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case "SUBMIT_LOGIN":
 			console.log(action.payload);
-			//localStorage.setItem("userprofile", JSON.stringify(action.payload.data.user) );
-			if( action.payload.data.user.user_type === "applicant" ) {
-				// browserHistory.push({
-				// 	pathname: '/userprofile',
-				// 	state: { stateData: action.payload.data.user }
-				// });
-			} else {
-				//new_registration
-				// browserHistory.push({
-				// 	pathname: '/schoolprofile',
-				// 	state: { stateData: action.payload.data.user }
-				// });
-			}
-			return state;
+      const { email, id, type } = action.payload.data.user
+			localStorage.setItem("userprofile", JSON.stringify({ email, id }) );
+      if( type === "vendor" ) {
+        CreateBrowserHistory.push({
+          pathname: "/vendorHome",
+      		// 	state: { stateData: action.payload.data.user }
+        })
+      } else {
+        CreateBrowserHistory.push({
+          pathname: "/vendorHome",
+      		// 	state: { stateData: action.payload.data.user }
+        })
+      }
+      return state;
 
      case "FORGOT_PASSWORD":
 	    //console.log(action.payload);

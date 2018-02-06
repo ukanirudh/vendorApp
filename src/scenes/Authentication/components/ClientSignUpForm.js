@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment,Checkbox} from 'semantic-ui-react'
-import axios from 'axios'
+import { connect } from "react-redux";
+import { submitClientSingUpDispatch } from "../root-reducers/SignUp_Actions_Reducer";
+import { bindActionCreators } from "redux";
 
 
 class ClientSignUpForm extends Component {
   onClientSignUp = () => {
       console.log('ClientSignUpForm');
-      const { name, email, password, phone } = this.state
-      console.log(name, email, password, phone)
-       axios({
-       method: 'post',
-       url: '/signup',
-       data: {
-         username: email,
-         password: password,
-         type: 'client'
-       }
-    });
+      const { name, username, password, phone } = this.state
+      console.log(name, username, password, phone)
+      const data = {
+      username,
+      password,
+      type:'client'
+    }
+    this.props.submitClientSingUpDispatch( data );
   }
 
   handleChangeForTerms = () => {
@@ -29,7 +28,7 @@ class ClientSignUpForm extends Component {
   componentWillMount() {
     this.setState({
       
-      name: '', email: '',password: '',phone: '', confimPassword:'',checked: false,
+      name: '', username: '',password: '',phone: '', confimPassword:'',checked: false,
     })
   }
 
@@ -37,7 +36,7 @@ class ClientSignUpForm extends Component {
 
   render() {
     //console.log(this.props)
-    const { name= '', email= '',password= '',confimPassword='',phone= '',checked= false} = this.state
+    const { name= '', username= '',password= '',confimPassword='',phone= '',checked= false} = this.state
     return (
       <Grid
         columns={3}
@@ -69,8 +68,8 @@ class ClientSignUpForm extends Component {
                 fluid
                 icon='mail'
                 iconPosition='left'
-                name= 'email'
-                value={email}
+                name= 'username'
+                value={username}
                 placeholder='E-mail address'
                 onChange={this.handleChange}
               />
@@ -120,4 +119,21 @@ class ClientSignUpForm extends Component {
   }
 }
 
-export default ClientSignUpForm
+//map store state to component state
+function mapStateToProps(state) {
+  return { current_user_profile: state.current_user_profile };
+}
+
+
+
+//map store dispatch function to component props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ submitClientSingUpDispatch }, dispatch);
+}
+
+
+
+//conect our component with store state and store dispatch functions
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientSignUpForm);
+

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Header, Button, Segment, Icon, Dimmer } from 'semantic-ui-react'
-import CreateBrowserHistory from '../../commonComponents/CreateBrowserHistory'
+import { CreateBrowserHistory } from '../../commonComponents'
 
 class AuthenticationHomePage extends Component {
 

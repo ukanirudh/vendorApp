@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
+import { connect } from "react-redux";
+import { submitLoginDispatch } from "../root-reducers/Login_Actions_Reducer";
+import { bindActionCreators } from "redux";
 
 class LoginForm extends Component {
 
   componentWillMount () {
-    this.setState({ userType: '' })
+    this.setState({ userType: '', username:'', password:'' })
   }
 
   componentDidMount () {
@@ -14,9 +17,15 @@ class LoginForm extends Component {
   }
 
   onLogin = () => {
+    const { username, password, userType } = this.state
+    const payloadData = { username, password, type: userType }
+    this.props.submitLoginDispatch(payloadData)
   }
 
+  handleFormValuesChange = (e, { name, value }) => this.setState({ [name]: value })
+
   render() {
+    const { username, password } = this.state
     return (
       <Grid
         columns={3}
@@ -35,15 +44,21 @@ class LoginForm extends Component {
               <Form.Input
                 fluid
                 icon='user'
+                name='username'
+                value={username}
                 iconPosition='left'
                 placeholder='E-mail address'
+                onChange={this.handleFormValuesChange}
               />
               <Form.Input
                 fluid
                 icon='lock'
                 iconPosition='left'
+                name='password'
+                value={password}
                 placeholder='Password'
                 type='password'
+                onChange={this.handleFormValuesChange}
               />
               <Button color='teal' fluid size='large' onClick={this.onLogin}>Login</Button>
             </Segment>
@@ -54,4 +69,15 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm
+//map store state to component state
+function mapStateToProps(state) {
+  return { current_user: state.current_user };
+}
+
+//map store dispatch function to component props
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ submitLoginDispatch }, dispatch);
+}
+
+//conect our component with store state and store dispatch functions
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

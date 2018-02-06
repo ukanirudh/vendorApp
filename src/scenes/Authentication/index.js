@@ -24,7 +24,7 @@ class Authentication extends Component {
     <Provider store={AuthenticationStore}>
       <div style={{ padding: '0px 10px' }}>
         <AppHeader />
-        <Route path="/authorization/home" component={AuthenticationHomePage}></Route>
+        <Route exact path="/authorization" component={AuthenticationHomePage}></Route>
         <Route path="/authorization/login" component={LoginFormContainer}></Route>
         <Route path="/authorization/signup" component={SignUpContainer}></Route>
         <AppFooter />

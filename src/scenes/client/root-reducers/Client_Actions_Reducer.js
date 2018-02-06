@@ -1,13 +1,18 @@
-import AunthenticationAndRegistrationApi from '../Authentication_Api';
+import ClientServiceApi from '../Client_Service_Api';
 import { CreateBrowserHistory } from '../../../commonComponents'
 
-export function submitLoginDispatch( payload) {
+const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
+const RECEIVE_FILTER = 'meeting_list/filters/RECEIVE_FILTER'
+const UPDATE_FILTER_SEARCH_TEXT = 'meeting_list/filters/SEARCH'
+const UPDATE_SELECTED_DATES = 'meeting_list/meeting_request/UPDATE_SELECTED_DATES'
+
+export function createNewTendorDispatch( payload) {
 
   return function(dispatch) {
-    return AunthenticationAndRegistrationApi.applicantLogin( payload).then(response => {
+    return ClientServiceApi.newTendorRequest( payload).then(response => {
       //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
-        dispatch(submitLogin(response));
+        dispatch(onCreateNewTender(response));
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -18,7 +23,7 @@ export function submitLoginDispatch( payload) {
 
 export function logoutDispatch( userEmail, token) {
   return function(dispatch) {
-    return AunthenticationAndRegistrationApi.logout( userEmail, token).then(response => {
+    return ClientServiceApi.logout( userEmail, token).then(response => {
       //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
         dispatch(logout(response));
@@ -30,9 +35,9 @@ export function logoutDispatch( userEmail, token) {
   };
 }
 
-export function submitLogin(user) {
+export function onCreateNewTender(user) {
   return {
-    type: "SUBMIT_LOGIN",
+    type: ON_CREATE_TENDER,
     payload: user
   };
 }
@@ -67,24 +72,26 @@ export function handleError(error) {
 
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: true
+  registrationSuccessStatus: true,
+  clientId : '',
+
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
-    case "SUBMIT_LOGIN":
+    case ON_CREATE_TENDER:
 			console.log(action.payload);
       const { email, id, type } = action.payload.data.user
 			localStorage.setItem("userprofile", JSON.stringify({ email, id }) );
       if( type === "vendor" ) {
         CreateBrowserHistory.push({
-          pathname: "/vendor",
+          pathname: "/vendorHome",
       		// 	state: { stateData: action.payload.data.user }
         })
       } else {
         CreateBrowserHistory.push({
-          pathname: "/client",
+          pathname: "/vendorHome",
       		// 	state: { stateData: action.payload.data.user }
         })
       }
@@ -137,10 +144,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 				// });
 			}
       return state;
-
-    case "REGISTER_APPLICANT":
-    //console.log(action.payload);
-    	return { ...state , registrationSuccessStatus: action.payload.status };
 
 		case "REGISTER_SCHOOL":
 			//console.log(action.payload);

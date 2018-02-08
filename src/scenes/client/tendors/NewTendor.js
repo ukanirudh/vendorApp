@@ -1,6 +1,6 @@
 import tcombForm from 'tcomb-form'
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment, Select } from 'semantic-ui-react'
 
 import { connect } from "react-redux";
 import { createNewTendorDispatch } from "../root-reducers/Client_Actions_Reducer";
@@ -17,6 +17,17 @@ const FormSchema = tcombForm.struct({
 
 class NewTendor extends Component {
 
+  componentWillMount() {
+    this.setState({mainCategorySelected:'', subCategorySelected:''})
+  }
+
+  onSelectMainCategory = (event, data) => {
+    console.log(event)
+    const {target: {value}} = event;
+    console.log(event.target.value)
+    this.setState({mainCategorySelected:event.target.value})
+  }
+
   onSubmit = (evt) => {
     evt.preventDefault()
     const value = this.refs.form.getValue()
@@ -26,6 +37,7 @@ class NewTendor extends Component {
   }
 
   render() {
+    const tempOp =[{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
     return (
       <Grid
         columns={3}
@@ -38,7 +50,12 @@ class NewTendor extends Component {
             New Tendor
           </Header>
         </Grid.Row>
+        <Grid.Row>
+          <Select placeholder='Select your country' value={this.state.mainCategorySelected} options={tempOp} onChange={this.onSelectMainCategory}/>
+        </Grid.Row>
         <Grid.Column className='login-form-grid'>
+        {
+          ( this.state.mainCategorySelected || this.state.subCategorySelected ) ?
           <Form size='large'>
             <Segment stacked>
               <form className='new-tendor-form' onSubmit={this.onSubmit}>
@@ -46,7 +63,8 @@ class NewTendor extends Component {
               </form>
               <Button color='teal' fluid size='large' onClick={this.onSubmit}>Submit the tendor</Button>
             </Segment>
-          </Form>
+          </Form> : ''
+        }
         </Grid.Column>
       </Grid>
     )

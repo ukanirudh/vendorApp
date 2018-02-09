@@ -55,7 +55,7 @@ export default function SingupReducer(state = INITIAL_STATE, action) {
     	return { ...state , registrationSuccessStatus: action.payload.status };
 
 		case "CLIENT_SIGNUP":
-			//console.log(action.payload);
+			console.log(action.payload);
 				return { ...state , registrationSuccessStatus: action.payload.status };
 
     default:

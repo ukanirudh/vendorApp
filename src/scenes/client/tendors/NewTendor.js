@@ -1,6 +1,6 @@
 import tcombForm from 'tcomb-form'
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment, Select } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 import { connect } from "react-redux";
 import { createNewTendorDispatch } from "../root-reducers/Client_Actions_Reducer";
@@ -21,11 +21,14 @@ class NewTendor extends Component {
     this.setState({mainCategorySelected:'', subCategorySelected:''})
   }
 
-  onSelectMainCategory = (event, data) => {
-    console.log(event)
-    const {target: {value}} = event;
-    console.log(event.target.value)
-    this.setState({mainCategorySelected:event.target.value})
+  onSelectMainCategory = (event, { name, value }) => {
+    //console.log(name, value)
+    this.setState({mainCategorySelected:value})
+  }
+
+  onSelectSubCategory = (event, { name, value }) => {
+    //console.log(name, value)
+    this.setState({subCategorySelected:value})
   }
 
   onSubmit = (evt) => {
@@ -38,6 +41,7 @@ class NewTendor extends Component {
 
   render() {
     const tempOp =[{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
+    const {mainCategorySelected, subCategorySelected} = this.state
     return (
       <Grid
         columns={3}
@@ -51,11 +55,16 @@ class NewTendor extends Component {
           </Header>
         </Grid.Row>
         <Grid.Row>
-          <Select placeholder='Select your country' value={this.state.mainCategorySelected} options={tempOp} onChange={this.onSelectMainCategory}/>
+          <Form.Select options={tempOp} placeholder='Category' onChange={this.onSelectMainCategory} />
+        </Grid.Row>
+        <Grid.Row>
+          { ( mainCategorySelected ) ?
+            <Form.Select options={tempOp} placeholder='Sub-Category' onChange={this.onSelectSubCategory} /> : ''
+          }
         </Grid.Row>
         <Grid.Column className='login-form-grid'>
         {
-          ( this.state.mainCategorySelected || this.state.subCategorySelected ) ?
+          ( mainCategorySelected && subCategorySelected ) ?
           <Form size='large'>
             <Segment stacked>
               <form className='new-tendor-form' onSubmit={this.onSubmit}>

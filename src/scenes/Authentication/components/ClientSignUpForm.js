@@ -85,6 +85,7 @@ class ClientSignUpForm extends Component {
                 iconPosition='left'
                 value={password}
                 name='password'
+                type='password'
                 placeholder='Password'
                 onChange={this.handleChange}
               />
@@ -93,6 +94,7 @@ class ClientSignUpForm extends Component {
                 icon='protect'
                 iconPosition='left'
                 name ='confimPassword'
+                type='password'
                 value={confimPassword}
                 placeholder='Confim Password'
                 onChange={this.handleChange}

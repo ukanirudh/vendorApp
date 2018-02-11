@@ -1,6 +1,7 @@
 import tcombForm from 'tcomb-form'
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment, Dropdown } from 'semantic-ui-react'
+import { CreateBrowserHistory } from '../../../commonComponents'
 
 import { connect } from "react-redux";
 import { createNewTendorDispatch } from "../root-reducers/Client_Actions_Reducer";
@@ -21,6 +22,11 @@ class NewTendor extends Component {
     this.setState({mainCategorySelected:'', subCategorySelected:''})
   }
 
+  componentDidMount() {
+    console.log(this.props)
+    //this.props.createNewTendorDispatch()
+  }
+
   onSelectMainCategory = (event, { name, value }) => {
     //console.log(name, value)
     this.setState({mainCategorySelected:value})
@@ -39,6 +45,12 @@ class NewTendor extends Component {
     }
   }
 
+  onCancel = () => {
+    CreateBrowserHistory.push({
+      pathname: "/client",
+    })
+  }
+
   render() {
     const tempOp =[{ key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' }]
     const {mainCategorySelected, subCategorySelected} = this.state
@@ -54,15 +66,19 @@ class NewTendor extends Component {
             New Tendor
           </Header>
         </Grid.Row>
-        <Grid.Row>
-          <Form.Select options={tempOp} placeholder='Category' onChange={this.onSelectMainCategory} />
+        <Grid.Row centered columns={3}>
+          <Grid.Column>
+            <Dropdown placeholder='Category' fluid search selection onChange={this.onSelectMainCategory} options={tempOp} />
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           { ( mainCategorySelected ) ?
-            <Form.Select options={tempOp} placeholder='Sub-Category' onChange={this.onSelectSubCategory} /> : ''
+            <Grid.Column>
+              <Dropdown placeholder='Sub-Category' fluid search selection onChange={this.onSelectSubCategory} options={tempOp} />
+            </Grid.Column> : ''
           }
         </Grid.Row>
-        <Grid.Column className='login-form-grid'>
+        <Grid.Column centered className='login-form-grid'>
         {
           ( mainCategorySelected && subCategorySelected ) ?
           <Form size='large'>
@@ -70,7 +86,10 @@ class NewTendor extends Component {
               <form className='new-tendor-form' onSubmit={this.onSubmit}>
                 <tcombForm.form.Form ref="form" type={FormSchema} />
               </form>
-              <Button color='teal' fluid size='large' onClick={this.onSubmit}>Submit the tendor</Button>
+
+                <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
+                <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
+
             </Segment>
           </Form> : ''
         }
@@ -92,4 +111,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 //conect our component with store state and store dispatch functions
-export default connect(mapStateToProps, mapDispatchToProps)(NewTendor);
+//export default connect(mapStateToProps, mapDispatchToProps)(NewTendor);
+export default NewTendor;

@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { Route, matchPath } from 'react-router-dom';
 
-/*Imported components*/
-import ClientHomePage from './ClientHome'
-import NewTendor from './tendors/NewTendor'
-
 // /*Imported components*/
 // import { AppHeader, AppFooter } from '../../commonComponents'
+import ClientContainer from './ClientContainer'
 
 /*routing and redux*/
 import { Provider } from "react-redux";
@@ -21,10 +18,7 @@ class Client extends Component {
   render () {
     return (
     <Provider store={ClientStore}>
-      <div style={{ padding: '0px 10px' }}>
-        <Route exact path="/client" component={ClientHomePage}></Route>
-        <Route path="/client/newTendor" component={NewTendor}></Route>
-      </div>
+      <Route path="/client" component={ClientContainer}></Route>
     </Provider>
     )
   }

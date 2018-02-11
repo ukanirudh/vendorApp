@@ -16,7 +16,7 @@ const FormSchema = tcombForm.struct({
 class NewTendor extends Component {
 
   componentWillMount() {
-    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[] })
+    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
   }
 
   componentDidMount() {
@@ -27,23 +27,34 @@ class NewTendor extends Component {
   componentWillReceiveProps (newProps) {
     //console.log(newProps)
     const { props } = newProps
-    const { main_categories } = props
-    this.setState({ mainCategories:main_categories })
+    const { main_categories, sub_categories } = props
+    this.setState({ mainCategories:main_categories, subCategories:sub_categories })
   }
 
   renderMainCategoryOption = () => {
     const { mainCategories } = this.state
     var mainCategoriesOptions = []
     forEach(mainCategories, function(mainCategory) {
-      mainCategoriesOptions.push({ key: mainCategory.id, value: mainCategory.name, text: mainCategory.name })
+      mainCategoriesOptions.push({ key: mainCategory.id, value: mainCategory.id, text: mainCategory.name })
     });
 
     return mainCategoriesOptions
   }
 
-  onSelectMainCategory = (event, { name, value }) => {
-    //console.log(name, value)
+  renderSubCategoryOption = () => {
+    const { subCategories } = this.state
+    var subCategoriesOptions = []
+    forEach(subCategories, function(subCategory) {
+      subCategoriesOptions.push({ key: subCategory.id, value: subCategory.id, text: subCategory.name })
+    });
+
+    return subCategoriesOptions
+  }
+
+  onSelectMainCategory = (event, {name, value}) => {
+    const { props } = this.props
     this.setState({mainCategorySelected:value})
+    props.getAllSubCategoriesDispatch(value)
   }
 
   onSelectSubCategory = (event, { name, value }) => {
@@ -87,7 +98,7 @@ class NewTendor extends Component {
         <Grid.Row>
           { ( mainCategorySelected ) ?
             <Grid.Column>
-              <Dropdown placeholder='Sub-Category' fluid search selection onChange={this.onSelectSubCategory} options={this.renderMainCategoryOption()} />
+              <Dropdown placeholder='Sub-Category' fluid search selection onChange={this.onSelectSubCategory} options={this.renderSubCategoryOption()} />
             </Grid.Column> : ''
           }
         </Grid.Row>

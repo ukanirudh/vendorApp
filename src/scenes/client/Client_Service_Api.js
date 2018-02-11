@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const getMainCategoriesUrl = '/main_categories';
+const getSubCategoriesUrl = '/sub_categories';
 const createTendorUrl = '/tendor';
 
 class AunthenticationAndRegistrationApi {
@@ -28,7 +29,7 @@ class AunthenticationAndRegistrationApi {
 		});
 	}
 
-	static getAllMainCategories( payloadData ) {
+	static getAllMainCategories() {
 		//var baseUrl = global.devHost ;
 		const headers = this.requestHeaders();
 
@@ -42,6 +43,22 @@ class AunthenticationAndRegistrationApi {
 			return error.response ;
 		});
 	}
+
+	static getAllSubCategories( mainCategoryId ) {
+		const subCatUrl = getSubCategoriesUrl + '/' + mainCategoryId ;
+		const headers = this.requestHeaders();
+
+		return axios({
+			method: 'GET',
+			url: subCatUrl,
+			headers: headers
+		}).then(function (response) {
+			return response;
+		}).catch(function (error) {
+			return error.response ;
+		});
+	}
+
 }
 
 export default AunthenticationAndRegistrationApi;

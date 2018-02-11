@@ -3,6 +3,7 @@ import { CreateBrowserHistory } from '../../../commonComponents'
 
 const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
+const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 
 export function createNewTendorDispatch( payload) {
 
@@ -19,12 +20,24 @@ export function createNewTendorDispatch( payload) {
   };
 }
 
-export function getAllMainCategoriesDispatch( userEmail, token) {
+export function getAllMainCategoriesDispatch() {
   return function(dispatch) {
     return ClientServiceApi.getAllMainCategories().then(response => {
-      //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
         dispatch(getAllMainCategories(response.data));
+      else
+        dispatch(handleError(response));
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  };
+}
+
+export function getAllSubCategoriesDispatch( mainCategoryId ) {
+  return function(dispatch) {
+    return ClientServiceApi.getAllSubCategories(mainCategoryId).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(getAllSubCategories(response.data));
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -47,10 +60,10 @@ export function getAllMainCategories(data) {
   };
 }
 
-export function forgotPassword(user) {
+export function getAllSubCategories(data) {
   return {
-    type: "FORGOT_PASSWORD",
-    payload: user
+    type: GET_ALL_SUB_CATEGORIES,
+    payload: data
   };
 }
 
@@ -72,14 +85,15 @@ const INITIAL_STATE = {
   current_user: {},
   registrationSuccessStatus: true,
   clientId : '',
-  main_categories:[]
+  main_categories:[],
+  sub_categories:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case ON_CREATE_TENDER:
-			console.log(action.payload);
+			//console.log(action.payload);
       const { email, id, type } = action.payload.data.user
 			localStorage.setItem("userprofile", JSON.stringify({ email, id }) );
       if( type === "vendor" ) {
@@ -97,8 +111,12 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case GET_ALL_MAIN_CATEGORIES:
       //console.log(action.payload)
-      const { data } = action.payload
+      var { data } = action.payload
       return { ...state , main_categories: data };
+
+    case GET_ALL_SUB_CATEGORIES:
+      var { data } = action.payload
+      return { ...state , sub_categories: data };
 
 		case "REGISTER_SCHOOL":
 			//console.log(action.payload);

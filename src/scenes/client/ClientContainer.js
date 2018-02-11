@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Route, matchPath } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 /*routing and redux*/
 import { connect } from "react-redux";
-import { createNewTendorDispatch } from "./root-reducers/Client_Actions_Reducer";
+import { createNewTendorDispatch, getAllMainCategoriesDispatch } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -42,12 +42,17 @@ class ClientContainer extends Component {
 
 //map store state to component state
 function mapStateToProps(state) {
-  return { current_user_profile: state.current_user_profile };
+  //console.log(state.clientReducer)
+  const { current_user_profile, main_categories} = state.clientReducer
+  return {
+    current_user_profile,
+    main_categories
+  };
 }
 
 //map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createNewTendorDispatch }, dispatch);
+  return bindActionCreators({ createNewTendorDispatch, getAllMainCategoriesDispatch }, dispatch);
 }
 
 //conect our component with store state and store dispatch functions

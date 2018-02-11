@@ -2,9 +2,7 @@ import ClientServiceApi from '../Client_Service_Api';
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
-const RECEIVE_FILTER = 'meeting_list/filters/RECEIVE_FILTER'
-const UPDATE_FILTER_SEARCH_TEXT = 'meeting_list/filters/SEARCH'
-const UPDATE_SELECTED_DATES = 'meeting_list/meeting_request/UPDATE_SELECTED_DATES'
+const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 
 export function createNewTendorDispatch( payload) {
 
@@ -21,12 +19,12 @@ export function createNewTendorDispatch( payload) {
   };
 }
 
-export function logoutDispatch( userEmail, token) {
+export function getAllMainCategoriesDispatch( userEmail, token) {
   return function(dispatch) {
-    return ClientServiceApi.logout( userEmail, token).then(response => {
+    return ClientServiceApi.getAllMainCategories().then(response => {
       //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
-        dispatch(logout(response));
+        dispatch(getAllMainCategories(response.data));
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -42,10 +40,10 @@ export function onCreateNewTender(user) {
   };
 }
 
-export function logout(token) {
+export function getAllMainCategories(data) {
   return {
-    type: "LOG_OUT",
-    payload: token
+    type: GET_ALL_MAIN_CATEGORIES,
+    payload: data
   };
 }
 
@@ -74,7 +72,7 @@ const INITIAL_STATE = {
   current_user: {},
   registrationSuccessStatus: true,
   clientId : '',
-
+  main_categories:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -97,53 +95,10 @@ export default function reducer(state = INITIAL_STATE, action) {
       }
       return state;
 
-     case "FORGOT_PASSWORD":
-	    //console.log(action.payload);
-			var baseUrl = global.devHost ;
-			const forgotUrl = baseUrl + '/users/sign_in';
-	  	fetch(forgotUrl, {
-		  method: 'POST',
-		  headers: {
-		    'Accept': 'application/json',
-		    'Content-Type': 'application/json',
-		  },
-		  body: JSON.stringify({
-		    "user":{
-		      "email":action.payload.email,
-		      "password":action.payload.password
-		    }
-		  })
-		}).then((response) => response.json())
-	  	.then((responseJson) => {
-	  		if(responseJson.success){
-	  			alert("successful login");
-	        	console.log(responseJson);
-	  		} else {
-	  			alert("authentication failed");
-	  		}
-	        return true;
-	      })
-	      .catch((error) => {
-	      	alert("unauthorized");
-	        console.error(error);
-	      });
-      return action.payload;
-
-
-    case "LOG_OUT":
-			if(action.payload.status === 200 ){
-				localStorage.removeItem("userprofile");
-				// browserHistory.push({
-				// 	pathname: '/Login'
-				// });
-			} else {
-				//alert("Invalid session");
-				localStorage.removeItem("userprofile");
-				// browserHistory.push({
-				// 	pathname: '/Login'
-				// });
-			}
-      return state;
+    case GET_ALL_MAIN_CATEGORIES:
+      //console.log(action.payload)
+      const { data } = action.payload
+      return { ...state , main_categories: data };
 
 		case "REGISTER_SCHOOL":
 			//console.log(action.payload);

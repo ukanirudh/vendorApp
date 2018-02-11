@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { submitLoginDispatch } from "../root-reducers/Login_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
+import { CreateBrowserHistory } from '../../../commonComponents'
+
 class LoginForm extends Component {
 
   componentWillMount () {
@@ -20,6 +22,22 @@ class LoginForm extends Component {
     const { username, password, userType } = this.state
     const payloadData = { username, password, type: userType }
     this.props.submitLoginDispatch(payloadData)
+  }
+
+  componentWillReceiveProps (newProps) {
+    //console.log(newProps)
+    const {current_user, registrationSuccessStatus, userType} = newProps
+    if(registrationSuccessStatus) {
+      if(userType === 'vendor') {
+        CreateBrowserHistory.push({
+          pathname: "/vendor",
+        })
+      } else {
+        CreateBrowserHistory.push({
+          pathname: "/client",
+        })
+      }
+    }
   }
 
   handleFormValuesChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -71,7 +89,9 @@ class LoginForm extends Component {
 
 //map store state to component state
 function mapStateToProps(state) {
-  return { current_user: state.current_user };
+  const { LoginModule } = state
+  const { current_user, registrationSuccessStatus } = LoginModule
+  return ({ current_user, registrationSuccessStatus })
 }
 
 //map store dispatch function to component props

@@ -1,13 +1,12 @@
 import AunthenticationAndRegistrationApi from '../Authentication_Api';
-import { CreateBrowserHistory } from '../../../commonComponents'
 
 export function submitLoginDispatch( payload) {
 
   return function(dispatch) {
-    return AunthenticationAndRegistrationApi.applicantLogin( payload).then(response => {
+    return AunthenticationAndRegistrationApi.applicantLogin(payload).then(response => {
       //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
-        dispatch(submitLogin(response));
+        dispatch(submitLogin(response.data));
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -19,7 +18,6 @@ export function submitLoginDispatch( payload) {
 export function logoutDispatch( userEmail, token) {
   return function(dispatch) {
     return AunthenticationAndRegistrationApi.logout( userEmail, token).then(response => {
-      //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
         dispatch(logout(response));
       else
@@ -51,13 +49,6 @@ export function forgotPassword(user) {
   };
 }
 
-export function resetStore(data) {
-  return {
-    type: "RESET_STORE",
-    payload: data
-  };
-}
-
 export function handleError(error) {
   return {
     type: "HANDLE_ERROR",
@@ -67,28 +58,17 @@ export function handleError(error) {
 
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: true
+  current_user_type : '',
+  registrationSuccessStatus: false
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case "SUBMIT_LOGIN":
-      console.log(action.payload);
-      const { email, id, type } = action.payload.data.user
+      const { email, id, type } = action.payload.data
       localStorage.setItem("userprofile", JSON.stringify({ email, id }) );
-      if( type === "vendor" ) {
-        CreateBrowserHistory.push({
-          pathname: "/vendorHome",
-          // 	state: { stateData: action.payload.data.user }
-        })
-      } else {
-        CreateBrowserHistory.push({
-          pathname: "/vendorHome",
-          // 	state: { stateData: action.payload.data.user }
-        })
-      }
-    return state;
+    return {...state, current_user: { email, id, type }, registrationSuccessStatus: true };
 
   case "FORGOT_PASSWORD":
   //console.log(action.payload);
@@ -141,9 +121,6 @@ export default function reducer(state = INITIAL_STATE, action) {
   //console.log(action.payload);
   	return { ...state , registrationSuccessStatus: action.payload.status,
 		errorMessage: action.payload.data.message, errorSummary: action.payload.statusText}
-
-	case "RESET_STORE":
-			return { ...state, registrationSuccessStatus: INITIAL_STATE.registrationSuccessStatus };
 
   default:
     return state;

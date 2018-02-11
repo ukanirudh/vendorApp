@@ -7,9 +7,8 @@ import { bindActionCreators } from "redux";
 
 class ClientSignUpForm extends Component {
   onClientSignUp = () => {
-      console.log('ClientSignUpForm');
       const { name, username, password, phone } = this.state
-      console.log(name, username, password, phone)
+      //console.log(name, username, password, phone)
       const data = {
       username,
       password,
@@ -22,12 +21,12 @@ class ClientSignUpForm extends Component {
        this.setState({
       checked: !this.state.checked
     })
-  } 
+  }
 
 
   componentWillMount() {
     this.setState({
-      
+
       name: '', username: '',password: '',phone: '', confimPassword:'',checked: false,
     })
   }
@@ -50,18 +49,15 @@ class ClientSignUpForm extends Component {
           </Header>
         </Grid.Row>
         <Grid.Column className='login-form-grid'>
-          <Form size='large'
-            onSubmit={this.onClientSignUp}
-           >
+          <Form size='large'>
             <Segment stacked>
-
-            <Form.Input
+              <Form.Input
                 fluid
                 icon='user'
                 iconPosition='left'
                 placeholder='Name'
-                name='name' 
-                value={name} 
+                name='name'
+                value={name}
                 onChange={this.handleChange}
               />
               <Form.Input
@@ -73,7 +69,7 @@ class ClientSignUpForm extends Component {
                 placeholder='E-mail address'
                 onChange={this.handleChange}
               />
-              
+
               <Form.Input
                 fluid
                 icon='phone'
@@ -83,29 +79,29 @@ class ClientSignUpForm extends Component {
                 placeholder='Phone Number'
                 onChange={this.handleChange}
               />
-              
               <Form.Input
                 fluid
                 icon='protect'
                 iconPosition='left'
                 value={password}
                 name='password'
+                type='password'
                 placeholder='Password'
                 onChange={this.handleChange}
               />
-
               <Form.Input
                 fluid
                 icon='protect'
                 iconPosition='left'
                 name ='confimPassword'
+                type='password'
                 value={confimPassword}
                 placeholder='Confim Password'
                 onChange={this.handleChange}
               />
               <Form.Field
-              checked={ checked } 
-              onChange={ this.handleChangeForTerms } 
+              checked={ checked }
+              onChange={ this.handleChangeForTerms }
               name= 'checked'
               control={Checkbox}
               label={<label>I agree to the Terms and Conditions</label>}
@@ -136,4 +132,3 @@ function mapDispatchToProps(dispatch) {
 //conect our component with store state and store dispatch functions
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClientSignUpForm);
-

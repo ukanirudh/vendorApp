@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
+import { isEmpty } from 'lodash'
 
 /*routing and redux*/
 import { connect } from "react-redux";
-import { createNewTendorDispatch, getAllMainCategoriesDispatch, getAllSubCategoriesDispatch } from "./root-reducers/Client_Actions_Reducer";
+import { createNewTendorDispatch, getAllMainCategoriesDispatch,
+  getAllSubCategoriesDispatch, onSetCurrentUserData } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -29,7 +31,12 @@ class ClientContainer extends Component {
 
   componentWillMount() {
     //console.log(this.props)
+    const {current_user} = this.props
+    if(isEmpty(current_user)) {
+      this.props.onSetCurrentUserData(JSON.parse(localStorage.getItem('userprofile')))
+    }
   }
+
   render () {
     return (
       <div style={{ padding: '0px 10px' }}>
@@ -43,9 +50,9 @@ class ClientContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.clientReducer)
-  const { current_user_profile, main_categories, sub_categories} = state.clientReducer
+  const { current_user, main_categories, sub_categories} = state.clientReducer
   return {
-    current_user_profile,
+    current_user,
     main_categories,
     sub_categories
   };
@@ -53,7 +60,13 @@ function mapStateToProps(state) {
 
 //map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createNewTendorDispatch, getAllMainCategoriesDispatch, getAllSubCategoriesDispatch }, dispatch);
+  return bindActionCreators(
+    {
+      createNewTendorDispatch,
+      getAllMainCategoriesDispatch,
+      getAllSubCategoriesDispatch,
+      onSetCurrentUserData
+    }, dispatch);
 }
 
 //conect our component with store state and store dispatch functions

@@ -13,8 +13,8 @@ class AunthenticationAndRegistrationApi {
 		}
   }
 
-	static newTendorRequest( payloadData ) {
-		//var baseUrl = global.devHost ;
+	static newTendorRequest( payloadData, clientId ) {
+		var createTendorUrl = createTendorUrl + '/' + clientId ;
 		const headers = this.requestHeaders();
 
 		return axios({

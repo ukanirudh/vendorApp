@@ -8,9 +8,9 @@ import { CreateBrowserHistory } from '../../../commonComponents'
 import templates from 'tcomb-form-templates-semantic'
 tcombForm.form.Form.templates = templates;
 const FormSchema = tcombForm.struct({
-  requirementDetails: tcombForm.String,         // a required string
+  quantity: tcombForm.String,         // a required string
   //age: tcombForm.maybe(tcombForm.Number), // an optional number
-  durationOfTendor: tcombForm.Number, // an optional number
+  duration: tcombForm.Number, // an optional number
 })
 
 class NewTendor extends Component {
@@ -25,8 +25,8 @@ class NewTendor extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    //console.log(newProps)
     const { props } = newProps
+    //console.log(props)
     const { main_categories, sub_categories } = props
     this.setState({ mainCategories:main_categories, subCategories:sub_categories })
   }
@@ -63,10 +63,14 @@ class NewTendor extends Component {
   }
 
   onSubmit = (evt) => {
+    const { props } = this.props
+    const { current_user } = props
     evt.preventDefault()
     const value = this.refs.form.getValue()
+    console.log(value)
     if (value) {
-      console.log(value)
+      const {id} = current_user
+      //this.props.createNewTendorDispatch(id, value)
     }
   }
 
@@ -110,10 +114,8 @@ class NewTendor extends Component {
               <form className='new-tendor-form' onSubmit={this.onSubmit}>
                 <tcombForm.form.Form ref="form" type={FormSchema} />
               </form>
-
-                <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
-                <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
-
+              <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
+              <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
             </Segment>
           </Form> : ''
         }

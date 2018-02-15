@@ -10,9 +10,8 @@ export function createNewTendorDispatch(payload, clientId) {
 
   return function(dispatch) {
     return ClientServiceApi.newTendorRequest(payload, clientId).then(response => {
-      //console.log("dispatch login suc::",response);
       if(response.status === 201 || response.status === 200)
-        dispatch(onCreateNewTender(response));
+        dispatch(onCreateNewTender(response.data));
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -106,7 +105,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 			//console.log(action.payload);
       CreateBrowserHistory.push({
         pathname: "/client",
-    		// 	state: { stateData: action.payload.data.user }
       })
       return state;
 
@@ -119,17 +117,10 @@ export default function reducer(state = INITIAL_STATE, action) {
       var { data } = action.payload
       return { ...state , sub_categories: data };
 
-		case "REGISTER_SCHOOL":
-			//console.log(action.payload);
-				return { ...state , registrationSuccessStatus: action.payload.status };
-
     case "HANDLE_ERROR":
     //console.log(action.payload);
     	return { ...state , registrationSuccessStatus: action.payload.status,
 			errorMessage: action.payload.data.message, errorSummary: action.payload.statusText}
-
-		case "RESET_STORE":
-				return { ...state, registrationSuccessStatus: INITIAL_STATE.registrationSuccessStatus };
 
     default:
       return state;

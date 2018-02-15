@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getMainCategoriesUrl = '/main_categories';
 const getSubCategoriesUrl = '/sub_categories';
-const createTendorUrl = '/tendor';
+const createTendorUrl = '/tender';
 
 class AunthenticationAndRegistrationApi {
 
@@ -14,12 +14,12 @@ class AunthenticationAndRegistrationApi {
   }
 
 	static newTendorRequest( payloadData, clientId ) {
-		var createTendorUrl = createTendorUrl + '/' + clientId ;
+		var createTendorRequestUrl = `${createTendorUrl}/${clientId}` ;
 		const headers = this.requestHeaders();
 
 		return axios({
 			method: 'POST',
-			url: createTendorUrl,
+			url: createTendorRequestUrl,
 			headers: headers,
 			data: payloadData
 		}).then(function (response) {

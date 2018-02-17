@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Button, Container, Menu, Responsive, Segment, Visibility } from 'semantic-ui-react'
-import HomePageHeading from './HomePageHeading'
 
 class DesktopContainer extends Component {
   state = {}
@@ -10,13 +9,13 @@ class DesktopContainer extends Component {
   showFixedMenu = () => this.setState({ fixed: true })
 
   render() {
-    const { children } = this.props
+    const { children, HomePageHeading='' } = this.props
     const { fixed } = this.state
 
     return (
       <Responsive {...Responsive.onlyComputer}>
         <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment inverted textAlign='center' style={{ minHeight: 350, padding: '1em 0em' }} vertical>
+          <Segment inverted textAlign='center' style={{ padding: '1em 0em' }} vertical>
             <Menu
               fixed={fixed ? 'top' : null}
               inverted={!fixed}
@@ -34,7 +33,7 @@ class DesktopContainer extends Component {
                 </Menu.Item>
               </Container>
             </Menu>
-            <HomePageHeading />
+            {HomePageHeading ? <HomePageHeading /> : ''}
           </Segment>
         </Visibility>
         {children}
@@ -44,8 +43,9 @@ class DesktopContainer extends Component {
 }
 
 
-HomePageHeading.propTypes = {
+DesktopContainer.propTypes = {
   mobile: PropTypes.bool,
+  children: PropTypes.node
 }
 
 export default DesktopContainer

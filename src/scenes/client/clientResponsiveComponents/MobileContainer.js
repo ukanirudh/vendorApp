@@ -4,7 +4,6 @@ import {
   Button, Container, Icon,
   Menu, Responsive, Segment, Sidebar
 } from 'semantic-ui-react'
-import HomePageHeading from './HomePageHeading'
 
 class MobileContainer extends Component {
   state = {}
@@ -12,7 +11,7 @@ class MobileContainer extends Component {
   handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
 
   render() {
-    const { children } = this.props
+    const { children, HomePageHeading='' } = this.props
     const { sidebarOpened } = this.state
 
     return (
@@ -39,7 +38,7 @@ class MobileContainer extends Component {
                   </Menu.Item>
                 </Menu>
               </Container>
-              <HomePageHeading mobile />
+              {HomePageHeading ? <HomePageHeading mobile /> : ''}
             </Segment>
             {children}
           </Sidebar.Pusher>
@@ -50,8 +49,9 @@ class MobileContainer extends Component {
 }
 
 
-HomePageHeading.propTypes = {
+MobileContainer.propTypes = {
   mobile: PropTypes.bool,
+  children: PropTypes.node
 }
 
 export default MobileContainer

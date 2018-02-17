@@ -2,34 +2,15 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Container, Grid, Header, List, Segment } from 'semantic-ui-react'
 
-import MobileContainer from './clientHomeResponsiveComponents/MobileContainer'
-import DesktopContainer from './clientHomeResponsiveComponents/DesktopContainer'
+import HomePageHeading from './clientResponsiveComponents/HomePageHeading'
+import ResponsiveContainer from './clientResponsiveComponents/ResponsiveContainer'
 import CompletedTendor from './tendors/CompletedTendor'
 import YourTendors from './tendors/YourTendors'
-
-DesktopContainer.propTypes = {
-  children: PropTypes.node,
-}
-
-MobileContainer.propTypes = {
-  children: PropTypes.node,
-}
-
-const ResponsiveContainer = ({ children }) => (
-  <div>
-    <DesktopContainer>{children}</DesktopContainer>
-    <MobileContainer>{children}</MobileContainer>
-  </div>
-)
-
-ResponsiveContainer.propTypes = {
-  children: PropTypes.node,
-}
 
 class ClientHome extends Component {
   render() {
     return (
-      <ResponsiveContainer>
+      <ResponsiveContainer HomePageHeading={HomePageHeading}>
         <Segment style={{ padding: '4em 0em' }} vertical>
           <YourTendors />
           <CompletedTendor />

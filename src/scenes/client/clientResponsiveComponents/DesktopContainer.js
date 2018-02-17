@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Button, Container, Menu, Responsive, Segment, Visibility } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 class DesktopContainer extends Component {
   state = {}
@@ -24,7 +25,7 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>Home</Menu.Item>
+                <Menu.Item  active><Link to='/client'>Home</Link></Menu.Item>
                 <Menu.Item as='a'>Work</Menu.Item>
                 <Menu.Item as='a'>Company</Menu.Item>
                 <Menu.Item as='a'>Careers</Menu.Item>

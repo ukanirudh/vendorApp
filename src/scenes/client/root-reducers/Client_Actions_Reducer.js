@@ -5,6 +5,7 @@ const SET_CURRENT_USER_DATA = 'SET_CURRENT_USER_DATA'
 const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
+const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 
 export function createNewTendorDispatch(payload, clientId) {
 
@@ -46,6 +47,22 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
   };
 }
 
+export function getClientAllTendorsDispatch( clientId ) {
+  return function(dispatch) {
+    return ClientServiceApi.getClientAllTendors(clientId).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(getClientAllTendors(response.data));
+      else
+        dispatch(handleError(response));
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  };
+}
+
+
+
+
 export function onSetCurrentUserData(userDetails) {
   return {
     type: SET_CURRENT_USER_DATA,
@@ -74,6 +91,13 @@ export function getAllSubCategories(data) {
   };
 }
 
+export function getClientAllTendors(data) {
+  return {
+    type: GET_CLIENT_ALL_TENDORS,
+    payload: data
+  };
+}
+
 export function resetStore(data) {
   return {
     type: "RESET_STORE",
@@ -92,7 +116,8 @@ const INITIAL_STATE = {
   current_user: {},
   registrationSuccessStatus: true,
   main_categories:[],
-  sub_categories:[]
+  sub_categories:[],
+  all_client_tendors:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -116,6 +141,10 @@ export default function reducer(state = INITIAL_STATE, action) {
     case GET_ALL_SUB_CATEGORIES:
       var { data } = action.payload
       return { ...state , sub_categories: data };
+
+    case GET_CLIENT_ALL_TENDORS:
+       var { data } = action.payload
+      return { ...state , all_client_tendors: data };
 
     case "HANDLE_ERROR":
     //console.log(action.payload);

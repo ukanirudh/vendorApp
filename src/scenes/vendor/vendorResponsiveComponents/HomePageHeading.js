@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
-import { Container, Header } from 'semantic-ui-react'
+import { Container, Header, Button, Icon } from 'semantic-ui-react'
+import { CreateBrowserHistory } from '../../../commonComponents'
 
 class HomepageHeading extends Component {
+
+  routeToAllTendersList = () => {
+    CreateBrowserHistory.push({
+      pathname: "/vendor/tenderlist"
+    })
+  }
 
   render () {
     return (
@@ -16,6 +23,10 @@ class HomepageHeading extends Component {
             marginTop: this.props.mobile ? '0.5em' : '1.5em',
           }}
         />
+        <Button primary size='huge' onClick={this.routeToAllTendersList}>
+          Show all Tenders
+          <Icon name='right arrow' />
+        </Button>
       </Container>
     )
   }

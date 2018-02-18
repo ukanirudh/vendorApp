@@ -10,6 +10,7 @@ import { bindActionCreators } from "redux";
 
 /*Imported components*/
 import VendorHomePage from './VendorHome'
+import AllCategoryTenders from './bids/AllCategoryTenders'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -39,7 +40,7 @@ class VendorContainer extends Component {
     return (
       <div style={{ padding: '0px 10px' }}>
         <Route exact path="/vendor" component={VendorHomePage}></Route>
-        {/*<PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />*/}
+        <PropsRoute path='/vendor/tenderlist' component={AllCategoryTenders} props={this.props} />
       </div>
     )
   }
@@ -47,7 +48,7 @@ class VendorContainer extends Component {
 
 //map store state to component state
 function mapStateToProps(state) {
-  //console.log(state.clientReducer)
+  //console.log(state.vendorReducer)
   const { current_user, main_categories, sub_categories} = state.vendorReducer
   return {
     current_user,

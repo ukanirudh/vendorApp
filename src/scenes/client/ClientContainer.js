@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash'
 /*routing and redux*/
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData } from "./root-reducers/Client_Actions_Reducer";
+  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -65,7 +65,8 @@ function mapDispatchToProps(dispatch) {
       createNewTendorDispatch,
       getAllMainCategoriesDispatch,
       getAllSubCategoriesDispatch,
-      onSetCurrentUserData
+      onSetCurrentUserData,
+      getClientAllTendorsDispatch
     }, dispatch);
 }
 

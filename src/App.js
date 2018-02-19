@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 /*Import components*/
 import { ApplicationHomePage } from './commonComponents'
 import AuthenticationModule from './scenes/Authentication';
-import VendorHome from './scenes/vendor/VendorHome';
+import VendorHome from './scenes/vendor/';
 import ClientHome from './scenes/client/';
 
 import './App.css';

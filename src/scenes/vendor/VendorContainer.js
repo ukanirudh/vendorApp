@@ -49,11 +49,12 @@ class VendorContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.vendorReducer)
-  const { current_user, main_categories, subscribed_category_tenders} = state.vendorReducer
+  const { current_user, main_categories, subscribed_category_tenders, isLoading} = state.vendorReducer
   return {
     current_user,
     main_categories,
-    subscribed_category_tenders
+    subscribed_category_tenders,
+    isLoading
   };
 }
 

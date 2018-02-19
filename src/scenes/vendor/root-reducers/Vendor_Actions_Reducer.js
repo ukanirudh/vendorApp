@@ -71,7 +71,8 @@ const INITIAL_STATE = {
   current_user: {},
   registrationSuccessStatus: true,
   main_categories:[],
-  subscribed_category_tenders:[]
+  subscribed_category_tenders:[],
+  isLoading: true
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -87,7 +88,7 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case GET_ALL_SUBSCRIBED_CATEGORY_TENDER:
       var { data } = action.payload
-      return { ...state , subscribed_category_tenders: data };
+      return { ...state , subscribed_category_tenders: data, isLoading: false };
 
     case "HANDLE_ERROR":
     //console.log(action.payload);

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const getMainCategoriesUrl = '/main_categories';
-const getSubCategoriesUrl = '/sub_categories';
-const createTendorUrl = '/tender';
+const getAllSubscribedTendersUrl = '/tenders_main_category';
 
 class AunthenticationAndRegistrationApi {
 
@@ -12,22 +11,6 @@ class AunthenticationAndRegistrationApi {
 		    'Content-Type': 'application/json'
 		}
   }
-
-	static newTendorRequest( payloadData, clientId ) {
-		var createTendorRequestUrl = `${createTendorUrl}/${clientId}` ;
-		const headers = this.requestHeaders();
-
-		return axios({
-			method: 'POST',
-			url: createTendorRequestUrl,
-			headers: headers,
-			data: payloadData
-		}).then(function (response) {
-			return response;
-		}).catch(function (error) {
-			return error.response ;
-		});
-	}
 
 	static getAllMainCategories() {
 		//var baseUrl = global.devHost ;
@@ -44,14 +27,16 @@ class AunthenticationAndRegistrationApi {
 		});
 	}
 
-	static getAllSubCategories( mainCategoryId ) {
-		const subCatUrl = getSubCategoriesUrl + '/' + mainCategoryId ;
+	static getAllSubscribedTenders( mainCategoryId ) {
 		const headers = this.requestHeaders();
 
 		return axios({
 			method: 'GET',
-			url: subCatUrl,
-			headers: headers
+			url: getAllSubscribedTendersUrl,
+			headers: headers,
+			params:{
+				mainCategoryId
+			}
 		}).then(function (response) {
 			return response;
 		}).catch(function (error) {

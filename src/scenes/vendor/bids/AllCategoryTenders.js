@@ -1,85 +1,67 @@
 import React, { Component } from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
-import { Container, Grid, Header } from 'semantic-ui-react'
-import axios from 'axios';
-
-const api = {
-    baseUrl: 'https://api.soundcloud.com',
-    client_id: 'caf73ef1e709f839664ab82bef40fa96'
-};
+import ResponsiveContainer from '../vendorResponsiveComponents/ResponsiveContainer'
+import { Container, Grid, Header, Card, Button, Pagination } from 'semantic-ui-react'
 
 class AllCategoryTenders extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            tracks: [],
-            hasMoreItems: true,
-            nextHref: null
-        };
     }
 
-    loadItems(page) {
-        var self = this;
+    componentWillMount() {
+      this.setState({ categoryTenders:[] })
+    }
 
-        var url = api.baseUrl + '/users/8665091/favorites';
-        if(this.state.nextHref) {
-            url = this.state.nextHref;
-        }
+    componentDidMount() {
+      const { props } = this.props
+      props.getAllSubscribedTendersDispatch(4)
+    }
 
-        axios({
-                method:'GET',
-                url:url,
-                params: {
-                  client_id: api.client_id,
-                  linked_partitioning: 1,
-                  page_size: 10
-                }
-            })
-            .then(function(resp) {
-              //console.log(resp.data)
-                if(resp.data) {
-                    var tracks = self.state.tracks;
-                    resp.data.collection.map((track) => {
-                        if(track.artwork_url == null) {
-                            track.artwork_url = track.user.avatar_url;
-                        }
-
-                        return tracks.push(track);
-                    });
-
-                    if(resp.data.next_href) {
-                        self.setState({
-                            tracks: tracks,
-                            nextHref: resp.data.next_href
-                        });
-                    } else {
-                        self.setState({
-                            hasMoreItems: false
-                        });
-                    }
-                }
-            });
+    componentWillReceiveProps (newProps) {
+      const { props } = newProps
+      const { subscribed_category_tenders } = props
+      this.setState({ categoryTenders:subscribed_category_tenders })
     }
 
     render() {
-        const loader = <div key={0} className="loader">Loading ...</div>;
+      const {categoryTenders=[]} = this.state
 
         var items = [];
-        this.state.tracks.map((track, i) => {
+        categoryTenders.map((tender, i) => {
+          const sub_category = tender.sub_category
+          let name=''
+          if(sub_category) {
+            name = sub_category.name
+          }
             return items.push(
-              <Grid.Column key={i}>
-                <div className="track" >
-                    <a href={track.permalink_url} target="_blank">
-                        <img src={track.artwork_url} alt='not found' width="150" height="150" />
-                        <p className="title">{track.title}</p>
-                    </a>
-                </div>
+              <Grid.Column key={i} style={{marginBottom:15}}>
+                <Card>
+                  <Card.Content>
+                    <Card.Header>
+                      {name}
+                    </Card.Header>
+                    <Card.Meta>
+                      <div className="track" >
+                        <p className="title">Quantity: {tender.quantity}</p>
+                        <p className="title">Tender Duration : {tender.tenderEnds}</p>
+                      </div>
+                    </Card.Meta>
+                    <Card.Description>
+                      This tender elapses in {tender.tenderEnds} days
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <div className='ui two buttons'>
+                      <Button basic color='green'>Accept</Button>
+                      <Button basic color='red'>Decline</Button>
+                    </div>
+                  </Card.Content>
+                </Card>
               </Grid.Column>
             );
         });
 
         return (
+        <ResponsiveContainer>
           <div>
             <Header
               as='h2'
@@ -90,21 +72,23 @@ class AllCategoryTenders extends Component {
                 marginTop: '1.5em',
               }}
             />
-            <InfiniteScroll
-                pageStart={0}
-                loadMore={this.loadItems.bind(this)}
-                hasMore={this.state.hasMoreItems}
-                loader={loader}>
-
-                <Container>
-                  <Grid columns={4} divided>
-                    <Grid.Row>
-                      {items}
-                    </Grid.Row>
-                  </Grid>
-                </Container>
-            </InfiniteScroll>
+            <Container>
+              <Grid columns={4}>
+                <Grid.Row>
+                  {items}
+                </Grid.Row>
+              </Grid>
+            </Container>
+            <Pagination
+              defaultActivePage={1}
+              firstItem={null}
+              lastItem={null}
+              pointing
+              secondary
+              totalPages={3}
+            />
           </div>
+        </ResponsiveContainer>
         );
     }
 }

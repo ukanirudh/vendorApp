@@ -4,8 +4,8 @@ import { isEmpty } from 'lodash'
 
 /*routing and redux*/
 import { connect } from "react-redux";
-import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData } from "./root-reducers/Vendor_Actions_Reducer";
+import { getAllMainCategoriesDispatch,
+  getAllSubscribedTendersDispatch, onSetCurrentUserData } from "./root-reducers/Vendor_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -49,11 +49,11 @@ class VendorContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.vendorReducer)
-  const { current_user, main_categories, sub_categories} = state.vendorReducer
+  const { current_user, main_categories, subscribed_category_tenders} = state.vendorReducer
   return {
     current_user,
     main_categories,
-    sub_categories
+    subscribed_category_tenders
   };
 }
 
@@ -61,9 +61,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      createNewTendorDispatch,
       getAllMainCategoriesDispatch,
-      getAllSubCategoriesDispatch,
+      getAllSubscribedTendersDispatch,
       onSetCurrentUserData
     }, dispatch);
 }

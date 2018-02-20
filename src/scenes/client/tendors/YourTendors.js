@@ -13,9 +13,9 @@ class YourTendors extends Component {
   }
 
   componentDidMount() {
-    const { props } = this.props
+    //const { props } = this.props
     this.setState({isLoading:true})
-    props.getClientAllTendorsDispatch("0a308d4908084fe4dc15dc9c8d08e6ef")
+    this.props.getClientAllTendorsDispatch("0a308d4908084fe4dc15dc9c8d08e6ef")
   }
 
   componentWillReceiveProps (newProps) {

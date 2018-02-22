@@ -3,6 +3,7 @@ import axios from 'axios';
 const getMainCategoriesUrl = '/main_categories';
 const getSubCategoriesUrl = '/sub_categories';
 const createTendorUrl = '/tender';
+const getClientAllTendersUrl='/client_tenders';
 
 class AunthenticationAndRegistrationApi {
 
@@ -51,6 +52,21 @@ class AunthenticationAndRegistrationApi {
 		return axios({
 			method: 'GET',
 			url: subCatUrl,
+			headers: headers
+		}).then(function (response) {
+			return response;
+		}).catch(function (error) {
+			return error.response ;
+		});
+	}
+
+	static getClientAllTendors( clientId ) {
+		const ClientAllTendersUrl = getClientAllTendersUrl + '/' + clientId ;
+		const headers = this.requestHeaders();
+
+		return axios({
+			method: 'GET',
+			url: ClientAllTendersUrl,
 			headers: headers
 		}).then(function (response) {
 			return response;

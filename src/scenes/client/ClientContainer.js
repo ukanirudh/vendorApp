@@ -5,12 +5,13 @@ import { isEmpty } from 'lodash'
 /*routing and redux*/
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData } from "./root-reducers/Client_Actions_Reducer";
+  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
 import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
+import YourTendors from './tendors/YourTendors'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -42,6 +43,7 @@ class ClientContainer extends Component {
       <div style={{ padding: '0px 10px' }}>
         <Route exact path="/client" component={ClientHomePage}></Route>
         <PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />
+        <PropsRoute path='/client/yourTendors' component={YourTendors} props={this.props} />
       </div>
     )
   }
@@ -50,11 +52,12 @@ class ClientContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.clientReducer)
-  const { current_user, main_categories, sub_categories} = state.clientReducer
+  const { current_user, main_categories, sub_categories, all_client_tendors} = state.clientReducer
   return {
     current_user,
     main_categories,
-    sub_categories
+    sub_categories,
+    all_client_tendors
   };
 }
 
@@ -65,7 +68,8 @@ function mapDispatchToProps(dispatch) {
       createNewTendorDispatch,
       getAllMainCategoriesDispatch,
       getAllSubCategoriesDispatch,
-      onSetCurrentUserData
+      onSetCurrentUserData,
+      getClientAllTendorsDispatch
     }, dispatch);
 }
 

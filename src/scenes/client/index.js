@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, matchPath } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 // /*Imported components*/
 // import { AppHeader, AppFooter } from '../../commonComponents'

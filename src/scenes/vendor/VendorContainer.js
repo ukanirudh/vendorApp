@@ -4,14 +4,13 @@ import { isEmpty } from 'lodash'
 
 /*routing and redux*/
 import { connect } from "react-redux";
-import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch } from "./root-reducers/Client_Actions_Reducer";
+import { getAllMainCategoriesDispatch,
+  getAllSubscribedTendersDispatch, onSetCurrentUserData } from "./root-reducers/Vendor_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
-import ClientHomePage from './ClientHome'
-import NewTendor from './tendors/NewTendor'
-import YourTendors from './tendors/YourTendors'
+import VendorHomePage from './VendorHome'
+import AllCategoryTenders from './bids/AllCategoryTenders'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -28,10 +27,9 @@ const PropsRoute = ({ component, ...rest }) => {
   );
 }
 
-class ClientContainer extends Component {
+class VendorContainer extends Component {
 
   componentWillMount() {
-    //console.log(this.props)
     const {current_user} = this.props
     if(isEmpty(current_user)) {
       this.props.onSetCurrentUserData(JSON.parse(localStorage.getItem('userprofile')))
@@ -41,9 +39,8 @@ class ClientContainer extends Component {
   render () {
     return (
       <div style={{ padding: '0px 10px' }}>
-        <Route exact path="/client" component={ClientHomePage}></Route>
-        <PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />
-        <PropsRoute path='/client/yourTendors' component={YourTendors} props={this.props} />
+        <Route exact path="/vendor" component={VendorHomePage}></Route>
+        <PropsRoute path='/vendor/tenderlist' component={AllCategoryTenders} props={this.props} />
       </div>
     )
   }
@@ -51,13 +48,13 @@ class ClientContainer extends Component {
 
 //map store state to component state
 function mapStateToProps(state) {
-  //console.log(state.clientReducer)
-  const { current_user, main_categories, sub_categories, all_client_tendors} = state.clientReducer
+  //console.log(state.vendorReducer)
+  const { current_user, main_categories, subscribed_category_tenders, isLoading} = state.vendorReducer
   return {
     current_user,
     main_categories,
-    sub_categories,
-    all_client_tendors
+    subscribed_category_tenders,
+    isLoading
   };
 }
 
@@ -65,13 +62,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      createNewTendorDispatch,
       getAllMainCategoriesDispatch,
-      getAllSubCategoriesDispatch,
-      onSetCurrentUserData,
-      getClientAllTendorsDispatch
+      getAllSubscribedTendersDispatch,
+      onSetCurrentUserData
     }, dispatch);
 }
 
 //conect our component with store state and store dispatch functions
-export default connect(mapStateToProps, mapDispatchToProps)(ClientContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(VendorContainer);

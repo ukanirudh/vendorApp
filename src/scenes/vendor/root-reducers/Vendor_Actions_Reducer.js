@@ -1,29 +1,14 @@
-import ClientServiceApi from '../Client_Service_Api';
+import VendorServiceApi from '../Vendor_Service_Api';
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const SET_CURRENT_USER_DATA = 'SET_CURRENT_USER_DATA'
-const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
-const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
-
-export function createNewTendorDispatch(payload, clientId) {
-
-  return function(dispatch) {
-    return ClientServiceApi.newTendorRequest(payload, clientId).then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(onCreateNewTender(response.data));
-      else
-        dispatch(handleError(response));
-    }).catch(error => {
-      console.log("dispatch person::",error);
-    });
-  };
-}
+const GET_ALL_SUBSCRIBED_CATEGORY_TENDER = 'GET_ALL_SUBSCRIBED_CATEGORY_TENDER'
 
 export function getAllMainCategoriesDispatch() {
   return function(dispatch) {
-    return ClientServiceApi.getAllMainCategories().then(response => {
+    return VendorServiceApi.getAllMainCategories().then(response => {
       if(response.status === 201 || response.status === 200)
         dispatch(getAllMainCategories(response.data));
       else
@@ -34,11 +19,11 @@ export function getAllMainCategoriesDispatch() {
   };
 }
 
-export function getAllSubCategoriesDispatch( mainCategoryId ) {
+export function getAllSubscribedTendersDispatch( mainCategoryId ) {
   return function(dispatch) {
-    return ClientServiceApi.getAllSubCategories(mainCategoryId).then(response => {
+    return VendorServiceApi.getAllSubscribedTenders(mainCategoryId).then(response => {
       if(response.status === 201 || response.status === 200)
-        dispatch(getAllSubCategories(response.data));
+        dispatch(getAllSubscribedTenders(response.data));
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -46,34 +31,11 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
     });
   };
 }
-
-export function getClientAllTendorsDispatch( clientId ) {
-  return function(dispatch) {
-    return ClientServiceApi.getClientAllTendors(clientId).then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(getClientAllTendors(response.data));
-      else
-        dispatch(handleError(response));
-    }).catch(error => {
-      console.log("dispatch person::",error);
-    });
-  };
-}
-
-
-
 
 export function onSetCurrentUserData(userDetails) {
   return {
     type: SET_CURRENT_USER_DATA,
     payload: userDetails
-  };
-}
-
-export function onCreateNewTender(user) {
-  return {
-    type: ON_CREATE_TENDER,
-    payload: user
   };
 }
 
@@ -84,16 +46,9 @@ export function getAllMainCategories(data) {
   };
 }
 
-export function getAllSubCategories(data) {
+export function getAllSubscribedTenders(data) {
   return {
-    type: GET_ALL_SUB_CATEGORIES,
-    payload: data
-  };
-}
-
-export function getClientAllTendors(data) {
-  return {
-    type: GET_CLIENT_ALL_TENDORS,
+    type: GET_ALL_SUBSCRIBED_CATEGORY_TENDER,
     payload: data
   };
 }
@@ -116,8 +71,8 @@ const INITIAL_STATE = {
   current_user: {},
   registrationSuccessStatus: true,
   main_categories:[],
-  sub_categories:[],
-  all_client_tendors:[]
+  subscribed_category_tenders:[],
+  isLoading: true
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -126,25 +81,14 @@ export default function reducer(state = INITIAL_STATE, action) {
     case SET_CURRENT_USER_DATA:
       return {...state, current_user: action.payload};
 
-    case ON_CREATE_TENDER:
-			//console.log(action.payload);
-      CreateBrowserHistory.push({
-        pathname: "/client",
-      })
-      return state;
-
     case GET_ALL_MAIN_CATEGORIES:
       //console.log(action.payload)
       var { data } = action.payload
       return { ...state , main_categories: data };
 
-    case GET_ALL_SUB_CATEGORIES:
+    case GET_ALL_SUBSCRIBED_CATEGORY_TENDER:
       var { data } = action.payload
-      return { ...state , sub_categories: data };
-
-    case GET_CLIENT_ALL_TENDORS:
-       var { data } = action.payload
-      return { ...state , all_client_tendors: data };
+      return { ...state , subscribed_category_tenders: data, isLoading: false };
 
     case "HANDLE_ERROR":
     //console.log(action.payload);

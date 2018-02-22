@@ -11,7 +11,7 @@ class ClientHome extends Component {
     return (
       <ResponsiveContainer HomePageHeading={HomePageHeading}>
         <Segment style={{ padding: '4em 0em' }} vertical>
-          <YourTendors />
+          
           <CompletedTendor />
         </Segment>
         <Segment inverted vertical style={{ padding: '5em 0em' }}>

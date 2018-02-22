@@ -13,23 +13,24 @@ class YourTendors extends Component {
   }
 
   componentDidMount() {
-    //const { props } = this.props
+    const { props } = this.props
+    const currentUser = JSON.parse(localStorage.getItem('userprofile'))
     this.setState({isLoading:true})
-    this.props.getClientAllTendorsDispatch("0a308d4908084fe4dc15dc9c8d08e6ef")
+    props.getClientAllTendorsDispatch(currentUser.id)
   }
 
   componentWillReceiveProps (newProps) {
     const { props } = newProps
-    const { client_tenders, isLoading } = props
-    this.setState({ tenders:client_tenders, isLoading })
+    const { all_client_tendors, isLoading } = props
+    this.setState({ tenders:all_client_tendors, isLoading })
   }
 
 
   render() {
-     const {clientTendors=[]} = this.state
+     const {tenders=[]} = this.state
 
         var items = [];
-        clientTendors.map((tender, i) => {
+        tenders.map((tender, i) => {
          const sub_category = tender.sub_category
           let name=''
           if(sub_category) {

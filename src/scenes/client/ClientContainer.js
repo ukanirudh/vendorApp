@@ -52,11 +52,12 @@ class ClientContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.clientReducer)
-  const { current_user, main_categories, sub_categories} = state.clientReducer
+  const { current_user, main_categories, sub_categories, all_client_tendors} = state.clientReducer
   return {
     current_user,
     main_categories,
-    sub_categories
+    sub_categories,
+    all_client_tendors
   };
 }
 

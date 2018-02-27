@@ -87,7 +87,7 @@ class AuthenticationHomePage extends Component {
 
   render() {
     return (
-      <Segment text style={{ marginTop: '4em' }}>
+      <Segment>
         <Header as='h2' icon textAlign='center'>
           <Icon name='users' circular />
           <Header.Content>

@@ -4,11 +4,12 @@ import React from 'react'
 import MobileContainer from './MobileContainer'
 import DesktopContainer from './DesktopContainer'
 
-const ResponsiveContainer = ({ children, HomePageHeading='', headerProps }) => {
+const ResponsiveContainer = (props) => {
+  const { children, HomePageHeading='', AppHeaderProps, headerPrimaryContentProps } = props
   return (
     <div>
-      <DesktopContainer HomePageHeading={HomePageHeading} headerProps={headerProps}>{children}</DesktopContainer>
-      <MobileContainer HomePageHeading={HomePageHeading}>{children}</MobileContainer>
+      <DesktopContainer {...props}>{children}</DesktopContainer>
+      <MobileContainer HomePageHeading={HomePageHeading} headerProps={headerPrimaryContentProps}>{children}</MobileContainer>
     </div>
   )
 }

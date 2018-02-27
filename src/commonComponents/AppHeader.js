@@ -1,40 +1,49 @@
-import React from 'react'
-import { Container, Dropdown, Image, Menu } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Container, Segment, Image, Menu, Button, Visibility } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
-const AppHeader = () => (
-  <div>
-    <Menu fixed='top' inverted>
-      <Container>
-        <Menu.Item as='a' header>
-          <Image
-            size='mini'
-            src='/logo.png'
-            style={{ marginRight: '1.5em' }}
-          />
-          Project Name
-        </Menu.Item>
-        <Menu.Item as='a'>Home</Menu.Item>
+class AppHeader extends Component {
+  state = {}
 
-        <Dropdown item simple text='Dropdown'>
-          <Dropdown.Menu>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Header Item</Dropdown.Header>
-            <Dropdown.Item>
-              <i className='dropdown icon' />
-              <span className='text'>Submenu</span>
-              <Dropdown.Menu>
-                <Dropdown.Item>List Item</Dropdown.Item>
-                <Dropdown.Item>List Item</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown.Item>
-            <Dropdown.Item>List Item</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Container>
-    </Menu>
-  </div>
-)
+  hideFixedMenu = () => this.setState({ fixed: false })
+  showFixedMenu = () => this.setState({ fixed: true })
+  render() {
+    const { HomePageHeading='', headerProps, AppHeaderProps, location } = this.props
+    const { headerRightActionText='', headerRightAction} = AppHeaderProps
+    const { fixed } = this.state
+    return (
+      <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
+        <Segment inverted textAlign='center' style={{ padding: '1em 0em' }} vertical>
+          <Menu
+            fixed={fixed ? 'top' : null}
+            inverted={!fixed}
+            pointing={!fixed}
+            secondary={!fixed}
+            size='large'
+          >
+            <Container>
+              <Menu.Item as='a' header>
+                <Image
+                  size='mini'
+                  src='/logo.png'
+                  style={{ marginRight: '1.5em' }}
+                />
+                Project Name
+              </Menu.Item>
+              <Menu.Item  active><Link to={location.pathname}>Home</Link></Menu.Item>
+              <Menu.Item as='a'>Work</Menu.Item>
+              <Menu.Item as='a'>Company</Menu.Item>
+              <Menu.Item as='a'>Careers</Menu.Item>
+              <Menu.Item position='right'>
+                <Button as='a' inverted={!fixed} onClick={headerRightAction}>{headerRightActionText}</Button>
+              </Menu.Item>
+            </Container>
+          </Menu>
+          {HomePageHeading ? <HomePageHeading headerProps={headerProps}/> : ''}
+        </Segment>
+      </Visibility>
+    )
+  }
+}
 
 export default AppHeader

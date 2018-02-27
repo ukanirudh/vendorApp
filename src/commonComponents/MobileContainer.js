@@ -11,7 +11,7 @@ class MobileContainer extends Component {
   handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
 
   render() {
-    const { children, HomePageHeading='' } = this.props
+    const { children, HomePageHeading='', headerProps } = this.props
     const { sidebarOpened } = this.state
 
     return (
@@ -23,7 +23,7 @@ class MobileContainer extends Component {
             <Menu.Item as='a'>Company</Menu.Item>
             <Menu.Item as='a'>Careers</Menu.Item>
             <Menu.Item as='a'>Log in</Menu.Item>
-            <Menu.Item as='a' primary>Sign Up</Menu.Item>
+            <Menu.Item as='a'>Sign Up</Menu.Item>
           </Sidebar>
 
           <Sidebar.Pusher dimmed={sidebarOpened} onClick={this.handleToggle} style={{ minHeight: '100vh' }}>
@@ -38,7 +38,7 @@ class MobileContainer extends Component {
                   </Menu.Item>
                 </Menu>
               </Container>
-              {HomePageHeading ? <HomePageHeading mobile /> : ''}
+              {HomePageHeading ? <HomePageHeading headerProps={headerProps} mobile /> : ''}
             </Segment>
             {children}
           </Sidebar.Pusher>

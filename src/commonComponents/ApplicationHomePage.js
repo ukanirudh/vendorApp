@@ -7,7 +7,7 @@ import HomePageHeading from './HomePageHeading'
 import ResponsiveContainer from './ResponsiveContainer'
 import CreateBrowserHistory from './CreateBrowserHistory'
 
-const headerProps = {
+const headerPrimaryContentProps = {
     'headerText':'We connect the Vendors and Clients with the best deals',
     'primaryActionText':'Get Started',
     'primaryActionRoute':() => {
@@ -17,10 +17,21 @@ const headerProps = {
     }
 }
 
+const AppHeaderProps = {
+  'headerRightActionText': 'Login/Signup',
+  'headerRightAction': () => {
+    CreateBrowserHistory.push({
+      pathname: "/authorization"
+    })
+  },
+}
+
 class ApplicationHomePage extends Component {
   render() {
+    const {location} = this.props
+    const props = {location, AppHeaderProps, headerPrimaryContentProps, HomePageHeading}
     return (
-    <ResponsiveContainer HomePageHeading={HomePageHeading} headerProps={headerProps}>
+    <ResponsiveContainer {...props} >
       <Segment style={{ padding: '4em 0em' }} vertical>
       </Segment>
       <Segment style={{ padding: '8em 0em' }} vertical>

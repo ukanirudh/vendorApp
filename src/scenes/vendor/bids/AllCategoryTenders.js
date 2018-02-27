@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
-import ResponsiveContainer from '../vendorResponsiveComponents/ResponsiveContainer'
+import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import { Container, Grid, Header, Card,
   Button, Pagination, Dimmer, Loader, Segment } from 'semantic-ui-react'
+
+const AppHeaderProps = {
+  'headerRightActionText': 'Profile',
+  'headerRightAction': () => {
+    // CreateBrowserHistory.push({
+    //   pathname: "/authorization"
+    // })
+  },
+}
 
 class AllCategoryTenders extends Component {
   constructor(props) {
@@ -60,9 +69,9 @@ class AllCategoryTenders extends Component {
         </Grid.Column>
       );
     });
-
+    
     return (
-    <ResponsiveContainer>
+    <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
       <Segment>
         <Header
           as='h2'

@@ -3,8 +3,7 @@ import { forEach } from 'lodash'
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
-import { CreateBrowserHistory } from '../../../commonComponents'
-import ResponsiveContainer from '../clientResponsiveComponents/ResponsiveContainer'
+import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 /*tcomb form setup*/
 import templates from 'tcomb-form-templates-semantic'
 tcombForm.form.Form.templates = templates;
@@ -12,6 +11,15 @@ const FormSchema = tcombForm.struct({
   quantity: tcombForm.Number,
   duration: tcombForm.Number,
 })
+
+const AppHeaderProps = {
+  'headerRightActionText': 'Profile',
+  'headerRightAction': () => {
+    // CreateBrowserHistory.push({
+    //   pathname: "/authorization"
+    // })
+  },
+}
 
 class NewTendor extends Component {
 
@@ -87,7 +95,7 @@ class NewTendor extends Component {
   render() {
     const {mainCategorySelected, subCategorySelected} = this.state
     return (
-      <ResponsiveContainer>
+      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
         <Grid
           columns={3}
           centered

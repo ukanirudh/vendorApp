@@ -1,5 +1,8 @@
 import tcombForm from 'tcomb-form'
 import { forEach } from 'lodash'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
@@ -10,13 +13,16 @@ import templates from 'tcomb-form-templates-semantic'
 tcombForm.form.Form.templates = templates;
 const FormSchema = tcombForm.struct({
   quantity: tcombForm.Number,
-  duration: tcombForm.Number,
+  startDate:tcombForm.Date,
+  endDate:tcombForm.Date,
+  description:tcombForm.String
 })
 
 class NewTendor extends Component {
+  
 
   componentWillMount() {
-    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
+    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[],startDate: moment(),endDate: moment()})
   }
 
   componentDidMount() {
@@ -64,28 +70,40 @@ class NewTendor extends Component {
     const { props } = this.props
     const { current_user } = props
     evt.preventDefault()
-    const value = this.refs.form.getValue()
-    if (value) {
-      const {mainCategorySelected, subCategorySelected } = this.state
+   // Check for the empty value
+    
+      const {mainCategorySelected, subCategorySelected,startDate,endDate,quantity,description} = this.state
       const {id} = current_user
       const payload = {
         'mainCategoryId': mainCategorySelected,
         'subCategoryId': subCategorySelected,
-        'duration': value.duration,
-        'quantity':value.quantity
+        'startDate': startDate,
+        'endDate': endDate,
+        'quantity':quantity,
+        'description':description
       }
       this.props.props.createNewTendorDispatch(payload, id)
-    }
+    
+  }
+  handleChangeStartDate(date) {
+    this.setState({
+      startDate: date
+    });
+  }
+  handleChangeEndDate(date) {
+    this.setState({
+      endDate: date
+    });
   }
 
+handleChange = (e, { name, value }) => this.setState({ [name]: value });
   onCancel = () => {
     CreateBrowserHistory.push({
       pathname: "/client",
     })
   }
-
   render() {
-    const {mainCategorySelected, subCategorySelected} = this.state
+    const {mainCategorySelected, subCategorySelected,startDate,endDate,quantity,description} = this.state
     return (
       <ResponsiveContainer>
         <Grid
@@ -114,14 +132,46 @@ class NewTendor extends Component {
           <Grid.Column className='login-form-grid'>
           {
             ( mainCategorySelected && subCategorySelected ) ?
-            <Form size='large'>
-              <Segment stacked>
-                <form className='new-tendor-form' onSubmit={this.onSubmit}>
-                  <tcombForm.form.Form ref="form" type={FormSchema} />
-                </form>
+                <Form size='large' className='new-tendor-form' onSubmit={this.onSubmit}>
+                <Segment stacked>
+                  <Form.Input
+                    fluid
+                    placeholder='Quantity'
+                    name='quantity'
+                    value={quantity}
+                    onChange={this.handleChange}
+                  />
+                   <Form.Group widths='equal' >
+                   <Form.Field fluid>
+                     
+                      <DatePicker
+                      selected={startDate}
+                      value={startDate}
+                      onChange={this.handleChangeStartDate.bind(this)}
+                      name='startDate'
+                       />
+                    </Form.Field>
+                    <Form.Field fluid 
+                      > 
+                      <DatePicker
+                          selected={endDate}
+                          value={endDate}
+                          name='endDate'
+                          onChange={this.handleChangeEndDate.bind(this)}
+                      />
+                     </Form.Field>
+                   </Form.Group>
+                  <Form.TextArea
+                    fluid
+                    rows={2}
+                    placeholder='Description'
+                    name='description'
+                    value={description}
+                    onChange={this.handleChange}
+                  />
                 <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
                 <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
-              </Segment>
+             </Segment>    
             </Form> : ''
           }
           </Grid.Column>

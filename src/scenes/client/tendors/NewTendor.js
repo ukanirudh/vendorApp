@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
+import {EntityForm} from '../../../utils/GenericForm'
+import addRoomFields from '../constants/new-tender-fields'
 /*tcomb form setup*/
 import templates from 'tcomb-form-templates-semantic'
 tcombForm.form.Form.templates = templates;
@@ -23,6 +25,11 @@ const AppHeaderProps = {
 
 class NewTendor extends Component {
 
+  constructor(props) {
+    super(props)
+    const { props:props2 } = this.props
+    this.CreateForm = EntityForm({name: 'PostTender', onUpdate: props2.onNewTenderRequest, fields: addRoomFields})
+  }
   componentWillMount() {
     this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
   }
@@ -36,6 +43,18 @@ class NewTendor extends Component {
     const { props } = newProps
     const { main_categories, sub_categories } = props
     this.setState({ mainCategories:main_categories, subCategories:sub_categories })
+  }
+
+  renderRoomFormWithSubmit = () => {
+    const CreateForm = this.CreateForm
+    const { props } = this.props
+    const { current_user:{id} } = props
+    return (
+      <div>
+        <CreateForm {...this.props} initialValues = {{activities: [], cliendId:id}}/>
+        <Button primary onClick={props.onNewTenderClick}> Post Tender </Button>
+      </div>
+    )
   }
 
   renderMainCategoryOption = () => {
@@ -93,6 +112,7 @@ class NewTendor extends Component {
   }
 
   render() {
+    const addRoomFormRendered = this.renderRoomFormWithSubmit()
     const {mainCategorySelected, subCategorySelected} = this.state
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
@@ -133,6 +153,11 @@ class NewTendor extends Component {
             </Form> : ''
           }
           </Grid.Column>
+          <Grid.Row>
+            <Grid.Column>
+              {addRoomFormRendered}
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </ResponsiveContainer>
     )

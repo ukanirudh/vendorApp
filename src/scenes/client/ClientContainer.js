@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
 import { isEmpty } from 'lodash'
+import {submit} from 'redux-form'
 
 /*routing and redux*/
 import { connect } from "react-redux";
@@ -63,14 +64,18 @@ function mapStateToProps(state) {
 
 //map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      createNewTendorDispatch,
-      getAllMainCategoriesDispatch,
-      getAllSubCategoriesDispatch,
-      onSetCurrentUserData,
-      getClientAllTendorsDispatch
-    }, dispatch);
+  const actions = bindActionCreators(Object.assign({}, {
+    createNewTendorDispatch,
+    getAllMainCategoriesDispatch,
+    getAllSubCategoriesDispatch,
+    onSetCurrentUserData,
+    getClientAllTendorsDispatch,
+    onNewTenderClick: () => dispatch(submit('PostTender')),
+  }), dispatch)
+
+  return Object.assign({}, actions, {
+    onNewTenderRequest: (v) => createNewTendorDispatch(v, dispatch)
+  })
 }
 
 //conect our component with store state and store dispatch functions

@@ -149,25 +149,27 @@ handleChange = (e, { name, value }) => this.setState({ [name]: value });
                     value={quantity}
                     onChange={this.handleChange}
                   />
-                   <Form.Group widths='equal' >
-                   <Form.Field fluid>
-                     
-                      <DatePicker
-                      selected={startDate}
-                      value={startDate}
-                      onChange={this.handleChangeStartDate.bind(this)}
-                      name='startDate'
-                       />
-                    </Form.Field>
-                    <Form.Field fluid 
-                      > 
-                      <DatePicker
+                   <Form.Group  >
+                      <Form.Field fluid >
+                        <DatePicker
+                        label='Start Date'
+                        selected={startDate}
+                        value={startDate}
+                        onChange={this.handleChangeStartDate.bind(this)}
+                        name='startDate'
+                        />
+                      </Form.Field>
+                      <Form.Field fluid label ='To'>
+                      </Form.Field>
+                      <Form.Field fluid > 
+                        <DatePicker
                           selected={endDate}
                           value={endDate}
                           name='endDate'
+                          label='End Date'
                           onChange={this.handleChangeEndDate.bind(this)}
-                      />
-                     </Form.Field>
+                         />
+                      </Form.Field>
                    </Form.Group>
                   <Form.TextArea
                     fluid

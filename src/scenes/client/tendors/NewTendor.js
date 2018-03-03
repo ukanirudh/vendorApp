@@ -7,6 +7,8 @@ import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
+import {EntityForm} from '../../../utils/GenericForm'
+import addRoomFields from '../constants/new-tender-fields'
 /*tcomb form setup*/
 import templates from 'tcomb-form-templates-semantic'
 tcombForm.form.Form.templates = templates;
@@ -27,8 +29,13 @@ const AppHeaderProps = {
 }
 
 class NewTendor extends Component {
-  
 
+
+  constructor(props) {
+    super(props)
+    const { props:props2 } = this.props
+    this.CreateForm = EntityForm({name: 'PostTender', onUpdate: props2.onNewTenderRequest, fields: addRoomFields})
+  }
   componentWillMount() {
     this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[],startDate: moment(),endDate: moment()})
   }
@@ -42,6 +49,18 @@ class NewTendor extends Component {
     const { props } = newProps
     const { main_categories, sub_categories } = props
     this.setState({ mainCategories:main_categories, subCategories:sub_categories })
+  }
+
+  renderRoomFormWithSubmit = () => {
+    const CreateForm = this.CreateForm
+    const { props } = this.props
+    const { current_user:{id} } = props
+    return (
+      <div>
+        <CreateForm {...this.props} initialValues = {{activities: [], cliendId:id}}/>
+        <Button primary onClick={props.onNewTenderClick}> Post Tender </Button>
+      </div>
+    )
   }
 
   renderMainCategoryOption = () => {
@@ -79,7 +98,7 @@ class NewTendor extends Component {
     const { current_user } = props
     evt.preventDefault()
    // Check for the empty value
-    
+
       const {mainCategorySelected, subCategorySelected,startDate,endDate,quantity,description} = this.state
       const {id} = current_user
       const payload = {
@@ -91,7 +110,7 @@ class NewTendor extends Component {
         'description':description
       }
       this.props.props.createNewTendorDispatch(payload, id)
-    
+
   }
   handleChangeStartDate(date) {
     this.setState({
@@ -111,7 +130,8 @@ handleChange = (e, { name, value }) => this.setState({ [name]: value });
     })
   }
   render() {
-    const {mainCategorySelected, subCategorySelected,startDate,endDate,quantity,description} = this.state
+    const addRoomFormRendered = this.renderRoomFormWithSubmit()
+    const {mainCategorySelected, subCategorySelected, startDate, endDate ,quantity, description} = this.state
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
         <Grid
@@ -161,7 +181,7 @@ handleChange = (e, { name, value }) => this.setState({ [name]: value });
                       </Form.Field>
                       <Form.Field fluid label ='To'>
                       </Form.Field>
-                      <Form.Field fluid > 
+                      <Form.Field fluid >
                         <DatePicker
                           selected={endDate}
                           value={endDate}
@@ -181,10 +201,15 @@ handleChange = (e, { name, value }) => this.setState({ [name]: value });
                   />
                 <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
                 <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
-             </Segment>    
+             </Segment>
             </Form> : ''
           }
           </Grid.Column>
+          <Grid.Row>
+            <Grid.Column>
+              {addRoomFormRendered}
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </ResponsiveContainer>
     )

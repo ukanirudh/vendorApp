@@ -7,7 +7,7 @@ import LoginFormContainer from './LoginFormContainer';
 import SignUpContainer from './SignUpFormContainer';
 
 /*Imported components*/
-import { AppHeader, AppFooter } from '../../commonComponents'
+import { AppFooter, ResponsiveContainer, CreateBrowserHistory } from '../../commonComponents'
 
 /*routing and redux*/
 import { Provider } from "react-redux";
@@ -18,18 +18,27 @@ import authenticationAndRegistration from "./root-reducers";
 import './authentication.css'
 
 const AuthenticationStore = createStore(authenticationAndRegistration, applyMiddleware(thunk))
+
+const AppHeaderProps = {
+  'headerRightActionText': 'Login/Signup',
+  'headerRightAction': () => {
+    CreateBrowserHistory.push({
+      pathname: "/authorization"
+    })
+  },
+}
+
 class Authentication extends Component {
   render () {
     return (
-    <Provider store={AuthenticationStore}>
-      <div style={{ padding: '0px 10px' }}>
-        <AppHeader />
-        <Route exact path="/authorization" component={AuthenticationHomePage}></Route>
-        <Route path="/authorization/login" component={LoginFormContainer}></Route>
-        <Route path="/authorization/signup" component={SignUpContainer}></Route>
-        <AppFooter />
-      </div>
-    </Provider>
+      <Provider store={AuthenticationStore}>
+        <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
+          <Route exact path="/authorization" component={AuthenticationHomePage}></Route>
+          <Route path="/authorization/login" component={LoginFormContainer}></Route>
+          <Route path="/authorization/signup" component={SignUpContainer}></Route>
+          <AppFooter />
+        </ResponsiveContainer>
+      </Provider>
     )
   }
 }

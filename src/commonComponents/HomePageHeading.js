@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
 import { Button, Container, Grid, Header, Icon } from 'semantic-ui-react'
-import { CreateBrowserHistory } from '../../../commonComponents'
 
 class HomepageHeading extends Component {
 
-  routeToNewTendor = () => {
-    CreateBrowserHistory.push({
-      pathname: "/client/newTendor"
-    })
-  }
-
   render () {
+    const { headerProps: {headerText='', primaryActionText='', primaryActionRoute} } = this.props
     return (
       <Container text>
         <Header
           as='h2'
-          content='Request a tendor now and get noticed by all our big vendors'
+          content={headerText}
           inverted
           style={{
             fontSize: this.props.mobile ? '1.5em' : '1.7em',
@@ -23,8 +17,8 @@ class HomepageHeading extends Component {
             marginTop: this.props.mobile ? '0.5em' : '1.5em',
           }}
         />
-        <Button primary size='huge' onClick={this.routeToNewTendor}>
-          Place a new Tender
+        <Button primary size='huge' onClick={primaryActionRoute}>
+          {primaryActionText}
           <Icon name='right arrow' />
         </Button>
       </Container>

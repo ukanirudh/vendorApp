@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
-import ResponsiveContainer from '../clientResponsiveComponents/ResponsiveContainer'
 import { Container, Grid, Header, Card, Button, Pagination } from 'semantic-ui-react'
-import { CreateBrowserHistory } from '../../../commonComponents'
+import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
+
+const AppHeaderProps = {
+  'headerRightActionText': 'Profile',
+  'headerRightAction': () => {
+    // CreateBrowserHistory.push({
+    //   pathname: "/authorization"
+    // })
+  },
+}
+
 class YourTendors extends Component {
 
    constructor(props) {
@@ -65,7 +74,7 @@ class YourTendors extends Component {
         });
 
         return (
-        <ResponsiveContainer>
+        <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location}>
           <div>
             <Header
               as='h2'

@@ -1,6 +1,27 @@
 import React, {Component} from 'react'
-import {pick} from 'lodash'
+import {pick, isEmpty} from 'lodash'
 import { Form, Button, Dropdown, Checkbox, TextArea } from 'semantic-ui-react'
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+const DatePickerComponent = (input, placeholder, label, touched, error) => {
+  // const inputs =  {
+  //   ...input,
+  //   onBlur: (event, data) => input.onBlur(data.value),
+  //   onChange: (event, data) => input.onChange(data.value)
+  // }
+
+  const selectedValue = input.value ? moment(input.value) : null
+  return (
+    <div className='field'>
+      <label>{label}</label>
+      <DatePicker
+      {...input}
+      selected={selectedValue}
+      placeholderText={placeholder} />
+    </div>
+  )
+}
 
 const CheckboxField = (input, label) => {
   const {name, onBlur, onDragStart, onDrop, onFocus} = input
@@ -21,7 +42,7 @@ const CheckboxField = (input, label) => {
 }
 
 const DropdownField = (input, placeholder, label, helpText='', options, touched, error) => {
-  const optionsArray = options()
+  //const optionsArray = options()
   const inputs =  {
     ...input,
     onBlur: (event, data) => input.onBlur(data.value),
@@ -30,8 +51,7 @@ const DropdownField = (input, placeholder, label, helpText='', options, touched,
   return (
     <div className='field'>
       <label>{placeholder}</label>
-      <Dropdown {...inputs} openOnFocus={false} multiple search selection options={optionsArray} placeholder={placeholder} error={!!(touched && error)} fluid />
-      <div className='help-text text-right'>({helpText})</div>
+      <Dropdown {...inputs} openOnFocus={false} multiple search selection options={options} placeholder={placeholder} error={!!(touched && error)} fluid />
     </div>
   )
 }
@@ -55,6 +75,9 @@ const renderSingleField = (input, componentType, attributes, touched, error) => 
 
     case 'checkbox':
       return CheckboxField(input, label)
+
+    case 'datepicker':
+      return DatePickerComponent(input, placeholder, label, touched, error)
 
     default:
       return InputField(input, placeholder, label, required, type, touched, error, rows)

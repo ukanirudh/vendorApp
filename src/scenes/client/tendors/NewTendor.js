@@ -1,23 +1,11 @@
-import tcombForm from 'tcomb-form'
 import { forEach } from 'lodash'
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import {EntityForm} from '../../../utils/GenericForm'
-import addRoomFields from '../constants/new-tender-fields'
-/*tcomb form setup*/
-import templates from 'tcomb-form-templates-semantic'
-tcombForm.form.Form.templates = templates;
-const FormSchema = tcombForm.struct({
-  quantity: tcombForm.Number,
-  startDate:tcombForm.Date,
-  endDate:tcombForm.Date,
-  description:tcombForm.String
-})
+import newTenderFields from '../constants/new-tender-fields'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
@@ -33,11 +21,10 @@ class NewTendor extends Component {
 
   constructor(props) {
     super(props)
-    const { props:props2 } = this.props
-    this.CreateForm = EntityForm({name: 'PostTender', onUpdate: props2.onNewTenderRequest, fields: addRoomFields})
   }
+
   componentWillMount() {
-    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[],startDate: moment(),endDate: moment()})
+    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
   }
 
   componentDidMount() {
@@ -52,12 +39,21 @@ class NewTendor extends Component {
   }
 
   renderRoomFormWithSubmit = () => {
-    const CreateForm = this.CreateForm
+    const {mainCategorySelected, subCategorySelected } = this.state
     const { props } = this.props
-    const { current_user:{id} } = props
+    const {current_user} = props
+    const {id} = current_user
+    const CreateForm =
+    EntityForm({
+        name: 'PostTender',
+        onUpdate: (values) => props.onNewTenderRequest({...values, 'client_id': id, 'main_category':mainCategorySelected, 'sub_category':subCategorySelected }),
+        fields: newTenderFields
+      })
     return (
       <div>
-        <CreateForm {...this.props} initialValues = {{activities: [], cliendId:id}}/>
+        <CreateForm
+        {...this.props}
+        />
         <Button primary onClick={props.onNewTenderClick}> Post Tender </Button>
       </div>
     )
@@ -93,45 +89,15 @@ class NewTendor extends Component {
     this.setState({subCategorySelected:value})
   }
 
-  onSubmit = (evt) => {
-    const { props } = this.props
-    const { current_user } = props
-    evt.preventDefault()
-   // Check for the empty value
-
-      const {mainCategorySelected, subCategorySelected,startDate,endDate,quantity,description} = this.state
-      const {id} = current_user
-      const payload = {
-        'mainCategoryId': mainCategorySelected,
-        'subCategoryId': subCategorySelected,
-        'startDate': startDate,
-        'endDate': endDate,
-        'quantity':quantity,
-        'description':description
-      }
-      this.props.props.createNewTendorDispatch(payload, id)
-
-  }
-  handleChangeStartDate(date) {
-    this.setState({
-      startDate: date
-    });
-  }
-  handleChangeEndDate(date) {
-    this.setState({
-      endDate: date
-    });
-  }
-
-handleChange = (e, { name, value }) => this.setState({ [name]: value });
   onCancel = () => {
     CreateBrowserHistory.push({
       pathname: "/client",
     })
   }
+
   render() {
     const addRoomFormRendered = this.renderRoomFormWithSubmit()
-    const {mainCategorySelected, subCategorySelected, startDate, endDate ,quantity, description} = this.state
+    const {mainCategorySelected, subCategorySelected} = this.state
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
         <Grid
@@ -160,56 +126,12 @@ handleChange = (e, { name, value }) => this.setState({ [name]: value });
           <Grid.Column className='login-form-grid'>
           {
             ( mainCategorySelected && subCategorySelected ) ?
-                <Form size='large' className='new-tendor-form' onSubmit={this.onSubmit}>
-                <Segment stacked>
-                  <Form.Input
-                    fluid
-                    placeholder='Quantity'
-                    name='quantity'
-                    value={quantity}
-                    onChange={this.handleChange}
-                  />
-                   <Form.Group  >
-                      <Form.Field fluid >
-                        <DatePicker
-                        label='Start Date'
-                        selected={startDate}
-                        value={startDate}
-                        onChange={this.handleChangeStartDate.bind(this)}
-                        name='startDate'
-                        />
-                      </Form.Field>
-                      <Form.Field fluid label ='To'>
-                      </Form.Field>
-                      <Form.Field fluid >
-                        <DatePicker
-                          selected={endDate}
-                          value={endDate}
-                          name='endDate'
-                          label='End Date'
-                          onChange={this.handleChangeEndDate.bind(this)}
-                         />
-                      </Form.Field>
-                   </Form.Group>
-                  <Form.TextArea
-                    fluid
-                    rows={2}
-                    placeholder='Description'
-                    name='description'
-                    value={description}
-                    onChange={this.handleChange}
-                  />
-                <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
+              <Segment stacked>
+                {addRoomFormRendered}
                 <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
-             </Segment>
-            </Form> : ''
+             </Segment> : ''
           }
           </Grid.Column>
-          <Grid.Row>
-            <Grid.Column>
-              {addRoomFormRendered}
-            </Grid.Column>
-          </Grid.Row>
         </Grid>
       </ResponsiveContainer>
     )

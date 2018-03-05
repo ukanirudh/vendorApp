@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { reduxForm } from 'redux-form';
 import ReduxForm from './ReduxForm'
-import validate from './add-room-validation'
+import validate from './postTenderValidation'
 
 
 const Form = (props) => {

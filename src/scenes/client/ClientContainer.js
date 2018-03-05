@@ -74,7 +74,7 @@ function mapDispatchToProps(dispatch) {
   }), dispatch)
 
   return Object.assign({}, actions, {
-    onNewTenderRequest: (v) => createNewTendorDispatch(v, dispatch)
+    onNewTenderRequest: (v) => dispatch(createNewTendorDispatch(v))
   })
 }
 

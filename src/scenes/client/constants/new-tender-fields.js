@@ -1,5 +1,4 @@
-//import staticData from '../utils/static-data'
-const addRoomFields = [
+const newTenderFields = [
   {
     label: 'Description',
     key: 'description',
@@ -14,12 +13,17 @@ const addRoomFields = [
     placeholder: 'Quantity',
     inputType:'text'
   },
-  // {
-  //   label: 'Meeting Type',
-  //   key: 'activities',
-  //   componentType:'dropdown',
-  //   placeholder: 'Meeting Type',
-  //   options: () => {}
-  // },
+  {
+    label: 'Start Date',
+    key: 'startDate',
+    componentType:'datepicker',
+    placeholder: 'Start Date',
+  },
+  {
+    label: 'End Date',
+    key: 'endDate',
+    componentType:'datepicker',
+    placeholder: 'End Date',
+  },
 ]
-export default addRoomFields;
+export default newTenderFields;

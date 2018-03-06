@@ -7,6 +7,7 @@ import HomePageHeading from './HomePageHeading'
 import ResponsiveContainer from './ResponsiveContainer'
 import CreateBrowserHistory from './CreateBrowserHistory'
 
+import Testimonials from '../applicationHomePage/Testimonials'
 const headerPrimaryContentProps = {
     'headerText':'We connect the Vendors and Clients with the best deals',
     'primaryActionText':'Get Started',
@@ -32,8 +33,6 @@ class ApplicationHomePage extends Component {
     const props = {location, AppHeaderProps, headerPrimaryContentProps, HomePageHeading}
     return (
     <ResponsiveContainer {...props} >
-      <Segment style={{ padding: '4em 0em' }} vertical>
-      </Segment>
       <Segment style={{ padding: '8em 0em' }} vertical>
         <Grid container stackable verticalAlign='middle'>
           <Grid.Row>
@@ -64,22 +63,11 @@ class ApplicationHomePage extends Component {
           </Grid.Row>
         </Grid>
       </Segment>
-      <Segment style={{ padding: '0em' }} vertical>
-        <Grid celled='internally' columns='equal' stackable>
-          <Grid.Row textAlign='center'>
-            <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-              <Header as='h3' style={{ fontSize: '2em' }}>"What a Company"</Header>
-              <p style={{ fontSize: '1.33em' }}>That is what they all say about us</p>
-            </Grid.Column>
-            <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-              <Header as='h3' style={{ fontSize: '2em' }}>"I shouldn't have gone with their competitor."</Header>
-              <p style={{ fontSize: '1.33em' }}>
-                <Image avatar src='/assets/images/avatar/large/nan.jpg' />
-                <b>Nan</b> Chief Fun Officer Acme Toys
-              </p>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+      <Segment style={{ padding: '0em', background: 'blanchedalmond' }} vertical>
+      <Header as='h3' style={{ fontSize: '2em' }}>Our Testimonials</Header>
+        <Container>
+          <Testimonials />
+        </Container>
       </Segment>
       <Segment style={{ padding: '8em 0em' }} vertical>
         <Container text>

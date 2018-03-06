@@ -128,11 +128,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       return {...state, current_user: action.payload};
 
     case ON_CREATE_TENDER:
-			//console.log(action.payload);
-      // CreateBrowserHistory.push({
-      //   pathname: "/client",
-      // })
-      return state;
+      return {...state};
 
     case GET_ALL_MAIN_CATEGORIES:
       //console.log(action.payload)

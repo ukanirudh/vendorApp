@@ -15,7 +15,6 @@ export const EntityForm = ({name, onUpdate, type, fields}) => reduxForm({
   onSubmit: onUpdate,
   onSubmitSuccess: (result, dispatch, props) => {
     const {form} = props
-    console.log(formRoutes)
     CreateBrowserHistory.push({
       pathname: formRoutes[form]
     })

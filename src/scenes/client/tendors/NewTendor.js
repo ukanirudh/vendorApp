@@ -18,7 +18,6 @@ const AppHeaderProps = {
 
 class NewTendor extends Component {
 
-
   constructor(props) {
     super(props)
   }
@@ -51,9 +50,7 @@ class NewTendor extends Component {
       })
     return (
       <div>
-        <CreateForm
-        {...this.props}
-        />
+        <CreateForm {...this.props} />
         <Button primary onClick={props.onNewTenderClick}> Post Tender </Button>
       </div>
     )

@@ -1,16 +1,11 @@
-import tcombForm from 'tcomb-form'
 import { forEach } from 'lodash'
+import 'react-datepicker/dist/react-datepicker.css';
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
-/*tcomb form setup*/
-import templates from 'tcomb-form-templates-semantic'
-tcombForm.form.Form.templates = templates;
-const FormSchema = tcombForm.struct({
-  quantity: tcombForm.Number,
-  duration: tcombForm.Number,
-})
+import {EntityForm} from '../../../utils/GenericForm'
+import newTenderFields from '../constants/new-tender-fields'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
@@ -22,6 +17,10 @@ const AppHeaderProps = {
 }
 
 class NewTendor extends Component {
+
+  constructor(props) {
+    super(props)
+  }
 
   componentWillMount() {
     this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
@@ -36,6 +35,25 @@ class NewTendor extends Component {
     const { props } = newProps
     const { main_categories, sub_categories } = props
     this.setState({ mainCategories:main_categories, subCategories:sub_categories })
+  }
+
+  renderRoomFormWithSubmit = () => {
+    const {mainCategorySelected, subCategorySelected } = this.state
+    const { props } = this.props
+    const {current_user} = props
+    const {id} = current_user
+    const CreateForm =
+    EntityForm({
+        name: 'PostTender',
+        onUpdate: (values) => props.onNewTenderRequest({...values, 'duration': 3, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
+        fields: newTenderFields
+      })
+    return (
+      <div>
+        <CreateForm {...this.props} />
+        <Button primary onClick={props.onNewTenderClick}> Post Tender </Button>
+      </div>
+    )
   }
 
   renderMainCategoryOption = () => {
@@ -68,24 +86,6 @@ class NewTendor extends Component {
     this.setState({subCategorySelected:value})
   }
 
-  onSubmit = (evt) => {
-    const { props } = this.props
-    const { current_user } = props
-    evt.preventDefault()
-    const value = this.refs.form.getValue()
-    if (value) {
-      const {mainCategorySelected, subCategorySelected } = this.state
-      const {id} = current_user
-      const payload = {
-        'mainCategoryId': mainCategorySelected,
-        'subCategoryId': subCategorySelected,
-        'duration': value.duration,
-        'quantity':value.quantity
-      }
-      this.props.props.createNewTendorDispatch(payload, id)
-    }
-  }
-
   onCancel = () => {
     CreateBrowserHistory.push({
       pathname: "/client",
@@ -93,6 +93,7 @@ class NewTendor extends Component {
   }
 
   render() {
+    const addRoomFormRendered = this.renderRoomFormWithSubmit()
     const {mainCategorySelected, subCategorySelected} = this.state
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
@@ -122,15 +123,10 @@ class NewTendor extends Component {
           <Grid.Column className='login-form-grid'>
           {
             ( mainCategorySelected && subCategorySelected ) ?
-            <Form size='large'>
               <Segment stacked>
-                <form className='new-tendor-form' onSubmit={this.onSubmit}>
-                  <tcombForm.form.Form ref="form" type={FormSchema} />
-                </form>
-                <Button primary size='large' onClick={this.onSubmit}>Submit the tendor</Button>
+                {addRoomFormRendered}
                 <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
-              </Segment>
-            </Form> : ''
+             </Segment> : ''
           }
           </Grid.Column>
         </Grid>

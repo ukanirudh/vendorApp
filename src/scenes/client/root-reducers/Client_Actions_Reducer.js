@@ -7,18 +7,19 @@ const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 
-export function createNewTendorDispatch(payload, clientId) {
-
-  return function(dispatch) {
-    return ClientServiceApi.newTendorRequest(payload, clientId).then(response => {
+export function createNewTendorDispatch(payload) {
+  return (dispatch, getState) => {
+    const {clientReducer:{current_user}} = getState()
+    const {id} = current_user
+    return ClientServiceApi.newTendorRequest(payload, id).then(response => {
       if(response.status === 201 || response.status === 200)
-        dispatch(onCreateNewTender(response.data));
+        dispatch(onCreateNewTender(response.data))
       else
         dispatch(handleError(response));
     }).catch(error => {
       console.log("dispatch person::",error);
     });
-  };
+  }
 }
 
 export function getAllMainCategoriesDispatch() {
@@ -127,11 +128,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       return {...state, current_user: action.payload};
 
     case ON_CREATE_TENDER:
-			//console.log(action.payload);
-      CreateBrowserHistory.push({
-        pathname: "/client",
-      })
-      return state;
+      return {...state};
 
     case GET_ALL_MAIN_CATEGORIES:
       //console.log(action.payload)

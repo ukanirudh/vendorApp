@@ -11,17 +11,18 @@ const AppFooter = () => (
       <Grid divided inverted stackable>
         <Grid.Row>
           <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 1' />
+            <Header inverted as='h4' content='Know Us Better' />
             <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
+              <List.Item as='a'>About Us</List.Item>
+              <List.Item as='a'>Our vision</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 2' />
+            <Header inverted as='h4' content='Contact Us' />
             <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
+              <List.Item as='a'>Reach Us</List.Item>
+              <List.Item as='a'>Call Us</List.Item>
+              <List.Item as='a'>Email Us</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
@@ -32,7 +33,7 @@ const AppFooter = () => (
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
-            <Header inverted as='h4' content='Footer Header' />
+            <Header inverted as='h4' content='Vendor Ka Tender' />
             <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
           </Grid.Column>
         </Grid.Row>

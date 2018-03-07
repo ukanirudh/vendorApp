@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 /*Import components*/
-import { ApplicationHomePage } from './commonComponents'
+import ApplicationHomePage from './applicationHomePage/ApplicationHomePage'
 import AuthenticationModule from './scenes/Authentication';
 import VendorHome from './scenes/vendor/';
 import ClientHome from './scenes/client/';

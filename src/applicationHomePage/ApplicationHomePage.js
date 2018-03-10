@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import {
-  Button, Container, Divider, Grid,
-  Header, Image, List, Segment, Visibility
-} from 'semantic-ui-react'
+import { Button, Container, Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 import { ResponsiveContainer, CreateBrowserHistory, HomePageHeading } from '../commonComponents'
 import Testimonials from './Testimonials'
 

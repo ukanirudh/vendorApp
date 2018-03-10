@@ -23,7 +23,6 @@ const AppFooter = () => (
             <List link inverted>
               <List.Item as='a'>Reach Us</List.Item>
               <List.Item as='a'>Call Us</List.Item>
-              <List.Item as='a'>Email Us</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={3}>

@@ -6,6 +6,8 @@ const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
+const UPDATE_CURRENT_USER_DATA = 'UPDATE_CURRENT_USER_DATA'
+const UPDATE_CURRENT_USER_BANK_DATA = 'UPDATE_CURRENT_USER_BANK_DATA'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
@@ -21,6 +23,38 @@ export function createNewTendorDispatch(payload) {
     });
   }
 }
+export function updateBasicDetailsDispatch(payload) {
+  return (dispatch, getState) => {
+    const {clientReducer:{current_user}} = getState()
+    const {id} = current_user
+    return ClientServiceApi.updateUserDeatilsResquest(payload, id).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(onUpdateCurrentUserData(response.data))
+      else
+        dispatch(handleError(response));
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+export function updateBankDetailsDispatch(payload) {
+  return (dispatch, getState) => {
+    const {clientReducer:{current_user}} = getState()
+    const {id} = current_user
+    return ClientServiceApi.updateUserBankDeatilsResquest(payload, id).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(onUpdateCurrentUserBankData(response.data))
+      else
+        dispatch(handleError(response));
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+
+
 
 export function getAllMainCategoriesDispatch() {
   return function(dispatch) {
@@ -67,6 +101,19 @@ export function getClientAllTendorsDispatch( clientId ) {
 export function onSetCurrentUserData(userDetails) {
   return {
     type: SET_CURRENT_USER_DATA,
+    payload: userDetails
+  };
+}
+
+export function onUpdateCurrentUserData(userDetails) {
+  return {
+    type: UPDATE_CURRENT_USER_BANK_DATA,
+    payload: userDetails
+  };
+}
+export function onUpdateCurrentUserBankData(userDetails) {
+  return {
+    type: UPDATE_CURRENT_USER_DATA,
     payload: userDetails
   };
 }
@@ -127,6 +174,12 @@ export default function reducer(state = INITIAL_STATE, action) {
     case SET_CURRENT_USER_DATA:
       return {...state, current_user: action.payload};
 
+    case UPDATE_CURRENT_USER_DATA:
+      return {...state, current_user: action.payload};
+
+    case UPDATE_CURRENT_USER_BANK_DATA:
+      return {...state, current_user: action.payload};
+    
     case ON_CREATE_TENDER:
       return {...state};
 

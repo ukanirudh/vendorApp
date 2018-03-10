@@ -6,13 +6,14 @@ import {submit} from 'redux-form'
 /*routing and redux*/
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch } from "./root-reducers/Client_Actions_Reducer";
+  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch,updateBasicDetailsDispatch,updateBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
 import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
 import YourTendors from './tendors/YourTendors'
+import Profile from './profile-additional-info/Profile'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -45,6 +46,8 @@ class ClientContainer extends Component {
         <Route exact path="/client" component={ClientHomePage}></Route>
         <PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />
         <PropsRoute path='/client/yourTendors' component={YourTendors} props={this.props} />
+        <PropsRoute path='/client/Profile' component={Profile} props={this.props} />
+       
       </div>
     )
   }
@@ -70,11 +73,17 @@ function mapDispatchToProps(dispatch) {
     getAllSubCategoriesDispatch,
     onSetCurrentUserData,
     getClientAllTendorsDispatch,
+    updateBasicDetailsDispatch,
+    updateBankDetailsDispatch,
     onNewTenderClick: () => dispatch(submit('PostTender')),
+    onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),
+    onUpdateBankDetailsClick: () => dispatch(submit('PostBankInfo')),
   }), dispatch)
 
   return Object.assign({}, actions, {
-    onNewTenderRequest: (v) => dispatch(createNewTendorDispatch(v))
+    onNewTenderRequest: (v) => dispatch(createNewTendorDispatch(v)),
+    onUpdateBasicDetailsrRequest:(v) => dispatch( updateBasicDetailsDispatch(v)),
+    onUpdateBankDetailsrRequest:(v) => dispatch( updateBankDetailsDispatch(v)),
   })
 }
 

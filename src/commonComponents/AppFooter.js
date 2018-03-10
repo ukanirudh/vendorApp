@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { Segment, Container, List, Grid, Divider, Header } from 'semantic-ui-react'
 
 const AppFooter = () => (
@@ -13,7 +14,7 @@ const AppFooter = () => (
           <Grid.Column width={3}>
             <Header inverted as='h4' content='Know Us Better' />
             <List link inverted>
-              <List.Item as='a'>About Us</List.Item>
+              <List.Item> <Link to='/about'>About Us</Link></List.Item>
               <List.Item as='a'>Our vision</List.Item>
             </List>
           </Grid.Column>

@@ -1,12 +1,9 @@
-import { forEach } from 'lodash'
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Segment, Dropdown,Checkbox } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment,Checkbox } from 'semantic-ui-react'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
-
 import {EntityForm} from '../../../utils/GenericForm'
 import basicInfoFields from '../constants/basic-info-fields'
-import { bindActionCreators } from "redux";
-import { submitClientSingUpDispatch } from "../root-reducers/Client_Actions_Reducer"
+
 class BasicInfo extends Component {
  
   constructor(props){

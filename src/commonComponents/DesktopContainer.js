@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Responsive } from 'semantic-ui-react'
 import AppHeader from './AppHeader'
+import AppFooter from './AppFooter'
 
 class DesktopContainer extends Component {
   state = {}
@@ -12,6 +13,7 @@ class DesktopContainer extends Component {
       <Responsive {...Responsive.onlyComputer}>
         <AppHeader location={location} HomePageHeading={HomePageHeading} AppHeaderProps={AppHeaderProps} headerProps={headerPrimaryContentProps} />
         {children}
+        <AppFooter />
       </Responsive>
     )
   }

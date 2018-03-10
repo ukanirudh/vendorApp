@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react'
-import { Container, Grid, Header, List, Segment,Tab } from 'semantic-ui-react'
+import { Segment, Tab } from 'semantic-ui-react'
 import BasicInfo from './BasicInfo.js'
 import BankDetails from './BankDetails.js'
-import { ResponsiveContainer, CreateBrowserHistory, HomePageHeading } from '../../../commonComponents'										   
+import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
@@ -16,31 +16,27 @@ const AppHeaderProps = {
 
 class Profile extends Component {
 
-constructor(props){
-      super(props);
-  }
-componentDidMount(){
-    
+  constructor(props){
+    super(props);
   }
 
- getTabPanes = () => {
- 	const panes = [
-  { menuItem: 'BASIC INFO', render: () => <Tab.Pane> 
-											  <Segment style={{ padding: '1em 0em' }} vertical>
-											        <BasicInfo {...this.props} /> 
-											   </Segment>
-										   </Tab.Pane> },
-  { menuItem: 'BANK DETAILS', render: () => <Tab.Pane> 
-											  <Segment style={{ padding: '1em 0em' }} vertical>
-											        <BankDetails {...this.props} /> 
-											   </Segment>
-										   </Tab.Pane> } ]
-	return panes									   
- } 
+  getTabPanes = () => {
+  	const panes = [
+  { menuItem: 'BASIC INFO', render: () => <Tab.Pane>
+  										  <Segment style={{ padding: '1em 0em' }} vertical>
+  										        <BasicInfo {...this.props} />
+  										   </Segment>
+  									   </Tab.Pane> },
+  { menuItem: 'BANK DETAILS', render: () => <Tab.Pane>
+  										  <Segment style={{ padding: '1em 0em' }} vertical>
+  										        <BankDetails {...this.props} />
+  										   </Segment>
+  									   </Tab.Pane> } ]
+  return panes
+  }
 
 render() {
 	const { props } = this.props;
-	console.log(this.props)
 	const {current_user} = props
     return (
       <ResponsiveContainer  AppHeaderProps={AppHeaderProps} location={this.props.location}>

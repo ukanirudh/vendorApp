@@ -1,35 +1,23 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Segment,Checkbox } from 'semantic-ui-react'
-import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
+import { Button, Grid } from 'semantic-ui-react'
 import {EntityForm} from '../../../utils/GenericForm'
 import basicInfoFields from '../constants/basic-info-fields'
 
 class BasicInfo extends Component {
- 
-  constructor(props){
-      super(props);
-      const { props: renderedProps } = props
-      this.CreateForm =
-        EntityForm({
-            name: 'PostBasicInfo',
-            onUpdate: (values) => renderedProps.onUpdateBasicDetailsrRequest({...values}),
-            fields: basicInfoFields
-          })
+
+  constructor(props) {
+    super(props);
+    const { props: renderedProps } = props
+    this.CreateForm =
+      EntityForm({
+          name: 'PostBasicInfo',
+          onUpdate: (values) => renderedProps.onUpdateBasicDetailsrRequest({...values}),
+          fields: basicInfoFields
+        })
   }
 
-componentWillMount() {
-    this.setState({
-      name: '', username: '',password: '',phone: '', confimPassword:''
-    })
-  }
-
-  componentDidMount() {
-  }
-
-renderRoomFormWithSubmit = () => {
-
+  renderRoomFormWithSubmit = () => {
     const { props } = this.props
-    console.log(this.props)
     const {current_user:{email}} = props
     const CreateForm= this.CreateForm
     const newinitialValues = {initialValues: {username:email}}
@@ -40,13 +28,10 @@ renderRoomFormWithSubmit = () => {
         <Button primary onClick={props.onUpdateBasicDetailsClick} fluid> UPDATE INFO </Button>
       </div>
     )
-
   }
-
 
   render() {
     const addRoomFormRendered = this.renderRoomFormWithSubmit()
-    //console.log(this.props)
     return (
       <Grid
         columns={3}
@@ -61,6 +46,5 @@ renderRoomFormWithSubmit = () => {
     )
   }
 }
-
 
 export default BasicInfo;

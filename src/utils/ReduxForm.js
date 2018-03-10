@@ -25,7 +25,7 @@ const ReduxForm = (props) => {
         )
       })
 	return (
-    <Form className='simple' size='large'>
+    <Form className='simple reduxFromGeneric' size='large'>
       {renderedFeilds}
     </Form>
   )

@@ -12,6 +12,8 @@ class ClientSignUpForm extends Component {
       const data = {
       username,
       password,
+      name,
+      phoneNumber: phone,
       type:'client'
     }
     this.props.submitClientSingUpDispatch( data );

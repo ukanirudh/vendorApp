@@ -32,7 +32,7 @@ class AunthenticationAndRegistrationApi {
 	}
 
 	static updateUserDeatilsResquest( payloadData, clientId ) {
-		var updateUserDeatilsRequestUrl = `${updateUserDeatilsUrl}/${clientId}` ;
+		var updateUserDeatilsRequestUrl = `${updateUserDeatilsUrl}` ;
 		const headers = this.requestHeaders();
 
 		return axios({
@@ -48,7 +48,7 @@ class AunthenticationAndRegistrationApi {
 	}
 
 	static updateUserBankDeatilsResquest( payloadData, clientId ) {
-		var updateUserBankDeatilsRequestUrl = `${updateUserBankDeatilsUrl}/${clientId}` ;
+		var updateUserBankDeatilsRequestUrl = `${updateUserBankDeatilsUrl}` ;
 		const headers = this.requestHeaders();
 
 		return axios({

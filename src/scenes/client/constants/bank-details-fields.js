@@ -1,42 +1,32 @@
 const bankInfoFields = [
   {
       key: 'bankname',
-      icon:'mail',
-      iconPosition:'left',
+      icon:'user',
       name: 'bankname',
       inputType:'text',
       placeholder:'Bank name',
   },
   {
-    
     key: 'branch',
     required: true,
-    icon:'user',
-    iconPosition:'left',
+    icon:'building outline',
     placeholder:'Branch',
     name:'branch',
     inputType:'text',
-   
-
   },
   {
-  
     key: 'accontnumber',
-    icon:'phone',
-    iconPosition:'left',
+    icon:'address card outline',
     name:'accontnumber',
     placeholder:'Accont number',
     inputType:'text',
-    
   },
   {
-    icon:'phone',
-    iconPosition:'left',
+    icon:'universal access',
     name:'gst',
     key: 'gst',
     placeholder: 'Gst in',
     inputType:'text',
-    
   },
 ]
 export default bankInfoFields;

@@ -56,19 +56,21 @@ const DropdownField = (input, placeholder, label, helpText='', options, touched,
   )
 }
 
-const InputField = (input, placeholder, label, required, type, touched, error, rows) => {
+const InputField = (input, placeholder, label, required, type, icon, touched, error, rows) => {
   if( type === 'textarea')
     return (
       <Form.TextArea {...input} rows={rows} placeholder={placeholder} required={required} label={label} error={!!(touched && error)} />
     )
   else
     return (
-      <Form.Input {...input} placeholder={placeholder} required={required} label={label} type={type} error={!!(touched && error)} />
+      <Form.Input
+      icon={icon} iconPosition='left'
+       {...input} placeholder={placeholder} required={required} label={label} type={type} error={!!(touched && error)} />
     )
 }
 
 const renderSingleField = (input, componentType, attributes, touched, error) => {
-  const {placeholder, label, required, type, options, rows, helpText} = attributes
+  const {placeholder, label, required, type, options, icon, rows, helpText} = attributes
   switch (componentType) {
     case 'dropdown':
       return DropdownField(input, placeholder, label, helpText, options, touched, error)
@@ -80,15 +82,15 @@ const renderSingleField = (input, componentType, attributes, touched, error) => 
       return DatePickerComponent(input, placeholder, label, touched, error)
 
     default:
-      return InputField(input, placeholder, label, required, type, touched, error, rows)
+      return InputField(input, placeholder, label, required, type, icon, touched, error, rows)
   }
 }
 
 const renderField = (props) => {
   const {input, componentType, placeholder, label, required, type, options,
-     helpText, rows, meta} = props
+     helpText, icon, rows, meta} = props
   const {touched, error} = meta
-  const attributes = { placeholder, label, required, type, options, helpText, rows}
+  const attributes = { placeholder, label, required, type, options, icon, helpText, rows}
   return (
     <div>
       { renderSingleField(input, componentType, attributes, touched, error) }

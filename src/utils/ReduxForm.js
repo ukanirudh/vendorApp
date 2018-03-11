@@ -7,7 +7,7 @@ const ReduxForm = (props) => {
 	const { formFields} = props
   const renderedFeilds = formFields.map((field, index) => {
   	const {key, options, inputType, placeholder, label,
-			 required, componentType, rows, helpText} = field
+			 required, componentType, rows, helpText, icon} = field
         return (
           <Field
               name={key}
@@ -20,6 +20,7 @@ const ReduxForm = (props) => {
               componentType={componentType}
               key={index}
               rows={rows}
+              icon={icon}
               helpText={helpText}
             />
         )

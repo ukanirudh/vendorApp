@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react'
-import { Segment, Tab } from 'semantic-ui-react'
+import { Tab, Header } from 'semantic-ui-react'
 import BasicInfo from './BasicInfo.js'
 import BankDetails from './BankDetails.js'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
@@ -14,40 +13,38 @@ const AppHeaderProps = {
   },
 }
 
+const profileComponentMap = {
+  'BasicInfo' : BasicInfo,
+  'BankDetails' : BankDetails,
+}
+
 class Profile extends Component {
 
   constructor(props){
     super(props);
   }
 
-  getTabPanes = () => {
-  	const panes = [
-  { menuItem: 'BASIC INFO', render: () => <Tab.Pane>
-  										  <Segment style={{ padding: '1em 0em' }} vertical>
-  										        <BasicInfo {...this.props} />
-  										   </Segment>
-  									   </Tab.Pane> },
-  { menuItem: 'BANK DETAILS', render: () => <Tab.Pane>
-  										  <Segment style={{ padding: '1em 0em' }} vertical>
-  										        <BankDetails {...this.props} />
-  										   </Segment>
-  									   </Tab.Pane> } ]
-  return panes
+  getTabPaneContent = (profileComponent) => {
+    const RenderedComponent = profileComponentMap[profileComponent]
+    return <RenderedComponent {...this.props} />
   }
 
-render() {
-	const { props } = this.props;
-	const {current_user} = props
+  getTabPanes = () => {
+    const panes = [
+      { menuItem: 'BASIC INFO', render: () => <Tab.Pane> {this.getTabPaneContent('BasicInfo')} </Tab.Pane> },
+      { menuItem: 'BANK DETAILS', render: () => <Tab.Pane> {this.getTabPaneContent('BankDetails')} </Tab.Pane> }
+    ]
+    return panes
+  }
+
+  render() {
     return (
       <ResponsiveContainer  AppHeaderProps={AppHeaderProps} location={this.props.location}>
-        <div style={{ padding: '1em 0em' }} vertical>
-         PROFILE INFO
-         </div>
-        <Segment style={{ padding: '0em 0em' }} vertical>
-           <Tab panes={this.getTabPanes()} />
-        </Segment>
+        <Header as='h2' color='teal' textAlign='center'> PROFILE INFO </Header>
+        <Tab panes={this.getTabPanes()} />
       </ResponsiveContainer>
     )
   }
 }
+
 export default Profile

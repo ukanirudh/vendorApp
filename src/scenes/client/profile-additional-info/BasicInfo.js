@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Grid } from 'semantic-ui-react'
+import { Button, Grid, Segment } from 'semantic-ui-react'
 import {EntityForm} from '../../../utils/GenericForm'
 import basicInfoFields from '../constants/basic-info-fields'
 
@@ -40,7 +40,9 @@ class BasicInfo extends Component {
         verticalAlign='middle'
       >
         <Grid.Column className='login-form-grid'>
-          {addRoomFormRendered}
+          <Segment>
+            {addRoomFormRendered}
+          </Segment>
         </Grid.Column>
       </Grid>
     )

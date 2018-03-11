@@ -8,6 +8,7 @@ const newTenderFields = [
   {
     key: 'quantity',
     required: true,
+    icon:'cubes',
     placeholder: 'Quantity',
     inputType:'text'
   },

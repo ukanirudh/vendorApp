@@ -13,6 +13,7 @@ export const EntityForm = ({name, onUpdate, type, fields}) => reduxForm({
   form: name,
   validate,
   onSubmit: onUpdate,
+  enableReinitialize: true,
   onSubmitSuccess: (result, dispatch, props) => {
     const {form} = props
     CreateBrowserHistory.push({

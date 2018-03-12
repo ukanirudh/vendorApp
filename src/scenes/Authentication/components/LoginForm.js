@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-
+import { ToastContainer, toast } from 'react-toastify';
 import { connect } from "react-redux";
-import { submitLoginDispatch } from "../root-reducers/Login_Actions_Reducer";
+import { submitLoginDispatch, setErrorFlag } from "../root-reducers/Login_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 import { CreateBrowserHistory } from '../../../commonComponents'
@@ -24,9 +24,22 @@ class LoginForm extends Component {
     this.props.submitLoginDispatch(payloadData)
   }
 
+  notify = (message) => {
+    const options = {
+      //onOpen: props => console.log(props.foo),
+      onClose: () => {
+        const { setErrorFlag } = this.props
+        setErrorFlag(false)
+      },
+      autoClose: false,
+      type: toast.TYPE.ERROR,
+    };
+    return toast(message,options)
+  }
+
   componentWillReceiveProps (newProps) {
     //console.log(newProps)
-    const {current_user, registrationSuccessStatus, userType} = newProps
+    const {current_user, registrationSuccessStatus, hasError, registrationMessage, userType} = newProps
     if(registrationSuccessStatus) {
       if(userType === 'vendor') {
         CreateBrowserHistory.push({
@@ -37,6 +50,9 @@ class LoginForm extends Component {
           pathname: "/client",
         })
       }
+    }
+    if(hasError) {
+      this.notify(registrationMessage)
     }
   }
 
@@ -52,6 +68,7 @@ class LoginForm extends Component {
         verticalAlign='middle'
       >
         <Grid.Row>
+          <ToastContainer />
           <Header as='h2' color='teal' textAlign='center'>
             Log-in to your account
           </Header>
@@ -90,13 +107,13 @@ class LoginForm extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   const { LoginModule } = state
-  const { current_user, registrationSuccessStatus } = LoginModule
-  return ({ current_user, registrationSuccessStatus })
+  const { current_user, registrationSuccessStatus, registrationMessage, hasError } = LoginModule
+  return ({ current_user, registrationSuccessStatus, registrationMessage, hasError })
 }
 
 //map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ submitLoginDispatch }, dispatch);
+  return bindActionCreators({ submitLoginDispatch, setErrorFlag }, dispatch);
 }
 
 //conect our component with store state and store dispatch functions

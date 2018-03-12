@@ -56,19 +56,28 @@ export function handleError(error) {
   };
 }
 
+export function setErrorFlag(flag) {
+  return {
+    type: "SET_ERROR_FLAG",
+    payload: flag
+  };
+}
+
 const INITIAL_STATE = {
   current_user: {},
   current_user_type : '',
-  registrationSuccessStatus: false
+  registrationSuccessStatus: false,
+  registrationMessage: '',
+  hasError: false
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case "SUBMIT_LOGIN":
-      const { email, id, type } = action.payload.data
-      localStorage.setItem("userprofile", JSON.stringify({ email, id }) );
-    return {...state, current_user: { email, id, type }, registrationSuccessStatus: true };
+      const { token } = action.payload.data
+      localStorage.setItem("authToken", token);
+    return {...state, current_user: token, registrationSuccessStatus: true };
 
   case "FORGOT_PASSWORD":
   //console.log(action.payload);
@@ -118,9 +127,11 @@ export default function reducer(state = INITIAL_STATE, action) {
   return state;
 
   case "HANDLE_ERROR":
-  //console.log(action.payload);
-  	return { ...state , registrationSuccessStatus: action.payload.status,
-		errorMessage: action.payload.data.message, errorSummary: action.payload.statusText}
+  	return { ...state , registrationSuccessStatus: false, hasError: true,
+		registrationMessage: action.payload.data.message }
+
+  case "SET_ERROR_FLAG":
+  	return { ...state , registrationSuccessStatus: false, hasError: action.payload }
 
   default:
     return state;

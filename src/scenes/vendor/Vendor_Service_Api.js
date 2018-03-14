@@ -6,10 +6,11 @@ const getAllSubscribedTendersUrl = '/tenders_main_category';
 class AunthenticationAndRegistrationApi {
 
 	static requestHeaders() {
-    	return {
-		    'Accept': 'application/json',
-		    'Content-Type': 'application/json'
-		}
+    return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'JWT ' + localStorage.getItem('authToken')
+    }
   }
 
 	static getAllMainCategories() {

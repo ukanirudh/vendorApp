@@ -16,11 +16,25 @@ class BasicInfo extends Component {
         })
   }
 
+  componentWillMount () {
+    this.setState({currentUserData:{}})
+  }
+
+  componentDidMount () {
+    const { props } = this.props
+    props.getBasicDetailsDispatch()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {props:{current_user}} = nextProps
+    this.setState({currentUserData: current_user})
+  }
+
   renderRoomFormWithSubmit = () => {
     const { props } = this.props
-    const {current_user:{email}} = props
     const CreateForm= this.CreateForm
-    const newinitialValues = {initialValues: {username:email}}
+    const {currentUserData} = this.state
+    const newinitialValues = {initialValues: currentUserData}
 
     return (
       <div>

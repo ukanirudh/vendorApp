@@ -1,10 +1,9 @@
 const basicInfoFields = [
   {
-    key: 'username',
+    key: 'email',
     icon:'mail',
-    name: 'username',
+    name: 'email',
     inputType:'text'
-
   },
   {
     key: 'name',
@@ -15,19 +14,12 @@ const basicInfoFields = [
     inputType:'text',
   },
   {
-    key: 'phone',
+    key: 'phoneNumber',
     icon:'phone',
-    name:'phone',
+    name:'phoneNumber',
     placeholder:'Phone number',
     inputType:'text',
-  },
-  {
-    icon:'phone',
-    name:'address',
-    key: 'address',
-    placeholder: 'Address',
-    inputType:'textarea',
-    rows: 3,
-  },
+    required: true,
+  }
 ]
 export default basicInfoFields;

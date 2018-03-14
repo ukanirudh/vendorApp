@@ -6,7 +6,9 @@ import {submit} from 'redux-form'
 /*routing and redux*/
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch,updateBasicDetailsDispatch,updateBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer";
+  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch,
+  updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
+  getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -47,7 +49,7 @@ class ClientContainer extends Component {
         <PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />
         <PropsRoute path='/client/yourTendors' component={YourTendors} props={this.props} />
         <PropsRoute path='/client/Profile' component={Profile} props={this.props} />
-       
+
       </div>
     )
   }
@@ -75,6 +77,8 @@ function mapDispatchToProps(dispatch) {
     getClientAllTendorsDispatch,
     updateBasicDetailsDispatch,
     updateBankDetailsDispatch,
+    getBasicDetailsDispatch,
+    getBankDetailsDispatch,
     onNewTenderClick: () => dispatch(submit('PostTender')),
     onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),
     onUpdateBankDetailsClick: () => dispatch(submit('PostBankInfo')),

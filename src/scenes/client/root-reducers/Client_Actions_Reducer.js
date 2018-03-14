@@ -6,8 +6,7 @@ const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
-const UPDATE_CURRENT_USER_DATA = 'UPDATE_CURRENT_USER_DATA'
-const UPDATE_CURRENT_USER_BANK_DATA = 'UPDATE_CURRENT_USER_BANK_DATA'
+const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
@@ -23,13 +22,38 @@ export function createNewTendorDispatch(payload) {
     });
   }
 }
+
+export function getBasicDetailsDispatch() {
+  return (dispatch, getState) => {
+    return ClientServiceApi.clientBasicDeatilsResquest('GET').then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(updateClientData(response.data))
+      else
+        dispatch(handleError(response));
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+export function getBankDetailsDispatch() {
+  return (dispatch, getState) => {
+    return ClientServiceApi.clientBankDeatilsResquest('GET').then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(updateClientData(response.data))
+      else
+        dispatch(handleError(response));
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
 export function updateBasicDetailsDispatch(payload) {
   return (dispatch, getState) => {
-    const {clientReducer:{current_user}} = getState()
-    const {id} = current_user
-    return ClientServiceApi.updateUserDeatilsResquest(payload, id).then(response => {
+    return ClientServiceApi.clientBasicDeatilsResquest('PUT', payload).then(response => {
       if(response.status === 201 || response.status === 200)
-        dispatch(onUpdateCurrentUserData(response.data))
+        dispatch(updateClientData(response.data))
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -40,11 +64,9 @@ export function updateBasicDetailsDispatch(payload) {
 
 export function updateBankDetailsDispatch(payload) {
   return (dispatch, getState) => {
-    const {clientReducer:{current_user}} = getState()
-    const {id} = current_user
-    return ClientServiceApi.updateUserBankDeatilsResquest(payload, id).then(response => {
+    return ClientServiceApi.clientBankDeatilsResquest('PUT', payload).then(response => {
       if(response.status === 201 || response.status === 200)
-        dispatch(onUpdateCurrentUserBankData(response.data))
+        dispatch(updateClientData(response.data))
       else
         dispatch(handleError(response));
     }).catch(error => {
@@ -52,9 +74,6 @@ export function updateBankDetailsDispatch(payload) {
     });
   }
 }
-
-
-
 
 export function getAllMainCategoriesDispatch() {
   return function(dispatch) {
@@ -95,9 +114,6 @@ export function getClientAllTendorsDispatch( clientId ) {
   };
 }
 
-
-
-
 export function onSetCurrentUserData(userDetails) {
   return {
     type: SET_CURRENT_USER_DATA,
@@ -105,16 +121,10 @@ export function onSetCurrentUserData(userDetails) {
   };
 }
 
-export function onUpdateCurrentUserData(userDetails) {
+export function updateClientData(clientDetails) {
   return {
-    type: UPDATE_CURRENT_USER_BANK_DATA,
-    payload: userDetails
-  };
-}
-export function onUpdateCurrentUserBankData(userDetails) {
-  return {
-    type: UPDATE_CURRENT_USER_DATA,
-    payload: userDetails
+    type: UPDATE_CLIENT_DATA,
+    payload: clientDetails
   };
 }
 
@@ -174,12 +184,9 @@ export default function reducer(state = INITIAL_STATE, action) {
     case SET_CURRENT_USER_DATA:
       return {...state, current_user: action.payload};
 
-    case UPDATE_CURRENT_USER_DATA:
-      return {...state, current_user: action.payload};
+    case UPDATE_CLIENT_DATA:
+      return {...state, ...{current_user: action.payload.data}};
 
-    case UPDATE_CURRENT_USER_BANK_DATA:
-      return {...state, current_user: action.payload};
-    
     case ON_CREATE_TENDER:
       return {...state};
 

@@ -17,11 +17,25 @@ class BankDetails extends Component {
         })
   }
 
+  componentWillMount () {
+    this.setState({currentUserData:{}})
+  }
+
+  componentDidMount () {
+    const { props } = this.props
+    props.getBankDetailsDispatch()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {props:{current_user}} = nextProps
+    this.setState({currentUserData: current_user})
+  }
+
   renderRoomFormWithSubmit = () => {
     const { props } = this.props
-    const {current_user:{email}} = props
+    const {currentUserData} = this.state
     const CreateForm= this.CreateForm
-    const newinitialValues = {initialValues: {username:email}}
+    const newinitialValues = {initialValues: currentUserData}
 
     return (
       <div>

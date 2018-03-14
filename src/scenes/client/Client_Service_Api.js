@@ -4,8 +4,8 @@ const getMainCategoriesUrl = '/main_categories';
 const getSubCategoriesUrl = '/sub_categories';
 const createTendorUrl = '/tender';
 const getClientAllTendersUrl='/client_tenders';
-const updateUserDeatilsUrl='/update_basic_details';
-const updateUserBankDeatilsUrl='/update_business_details';
+const clientBasicDeatilsUrl='/basic_details';
+const clientBankDeatilsUrl='/business_details';
 
 class ClientServiceApis {
 
@@ -32,13 +32,12 @@ class ClientServiceApis {
 		});
 	}
 
-	static updateUserDeatilsResquest( payloadData, clientId ) {
-		var updateUserDeatilsRequestUrl = `${updateUserDeatilsUrl}` ;
+	static clientBasicDeatilsResquest( method, payloadData ) {
 		const headers = this.requestHeaders();
 
 		return axios({
-			method: 'PUT',
-			url: updateUserDeatilsRequestUrl,
+			method: method,
+			url: clientBasicDeatilsUrl,
 			headers: headers,
 			data: payloadData
 		}).then(function (response) {
@@ -48,13 +47,12 @@ class ClientServiceApis {
 		});
 	}
 
-	static updateUserBankDeatilsResquest( payloadData, clientId ) {
-		var updateUserBankDeatilsRequestUrl = `${updateUserBankDeatilsUrl}` ;
+	static clientBankDeatilsResquest( method, payloadData ) {
 		const headers = this.requestHeaders();
 
 		return axios({
-			method: 'PUT',
-			url: updateUserBankDeatilsRequestUrl,
+			method: method,
+			url: clientBankDeatilsUrl,
 			headers: headers,
 			data: payloadData
 		}).then(function (response) {

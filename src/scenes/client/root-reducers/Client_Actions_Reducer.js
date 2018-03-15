@@ -7,6 +7,8 @@ const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
+const SHOW_MESSAGE = 'SHOW_MESSAGE'
+const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
@@ -16,7 +18,7 @@ export function createNewTendorDispatch(payload) {
       if(response.status === 201 || response.status === 200)
         dispatch(onCreateNewTender(response.data))
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -29,7 +31,7 @@ export function getBasicDetailsDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(updateClientData(response.data))
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -42,7 +44,7 @@ export function getBankDetailsDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(updateClientData(response.data))
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -52,10 +54,12 @@ export function getBankDetailsDispatch() {
 export function updateBasicDetailsDispatch(payload) {
   return (dispatch, getState) => {
     return ClientServiceApi.clientBasicDeatilsResquest('PUT', payload).then(response => {
-      if(response.status === 201 || response.status === 200)
+      if(response.status === 201 || response.status === 200) {
         dispatch(updateClientData(response.data))
+        dispatch(showMessage('Basic Details Updated Successfully'))
+      }
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -68,7 +72,7 @@ export function updateBankDetailsDispatch(payload) {
       if(response.status === 201 || response.status === 200)
         dispatch(updateClientData(response.data))
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -81,7 +85,7 @@ export function getAllMainCategoriesDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(getAllMainCategories(response.data));
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -94,7 +98,7 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
       if(response.status === 201 || response.status === 200)
         dispatch(getAllSubCategories(response.data));
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -107,7 +111,7 @@ export function getClientAllTendorsDispatch( clientId ) {
       if(response.status === 201 || response.status === 200)
         dispatch(getClientAllTendors(response.data));
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -156,42 +160,40 @@ export function getClientAllTendors(data) {
   };
 }
 
-export function resetStore(data) {
+export function showMessage(message) {
   return {
-    type: "RESET_STORE",
-    payload: data
+    type: SHOW_MESSAGE,
+    payload: message
   };
 }
 
-export function handleError(error) {
+export function setErrorFlag(flag) {
   return {
-    type: "HANDLE_ERROR",
-    payload: error
+    type: SET_ERROR_FLAG,
+    payload: flag
   };
 }
 
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: true,
+  registrationSuccessStatus: false,
   main_categories:[],
   sub_categories:[],
-  all_client_tendors:[]
+  all_client_tendors:[],
+  notificationMsg: ''
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
-    case SET_CURRENT_USER_DATA:
-      return {...state, current_user: action.payload};
-
     case UPDATE_CLIENT_DATA:
-      return {...state, ...{current_user: action.payload.data}};
+      var { data } = action.payload
+      return {...state, ...{current_user: data}};
 
     case ON_CREATE_TENDER:
       return {...state};
 
     case GET_ALL_MAIN_CATEGORIES:
-      //console.log(action.payload)
       var { data } = action.payload
       return { ...state , main_categories: data };
 
@@ -203,10 +205,11 @@ export default function reducer(state = INITIAL_STATE, action) {
        var { data } = action.payload
       return { ...state , all_client_tendors: data };
 
-    case "HANDLE_ERROR":
-    //console.log(action.payload);
-    	return { ...state , registrationSuccessStatus: action.payload.status,
-			errorMessage: action.payload.data.message, errorSummary: action.payload.statusText}
+    case SHOW_MESSAGE:
+      return {...state, registrationSuccessStatus:true, notificationMsg: action.payload };
+
+    case SET_ERROR_FLAG:
+    	return { ...state , registrationSuccessStatus: action.payload, hasError: action.payload }
 
     default:
       return state;

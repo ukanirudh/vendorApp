@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
-import { isEmpty } from 'lodash'
 import {submit} from 'redux-form'
+import { ToastContainer } from 'react-toastify';
 
 /*routing and redux*/
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
-  getAllSubCategoriesDispatch, onSetCurrentUserData, getClientAllTendorsDispatch,
+  getAllSubCategoriesDispatch, getClientAllTendorsDispatch,
   updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
-  getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer";
+  getBankDetailsDispatch, setErrorFlag } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -34,13 +34,7 @@ const PropsRoute = ({ component, ...rest }) => {
 
 class ClientContainer extends Component {
 
-  componentWillMount() {
-    //console.log(this.props)
-    const {current_user} = this.props
-    if(isEmpty(current_user)) {
-      this.props.onSetCurrentUserData(JSON.parse(localStorage.getItem('userprofile')))
-    }
-  }
+  componentWillMount() {}
 
   render () {
     return (
@@ -49,7 +43,7 @@ class ClientContainer extends Component {
         <PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />
         <PropsRoute path='/client/yourTendors' component={YourTendors} props={this.props} />
         <PropsRoute path='/client/Profile' component={Profile} props={this.props} />
-
+        <ToastContainer />
       </div>
     )
   }
@@ -58,12 +52,14 @@ class ClientContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.clientReducer)
-  const { current_user, main_categories, sub_categories, all_client_tendors} = state.clientReducer
+  const { current_user, main_categories, sub_categories, all_client_tendors, registrationSuccessStatus, notificationMsg} = state.clientReducer
   return {
     current_user,
     main_categories,
     sub_categories,
-    all_client_tendors
+    all_client_tendors,
+    registrationSuccessStatus,
+    notificationMsg
   };
 }
 
@@ -73,12 +69,12 @@ function mapDispatchToProps(dispatch) {
     createNewTendorDispatch,
     getAllMainCategoriesDispatch,
     getAllSubCategoriesDispatch,
-    onSetCurrentUserData,
     getClientAllTendorsDispatch,
     updateBasicDetailsDispatch,
     updateBankDetailsDispatch,
     getBasicDetailsDispatch,
     getBankDetailsDispatch,
+    setErrorFlag,
     onNewTenderClick: () => dispatch(submit('PostTender')),
     onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),
     onUpdateBankDetailsClick: () => dispatch(submit('PostBankInfo')),

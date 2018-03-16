@@ -9,12 +9,12 @@ import YourTendors from './tendors/YourTendors'
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
-    // CreateBrowserHistory.push({
-    //   pathname: "/authorization"
-    // })
-  },
-}
+     CreateBrowserHistory.push({
+      pathname: "/client/Profile"
+    })
+ }
 
+}
 const headerPrimaryContentProps = {
   'headerText':'Request a tendor now and get noticed by all our big vendors.',
   'primaryActionText':'Place a new Tender',

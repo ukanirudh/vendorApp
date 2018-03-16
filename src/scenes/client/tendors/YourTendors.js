@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Grid, Header, Card, Button, Pagination } from 'semantic-ui-react'
+import { Container, Grid, Header, Button, Pagination } from 'semantic-ui-react'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
+import TenderListItem from './TenderListItem'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
@@ -13,8 +14,8 @@ const AppHeaderProps = {
 
 class YourTendors extends Component {
 
-   constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
   }
 
   componentWillMount() {
@@ -23,9 +24,8 @@ class YourTendors extends Component {
 
   componentDidMount() {
     const { props } = this.props
-    const currentUser = JSON.parse(localStorage.getItem('userprofile'))
     this.setState({isLoading:true})
-    props.getClientAllTendorsDispatch(currentUser.id)
+    props.getClientAllTendorsDispatch()
   }
 
   componentWillReceiveProps (newProps) {
@@ -36,73 +36,40 @@ class YourTendors extends Component {
 
 
   render() {
-     const {tenders=[]} = this.state
+    const {tenders=[]} = this.state
+    var items = [];
+    tenders.map((tender, i) => items.push( <TenderListItem {...tender} key={i} /> ))
 
-        var items = [];
-        tenders.map((tender, i) => {
-         const sub_category = tender.sub_category
-          let name=''
-          if(sub_category) {
-          name = sub_category.name
-      }
-            return items.push(
-              <Grid.Column key={i} style={{marginBottom:15}}>
-                <Card>
-                  <Card.Content>
-                    <Card.Header>
-                      {name}
-                    </Card.Header>
-                    <Card.Meta>
-                      <div className="track" >
-                        <p className="title">Quantity: {tender.quantity}</p>
-                        <p className="title">Tender Duration : {tender.tenderEnds}</p>
-                      </div>
-                    </Card.Meta>
-                    <Card.Description>
-                      This tender elapses in {tender.tenderEnds} days
-                    </Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <div className='ui two buttons'>
-                      <Button basic color='green'>Accept</Button>
-                      <Button basic color='red'>Decline</Button>
-                    </div>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-            );
-        });
-
-        return (
-        <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location}>
-          <div>
-            <Header
-              as='h2'
-              content='All Potential Tenders.'
-              style={{
-                fontSize: '1.7em',
-                fontWeight: 'normal',
-                marginTop: '1.5em',
-              }}
-            />
-            <Container>
-              <Grid columns={4}>
-                <Grid.Row>
-                  {items}
-                </Grid.Row>
-              </Grid>
-            </Container>
-            <Pagination
-              defaultActivePage={1}
-              firstItem={null}
-              lastItem={null}
-              pointing
-              secondary
-              totalPages={3}
-            />
-          </div>
-        </ResponsiveContainer>
-        );
+    return (
+      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location}>
+        <div>
+          <Header
+            as='h2'
+            content='All Potential Tenders.'
+            style={{
+              fontSize: '1.7em',
+              fontWeight: 'normal',
+              marginTop: '1.5em',
+            }}
+          />
+          <Container>
+            <Grid columns={4}>
+              <Grid.Row>
+                {items}
+              </Grid.Row>
+            </Grid>
+          </Container>
+          <Pagination
+            defaultActivePage={1}
+            firstItem={null}
+            lastItem={null}
+            pointing
+            secondary
+            totalPages={3}
+          />
+        </div>
+      </ResponsiveContainer>
+    );
   }
 }
 

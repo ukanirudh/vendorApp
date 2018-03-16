@@ -3,6 +3,33 @@ const validate = values => {
   if (!values.quantity) {
     errors.quantity = 'Required'
   }
+  if (!values.email) {
+    errors.email = 'Required'
+  }
+  if (!values.phoneNumber) {
+    errors.phoneNumber = 'Required'
+  }
+  if (!values.name) {
+    errors.name = 'Required'
+  }
+  if (!values.bankName) {
+    errors.bankName = 'Required'
+  }
+  if (!values.ifscCode) {
+    errors.ifscCode = 'Required'
+  }
+  if (!values.bankBranch) {
+    errors.bankBranch = 'Required'
+  }
+  if (!values.address) {
+    errors.address = 'Required'
+  }
+  if (!values.gstNumber) {
+    errors.gstNumber = 'Required'
+  }
+  if (!values.accountNumber) {
+    errors.accountNumber = 'Required'
+  }
 
   // if (values.contact_no && !values.contact_no.match(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/)) {
   //   errors.contact_no = 'Invalid contact number'

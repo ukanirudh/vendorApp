@@ -14,10 +14,12 @@ class VendorSignUpForm extends Component {
   }
 
   onVendorRegistration = () => {
-    const { username='', password='' } = this.state
+    const { username='', password='',full_name='', phone= ''} = this.state
     const data = {
       username,
       password,
+      name: full_name,
+      phoneNumber: phone,
       type:'vendor'
     }
     this.props.submitVendorSingUpDispatch( data );
@@ -62,9 +64,12 @@ class VendorSignUpForm extends Component {
                 />
                 <Form.Input
                   fluid
-                  icon='phone'
-                  iconPosition='left'
-                  placeholder='Phone Number'
+                icon='phone'
+                iconPosition='left'
+                name='phone'
+                value={phone}
+                placeholder='Phone Number'
+                onChange={this.handleFormValuesChange}
                 />
                 <Form.Input
                   fluid

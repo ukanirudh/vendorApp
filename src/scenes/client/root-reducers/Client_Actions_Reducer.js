@@ -6,16 +6,71 @@ const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
+const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
+const SHOW_MESSAGE = 'SHOW_MESSAGE'
+const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
-    const {clientReducer:{current_user}} = getState()
-    const {id} = current_user
-    return ClientServiceApi.newTendorRequest(payload, id).then(response => {
+    return ClientServiceApi.newTendorRequest(payload).then(response => {
       if(response.status === 201 || response.status === 200)
         dispatch(onCreateNewTender(response.data))
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+export function getBasicDetailsDispatch() {
+  return (dispatch, getState) => {
+    return ClientServiceApi.clientBasicDeatilsResquest('GET').then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(updateClientData(response.data))
+      else
+        console.log("dispatch error::",response);;
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+export function getBankDetailsDispatch() {
+  return (dispatch, getState) => {
+    return ClientServiceApi.clientBankDeatilsResquest('GET').then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(updateClientData(response.data))
+      else
+        console.log("dispatch error::",response);;
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+export function updateBasicDetailsDispatch(payload) {
+  return (dispatch, getState) => {
+    return ClientServiceApi.clientBasicDeatilsResquest('PUT', payload).then(response => {
+      if(response.status === 201 || response.status === 200) {
+        dispatch(updateClientData(response.data))
+        dispatch(showMessage('Basic Details Updated Successfully'))
+      }
+      else
+        console.log("dispatch error::",response);;
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  }
+}
+
+export function updateBankDetailsDispatch(payload) {
+  return (dispatch, getState) => {
+    return ClientServiceApi.clientBankDeatilsResquest('PUT', payload).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(updateClientData(response.data))
+      else
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -28,7 +83,7 @@ export function getAllMainCategoriesDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(getAllMainCategories(response.data));
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -41,33 +96,37 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
       if(response.status === 201 || response.status === 200)
         dispatch(getAllSubCategories(response.data));
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
   };
 }
 
-export function getClientAllTendorsDispatch( clientId ) {
+export function getClientAllTendorsDispatch() {
   return function(dispatch) {
-    return ClientServiceApi.getClientAllTendors(clientId).then(response => {
+    return ClientServiceApi.getClientAllTendors().then(response => {
       if(response.status === 201 || response.status === 200)
         dispatch(getClientAllTendors(response.data));
       else
-        dispatch(handleError(response));
+        console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
   };
 }
-
-
-
 
 export function onSetCurrentUserData(userDetails) {
   return {
     type: SET_CURRENT_USER_DATA,
     payload: userDetails
+  };
+}
+
+export function updateClientData(clientDetails) {
+  return {
+    type: UPDATE_CLIENT_DATA,
+    payload: clientDetails
   };
 }
 
@@ -99,39 +158,40 @@ export function getClientAllTendors(data) {
   };
 }
 
-export function resetStore(data) {
+export function showMessage(message) {
   return {
-    type: "RESET_STORE",
-    payload: data
+    type: SHOW_MESSAGE,
+    payload: message
   };
 }
 
-export function handleError(error) {
+export function setErrorFlag(flag) {
   return {
-    type: "HANDLE_ERROR",
-    payload: error
+    type: SET_ERROR_FLAG,
+    payload: flag
   };
 }
 
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: true,
+  registrationSuccessStatus: false,
   main_categories:[],
   sub_categories:[],
-  all_client_tendors:[]
+  all_client_tendors:[],
+  notificationMsg: ''
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
-    case SET_CURRENT_USER_DATA:
-      return {...state, current_user: action.payload};
+    case UPDATE_CLIENT_DATA:
+      var { data } = action.payload
+      return {...state, ...{current_user: data}};
 
     case ON_CREATE_TENDER:
       return {...state};
 
     case GET_ALL_MAIN_CATEGORIES:
-      //console.log(action.payload)
       var { data } = action.payload
       return { ...state , main_categories: data };
 
@@ -143,10 +203,11 @@ export default function reducer(state = INITIAL_STATE, action) {
        var { data } = action.payload
       return { ...state , all_client_tendors: data };
 
-    case "HANDLE_ERROR":
-    //console.log(action.payload);
-    	return { ...state , registrationSuccessStatus: action.payload.status,
-			errorMessage: action.payload.data.message, errorSummary: action.payload.statusText}
+    case SHOW_MESSAGE:
+      return {...state, registrationSuccessStatus:true, notificationMsg: action.payload };
+
+    case SET_ERROR_FLAG:
+    	return { ...state , registrationSuccessStatus: action.payload, hasError: action.payload }
 
     default:
       return state;

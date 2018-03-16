@@ -92,13 +92,12 @@ class ClientServiceApis {
 		});
 	}
 
-	static getClientAllTendors( clientId ) {
-		const ClientAllTendersUrl = getClientAllTendersUrl + '/' + clientId ;
+	static getClientAllTendors() {
 		const headers = this.requestHeaders();
 
 		return axios({
 			method: 'GET',
-			url: ClientAllTendersUrl,
+			url: getClientAllTendersUrl,
 			headers: headers
 		}).then(function (response) {
 			return response;

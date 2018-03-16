@@ -12,9 +12,7 @@ const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
-    const {clientReducer:{current_user}} = getState()
-    const {id} = current_user
-    return ClientServiceApi.newTendorRequest(payload, id).then(response => {
+    return ClientServiceApi.newTendorRequest(payload).then(response => {
       if(response.status === 201 || response.status === 200)
         dispatch(onCreateNewTender(response.data))
       else
@@ -105,9 +103,9 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
   };
 }
 
-export function getClientAllTendorsDispatch( clientId ) {
+export function getClientAllTendorsDispatch() {
   return function(dispatch) {
-    return ClientServiceApi.getClientAllTendors(clientId).then(response => {
+    return ClientServiceApi.getClientAllTendors().then(response => {
       if(response.status === 201 || response.status === 200)
         dispatch(getClientAllTendors(response.data));
       else

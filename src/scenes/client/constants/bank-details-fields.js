@@ -18,7 +18,7 @@ const bankInfoFields = [
     key: 'ifscCode',
     required: true,
     icon:'building outline',
-    placeholder:'Branch',
+    placeholder:'IFSC Code',
     name:'ifscCode',
     inputType:'text',
   },

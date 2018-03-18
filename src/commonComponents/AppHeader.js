@@ -30,7 +30,7 @@ class AppHeader extends Component {
                 />
                 Project Name
               </Menu.Item>
-              <Menu.Item  active><Link to={location.pathname}>Home</Link></Menu.Item>
+              <Menu.Item  active><Link to={location}>Home</Link></Menu.Item>
               <Menu.Item as='a'>Work</Menu.Item>
               <Menu.Item as='a'>Company</Menu.Item>
               <Menu.Item as='a'>Careers</Menu.Item>

@@ -35,7 +35,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <ResponsiveContainer  AppHeaderProps={AppHeaderProps} location={this.props.location}>
+      <ResponsiveContainer  AppHeaderProps={AppHeaderProps} location={'/client'}>
         <Header as='h2' color='teal' textAlign='center'> PROFILE INFO </Header>
         <Tab panes={this.getTabPanes()} />
       </ResponsiveContainer>

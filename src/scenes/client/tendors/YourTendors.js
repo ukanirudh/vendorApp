@@ -36,7 +36,7 @@ class YourTendors extends Component {
     tenders.map((tender, i) => items.push( <TenderListItem {...tender} key={i} /> ))
 
     return (
-      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location}>
+      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'}>
         <div>
           <Header
             as='h2'

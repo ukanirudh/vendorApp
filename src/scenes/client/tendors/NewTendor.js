@@ -89,7 +89,7 @@ class NewTendor extends Component {
     const addRoomFormRendered = this.renderRoomFormWithSubmit()
     const {mainCategorySelected, subCategorySelected} = this.state
     return (
-      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
+      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'} >
         <Grid
           columns={3}
           centered

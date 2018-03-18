@@ -10,48 +10,41 @@ import newTenderFields from '../constants/new-tender-fields'
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
-    // CreateBrowserHistory.push({
-    //   pathname: "/authorization"
-    // })
+    CreateBrowserHistory.push({
+      pathname: "/client/Profile"
+    })
   },
 }
 
 class NewTendor extends Component {
-
-  constructor(props) {
-    super(props)
-  }
 
   componentWillMount() {
     this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
   }
 
   componentDidMount() {
-    const { props } = this.props
-    props.getAllMainCategoriesDispatch()
+    const { getAllMainCategoriesDispatch } = this.props
+    getAllMainCategoriesDispatch()
   }
 
   componentWillReceiveProps (newProps) {
-    const { props } = newProps
-    const { main_categories, sub_categories } = props
+    const { main_categories, sub_categories } = newProps
     this.setState({ mainCategories:main_categories, subCategories:sub_categories })
   }
 
   renderRoomFormWithSubmit = () => {
     const {mainCategorySelected, subCategorySelected } = this.state
-    const { props } = this.props
-    const {current_user} = props
-    const {id} = current_user
+    const { onNewTenderRequest, onNewTenderClick } = this.props
     const CreateForm =
     EntityForm({
         name: 'PostTender',
-        onUpdate: (values) => props.onNewTenderRequest({...values, 'duration': 3, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
+        onUpdate: (values) => onNewTenderRequest({...values, 'duration': 3, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
         fields: newTenderFields
       })
     return (
       <div>
         <CreateForm {...this.props} />
-        <Button primary onClick={props.onNewTenderClick}> Post Tender </Button>
+        <Button primary onClick={onNewTenderClick}> Post Tender </Button>
       </div>
     )
   }
@@ -77,9 +70,9 @@ class NewTendor extends Component {
   }
 
   onSelectMainCategory = (event, {name, value}) => {
-    const { props } = this.props
+    const { getAllSubCategoriesDispatch } = this.props
     this.setState({mainCategorySelected:value})
-    props.getAllSubCategoriesDispatch(value)
+    getAllSubCategoriesDispatch(value)
   }
 
   onSelectSubCategory = (event, { name, value }) => {

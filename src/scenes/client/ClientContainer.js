@@ -15,7 +15,7 @@ import { bindActionCreators } from "redux";
 import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
 import YourTendors from './tendors/YourTendors'
-import Profile from './profile-additional-info/Profile'
+import Profile from './profileInfo/Profile'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -39,10 +39,10 @@ class ClientContainer extends Component {
   render () {
     return (
       <div style={{ padding: '0px 10px' }}>
-        <Route exact path="/client" component={ClientHomePage}></Route>
-        <PropsRoute path='/client/newTendor' component={NewTendor} props={this.props} />
-        <PropsRoute path='/client/yourTendors' component={YourTendors} props={this.props} />
-        <PropsRoute path='/client/Profile' component={Profile} props={this.props} />
+        <PropsRoute exact path='/client' component={ClientHomePage} {...this.props} />
+        <PropsRoute path='/client/newTendor' component={NewTendor} {...this.props} />
+        <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
+        <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
         <ToastContainer />
       </div>
     )
@@ -82,8 +82,8 @@ function mapDispatchToProps(dispatch) {
 
   return Object.assign({}, actions, {
     onNewTenderRequest: (v) => dispatch(createNewTendorDispatch(v)),
-    onUpdateBasicDetailsrRequest:(v) => dispatch( updateBasicDetailsDispatch(v)),
-    onUpdateBankDetailsrRequest:(v) => dispatch( updateBankDetailsDispatch(v)),
+    onUpdateBasicDetailsrRequest:(v) => dispatch(updateBasicDetailsDispatch(v)),
+    onUpdateBankDetailsrRequest:(v) => dispatch(updateBankDetailsDispatch(v)),
   })
 }
 

@@ -1,23 +1,28 @@
 const basicInfoFields = [
   {
     key: 'email',
-    icon:'mail',
     name: 'email',
-    inputType:'text'
+    icon:'mail',
+    label: 'Email',
+    inputType:'text',
+    required: true,
+    disabled: true
   },
   {
     key: 'name',
-    required: true,
+    name:'name',
     icon:'user',
     placeholder:'Name',
-    name:'name',
+    label: 'Full Name',
     inputType:'text',
+    required: true
   },
   {
     key: 'phoneNumber',
-    icon:'phone',
     name:'phoneNumber',
+    icon:'phone',
     placeholder:'Phone number',
+    label: 'Phone number',
     inputType:'text',
     required: true,
   }

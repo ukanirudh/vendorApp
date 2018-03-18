@@ -7,12 +7,12 @@ import { toast } from 'react-toastify';
 class BasicInfo extends Component {
 
   constructor(props) {
-    super(props);
-    const { props: renderedProps } = props
+    super(props)
+
     this.CreateForm =
       EntityForm({
           name: 'PostBasicInfo',
-          onUpdate: (values) => renderedProps.onUpdateBasicDetailsrRequest({...values}),
+          onUpdate: (values) => props.onUpdateBasicDetailsrRequest({...values}),
           fields: basicInfoFields
         })
   }
@@ -22,15 +22,14 @@ class BasicInfo extends Component {
   }
 
   componentDidMount () {
-    const { props } = this.props
-    props.getBasicDetailsDispatch()
+    const { getBasicDetailsDispatch } = this.props
+    getBasicDetailsDispatch()
   }
 
   componentWillReceiveProps (nextProps) {
-    const {props:{current_user}} = nextProps
-    //console.log(nextProps.props)
-    if(nextProps.props.registrationSuccessStatus) {
-      this.notify(nextProps.props.notificationMsg)
+    const {current_user, registrationSuccessStatus, notificationMsg} = nextProps
+    if(registrationSuccessStatus) {
+      this.notify(notificationMsg)
     }
     this.setState({currentUserData: current_user})
   }
@@ -50,15 +49,15 @@ class BasicInfo extends Component {
   }
 
   renderRoomFormWithSubmit = () => {
-    const { props } = this.props
-    const CreateForm= this.CreateForm
+    const { onUpdateBasicDetailsClick } = this.props
     const {currentUserData} = this.state
+    const CreateForm= this.CreateForm
     const newinitialValues = {initialValues: currentUserData}
 
     return (
       <div>
         <CreateForm {...newinitialValues} />
-        <Button primary onClick={props.onUpdateBasicDetailsClick} fluid> UPDATE INFO </Button>
+        <Button primary onClick={onUpdateBasicDetailsClick} fluid> UPDATE INFO </Button>
       </div>
     )
   }

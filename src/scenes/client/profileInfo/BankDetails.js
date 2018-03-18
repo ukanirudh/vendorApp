@@ -7,12 +7,12 @@ import bankInfoFields from '../constants/bank-details-fields'
 class BankDetails extends Component {
 
   constructor(props){
-    super(props);
-    const { props: renderedProps } = props
+    super(props)
+    const { onUpdateBankDetailsrRequest } = props
     this.CreateForm =
       EntityForm({
           name: 'PostBankInfo',
-          onUpdate: (values) => renderedProps.onUpdateBankDetailsrRequest({...values}),
+          onUpdate: (values) => onUpdateBankDetailsrRequest({...values}),
           fields: bankInfoFields
         })
   }
@@ -22,17 +22,17 @@ class BankDetails extends Component {
   }
 
   componentDidMount () {
-    const { props } = this.props
-    props.getBankDetailsDispatch()
+    const { getBankDetailsDispatch } = this.props
+    getBankDetailsDispatch()
   }
 
   componentWillReceiveProps (nextProps) {
-    const {props:{current_user}} = nextProps
+    const {current_user} = nextProps
     this.setState({currentUserData: current_user})
   }
 
   renderRoomFormWithSubmit = () => {
-    const { props } = this.props
+    const { onUpdateBankDetailsClick } = this.props
     const {currentUserData} = this.state
     const CreateForm= this.CreateForm
     const newinitialValues = {initialValues: currentUserData}
@@ -40,7 +40,7 @@ class BankDetails extends Component {
     return (
       <div>
         <CreateForm {...newinitialValues} />
-        <Button primary onClick={props.onUpdateBankDetailsClick} fluid> UPDATE INFO </Button>
+        <Button primary onClick={onUpdateBankDetailsClick} fluid> UPDATE INFO </Button>
       </div>
     )
   }

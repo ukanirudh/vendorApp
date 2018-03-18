@@ -20,10 +20,6 @@ const profileComponentMap = {
 
 class Profile extends Component {
 
-  constructor(props){
-    super(props);
-  }
-
   getTabPaneContent = (profileComponent) => {
     const RenderedComponent = profileComponentMap[profileComponent]
     return <RenderedComponent {...this.props} />

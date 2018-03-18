@@ -1,7 +1,8 @@
 import { forEach } from 'lodash'
-import 'react-datepicker/dist/react-datepicker.css';
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
+import moment from 'moment'
+import DatePicker from 'react-datepicker';
+import { Button, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import {EntityForm} from '../../../utils/GenericForm'
@@ -42,10 +43,25 @@ class NewTendor extends Component {
         fields: newTenderFields
       })
     return (
-      <div>
+      <Segment stacked>
         <CreateForm {...this.props} />
-        <Button primary onClick={onNewTenderClick}> Post Tender </Button>
-      </div>
+        <div style={{'marginBottom': 10}} className='form ui'>
+          <DatePicker
+            disabled={true}
+            dateFormat="LL"
+            selected={moment()}
+            placeholderText={'Start Date'} />
+        </div>
+        <div style={{'marginBottom': 10}} className='form ui'>
+          <DatePicker
+            dateFormat="LL"
+            minDate={moment().add(7, "days")}
+            maxDate={moment().add(14, "days")}
+            placeholderText={'End Date'} />
+        </div>
+        <Button fluid primary size='large' onClick={onNewTenderClick}> Post Tender </Button>
+        {/*<Button secondary size='large' onClick={this.onCancel}>Cancel</Button>*/}
+      </Segment>
     )
   }
 
@@ -86,7 +102,6 @@ class NewTendor extends Component {
   }
 
   render() {
-    const addRoomFormRendered = this.renderRoomFormWithSubmit()
     const {mainCategorySelected, subCategorySelected} = this.state
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'} >
@@ -114,13 +129,7 @@ class NewTendor extends Component {
             }
           </Grid.Row>
           <Grid.Column className='login-form-grid'>
-          {
-            ( mainCategorySelected && subCategorySelected ) ?
-              <Segment stacked>
-                {addRoomFormRendered}
-                <Button secondary size='large' onClick={this.onCancel}>Cancel</Button>
-             </Segment> : ''
-          }
+          { ( mainCategorySelected && subCategorySelected ) ? this.renderRoomFormWithSubmit() : '' }
           </Grid.Column>
         </Grid>
       </ResponsiveContainer>

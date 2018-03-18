@@ -10,6 +10,7 @@ import { CreateBrowserHistory } from './commonComponents'
 /*CSS*/
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 /*import components*/
 import App from './App';

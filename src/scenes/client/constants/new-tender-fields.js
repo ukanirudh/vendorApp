@@ -12,15 +12,16 @@ const newTenderFields = [
     placeholder: 'Quantity',
     inputType:'text'
   },
-  {
-    key: 'startDate',
-    componentType:'datepicker',
-    placeholder: 'Start Date',
-  },
-  {
-    key: 'endDate',
-    componentType:'datepicker',
-    placeholder: 'End Date',
-  },
+  // {
+  //   key: 'startDate',
+  //   disabled:true,
+  //   componentType:'datepicker',
+  //   placeholder: 'Start Date',
+  // },
+  // {
+  //   key: 'endDate',
+  //   componentType:'datepicker',
+  //   placeholder: 'End Date',
+  // },
 ]
 export default newTenderFields;

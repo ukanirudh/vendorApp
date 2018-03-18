@@ -6,31 +6,26 @@ import TenderListItem from './TenderListItem'
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
-    // CreateBrowserHistory.push({
-    //   pathname: "/authorization"
-    // })
+    CreateBrowserHistory.push({
+      pathname: "/client/Profile"
+    })
   },
 }
 
 class YourTendors extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     this.setState({ tenders:[], isLoading: false })
   }
 
   componentDidMount() {
-    const { props } = this.props
+    const { getClientAllTendorsDispatch } = this.props
     this.setState({isLoading:true})
-    props.getClientAllTendorsDispatch()
+    getClientAllTendorsDispatch()
   }
 
   componentWillReceiveProps (newProps) {
-    const { props } = newProps
-    const { all_client_tendors, isLoading } = props
+    const { all_client_tendors, isLoading } = newProps
     this.setState({ tenders:all_client_tendors, isLoading })
   }
 

@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { Container, Grid, Header, List, Segment } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory, HomePageHeading } from '../../commonComponents'
-import CompletedTendor from './tendors/CompletedTendor'
-import YourTendors from './tendors/YourTendors'
-
+import CompletedTendor from './homePageComponents/CompletedTendor'
+import YourTendors from './homePageComponents/YourTendors'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
@@ -29,6 +28,9 @@ class ClientHome extends Component {
   render() {
     return (
       <ResponsiveContainer HomePageHeading={HomePageHeading} headerPrimaryContentProps={headerPrimaryContentProps} AppHeaderProps={AppHeaderProps} location={this.props.location}>
+        <Segment style={{ padding: '4em 0em' }} vertical>
+          <YourTendors {...this.props} />
+        </Segment>
         <Segment style={{ padding: '4em 0em' }} vertical>
           <CompletedTendor />
         </Segment>

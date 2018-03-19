@@ -1,4 +1,5 @@
 import VendorServiceApi from '../Vendor_Service_Api';
+import {isEmpty} from 'lodash'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const SET_CURRENT_USER_DATA = 'SET_CURRENT_USER_DATA'
@@ -88,7 +89,7 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case GET_ALL_SUBSCRIBED_CATEGORY_TENDER:
       var { data } = action.payload
-      return { ...state , subscribed_category_tenders: data, isLoading: false };
+      return { ...state , subscribed_category_tenders: isEmpty(data) ? [] : data, isLoading: false };
 
     case "HANDLE_ERROR":
     //console.log(action.payload);

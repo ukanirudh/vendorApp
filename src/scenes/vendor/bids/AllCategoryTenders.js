@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import { Container, Grid, Header, Card,
   Button, Pagination, Dimmer, Loader, Segment } from 'semantic-ui-react'
+import TenderListItem from './TenderListItem'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
     // CreateBrowserHistory.push({
-    //   pathname: "/authorization"
+    //   pathname: "/profile"
     // })
   },
 }
@@ -24,7 +25,7 @@ class AllCategoryTenders extends Component {
   componentDidMount() {
     const { props } = this.props
     this.setState({isLoading:true})
-    props.getAllSubscribedTendersDispatch(4)
+    props.getAllSubscribedTendersDispatch(3)
   }
 
   componentWillReceiveProps (newProps) {
@@ -36,40 +37,8 @@ class AllCategoryTenders extends Component {
   render() {
     const {categoryTenders=[]} = this.state
     var items = [];
-    categoryTenders.map((tender, i) => {
-      const sub_category = tender.sub_category
-      let name=''
-      if(sub_category) {
-        name = sub_category.name
-      }
-      return items.push(
-        <Grid.Column key={i} style={{marginBottom:15}}>
-          <Card>
-            <Card.Content>
-              <Card.Header>
-                {name}
-              </Card.Header>
-              <Card.Meta>
-                <div className="track" >
-                  <p className="title">Quantity: {tender.quantity}</p>
-                  <p className="title">Tender Duration : {tender.tenderEnds}</p>
-                </div>
-              </Card.Meta>
-              <Card.Description>
-                This tender elapses in {tender.tenderEnds} days
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <div className='ui two buttons'>
-                <Button basic color='green'>Accept</Button>
-                <Button basic color='red'>Decline</Button>
-              </div>
-            </Card.Content>
-          </Card>
-        </Grid.Column>
-      );
-    });
-    
+    categoryTenders.map((tender, i) => items.push( <TenderListItem {...tender} key={i} /> ))
+
     return (
     <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
       <Segment>

@@ -178,7 +178,8 @@ const INITIAL_STATE = {
   main_categories:[],
   sub_categories:[],
   all_client_tendors:[],
-  notificationMsg: ''
+  notificationMsg: '',
+  
 }
 
 export default function reducer(state = INITIAL_STATE, action) {

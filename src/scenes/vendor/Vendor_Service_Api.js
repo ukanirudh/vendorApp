@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const getMainCategoriesUrl = '/main_categories';
 const getAllSubscribedTendersUrl = '/tenders_main_category';
+const vendorBasicDeatilsUrl='/basic_details';
+const vendorBankDeatilsUrl='/business_details';
 
 class AunthenticationAndRegistrationApi {
 
@@ -38,6 +40,36 @@ class AunthenticationAndRegistrationApi {
 			params:{
 				mainCategoryId
 			}
+		}).then(function (response) {
+			return response;
+		}).catch(function (error) {
+			return error.response ;
+		});
+	}
+
+	static vendorBasicDeatilsResquest( method, payloadData ) {
+		const headers = this.requestHeaders();
+
+		return axios({
+			method: method,
+			url: vendorBasicDeatilsUrl,
+			headers: headers,
+			data: payloadData
+		}).then(function (response) {
+			return response;
+		}).catch(function (error) {
+			return error.response ;
+		});
+	}
+
+	static vendorBankDeatilsResquest( method, payloadData ) {
+		const headers = this.requestHeaders();
+
+		return axios({
+			method: method,
+			url: vendorBankDeatilsUrl,
+			headers: headers,
+			data: payloadData
 		}).then(function (response) {
 			return response;
 		}).catch(function (error) {

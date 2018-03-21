@@ -11,8 +11,8 @@ class BasicInfo extends Component {
 
     this.CreateForm =
       EntityForm({
-          name: 'PostBasicInfo',
-          onUpdate: (values) => props.onUpdateBasicDetailsrRequest({...values}),
+          name: 'VendorBasicDetailsForm',
+          onUpdate: (values) => props.onUpdateBasicDetailsRequest({...values}),
           fields: basicInfoFields
         })
   }
@@ -48,7 +48,7 @@ class BasicInfo extends Component {
     return toast(message,options)
   }
 
-  renderRoomFormWithSubmit = () => {
+  renderRoomVendorBasicDetailsFormWithSubmit = () => {
     const { onUpdateBasicDetailsClick } = this.props
     const {currentUserData} = this.state
     const CreateForm= this.CreateForm
@@ -63,7 +63,7 @@ class BasicInfo extends Component {
   }
 
   render() {
-    const addRoomFormRendered = this.renderRoomFormWithSubmit()
+    const addRoomVendorBasicDetailsFormRendered = this.renderRoomVendorBasicDetailsFormWithSubmit()
     return (
       <Grid
         columns={3}
@@ -73,7 +73,7 @@ class BasicInfo extends Component {
       >
         <Grid.Column className='login-form-grid'>
           <Segment>
-            {addRoomFormRendered}
+            {addRoomVendorBasicDetailsFormRendered}
           </Segment>
         </Grid.Column>
       </Grid>

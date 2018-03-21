@@ -8,11 +8,11 @@ class BankDetails extends Component {
 
   constructor(props){
     super(props)
-    const { onUpdateBankDetailsrRequest } = props
+    const { onUpdateBankDetailsRequest } = props
     this.CreateForm =
       EntityForm({
-          name: 'PostBankInfo',
-          onUpdate: (values) => onUpdateBankDetailsrRequest({...values}),
+          name: 'VendorBankDetailsForm',
+          onUpdate: (values) => onUpdateBankDetailsRequest({...values}),
           fields: bankInfoFields
         })
   }
@@ -31,7 +31,7 @@ class BankDetails extends Component {
     this.setState({currentUserData: current_user})
   }
 
-  renderRoomFormWithSubmit = () => {
+  renderRoomVendorBankDetailsFormWithSubmit = () => {
     const { onUpdateBankDetailsClick } = this.props
     const {currentUserData} = this.state
     const CreateForm= this.CreateForm
@@ -46,7 +46,7 @@ class BankDetails extends Component {
   }
 
   render() {
-    const addRoomFormRendered = this.renderRoomFormWithSubmit()
+    const addRoomVendorBankDetailsFormRendered = this.renderRoomVendorBankDetailsFormWithSubmit()
     return (
       <Grid
         columns={3}
@@ -56,7 +56,7 @@ class BankDetails extends Component {
       >
         <Grid.Column className='login-form-grid'>
           <Segment>
-            {addRoomFormRendered}
+            {addRoomVendorBankDetailsFormRendered}
           </Segment>
         </Grid.Column>
       </Grid>

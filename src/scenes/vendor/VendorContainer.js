@@ -79,13 +79,13 @@ function mapDispatchToProps(dispatch) {
       getBasicDetailsDispatch,
       getBankDetailsDispatch,
       setErrorFlag,
-      onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),
-      onUpdateBankDetailsClick: () => dispatch(submit('PostBankInfo')),
+      onUpdateBasicDetailsClick: () => dispatch(submit('VendorBasicDetailsForm')),
+      onUpdateBankDetailsClick: () => dispatch(submit('VendorBankDetailsForm')),
     }), dispatch)
 
   return Object.assign({}, actions, {
-    onUpdateBasicDetailsrRequest:(v) => dispatch(updateBasicDetailsDispatch(v)),
-    onUpdateBankDetailsrRequest:(v) => dispatch(updateBankDetailsDispatch(v)),
+    onUpdateBasicDetailsRequest:(v) => dispatch(updateBasicDetailsDispatch(v)),
+    onUpdateBankDetailsRequest:(v) => dispatch(updateBankDetailsDispatch(v)),
   })
 }
 

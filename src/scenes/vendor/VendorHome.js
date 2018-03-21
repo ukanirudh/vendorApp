@@ -9,11 +9,11 @@ import { ResponsiveContainer, CreateBrowserHistory, HomePageHeading } from '../.
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
-    // CreateBrowserHistory.push({
-    //   pathname: "/authorization"
-    // })
-  },
-}
+     CreateBrowserHistory.push({
+      pathname: "/vendor/Profile"
+    })
+  }
+} 
 
 const headerPrimaryContentProps = {
   'headerText':'We bring to you all the tenders for the categories you have registered for.',

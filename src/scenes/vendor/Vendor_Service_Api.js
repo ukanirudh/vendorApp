@@ -4,6 +4,7 @@ const getMainCategoriesUrl = '/main_categories';
 const getAllSubscribedTendersUrl = '/tenders_main_category';
 const vendorBasicDeatilsUrl='/basic_details';
 const vendorBankDeatilsUrl='/business_details';
+const getTendersDetailsUrl = '/tender_details';
 
 class AunthenticationAndRegistrationApi {
 
@@ -76,6 +77,20 @@ class AunthenticationAndRegistrationApi {
 			return error.response ;
 		});
 	}
+
+  static tenderDetailsRequest(tenderId) {
+    const headers = this.requestHeaders();
+
+    return axios({
+      method: 'GET',
+      url: getTendersDetailsUrl + `${tenderId}`,
+      headers: headers
+    }).then(function (response) {
+      return response;
+    }).catch(function (error) {
+      return error.response ;
+    });
+  }
 
 }
 

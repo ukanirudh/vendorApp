@@ -15,7 +15,7 @@ const AppHeaderProps = {
 
 class AllCategoryTenders extends Component {
   constructor(props) {
-      super(props);
+    super(props);
   }
 
   componentWillMount() {
@@ -23,14 +23,13 @@ class AllCategoryTenders extends Component {
   }
 
   componentDidMount() {
-    const { props } = this.props
+    const { getAllSubscribedTendersDispatch } = this.props
     this.setState({isLoading:true})
-    props.getAllSubscribedTendersDispatch(3)
+    getAllSubscribedTendersDispatch(3)
   }
 
   componentWillReceiveProps (newProps) {
-    const { props } = newProps
-    const { subscribed_category_tenders, isLoading } = props
+    const { subscribed_category_tenders, isLoading } = newProps
     this.setState({ categoryTenders:subscribed_category_tenders, isLoading })
   }
 

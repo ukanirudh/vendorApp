@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 /*Import components*/
 import ApplicationHomePage from './applicationHomePage/ApplicationHomePage'
@@ -14,11 +14,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <Switch>
         <Route exact path='/' component={ApplicationHomePage}/>
         <Route path='/about' component={AboutUs} />
         <Route path="/authorization" component={AuthenticationModule}></Route>
         <Route path="/vendor" component={VendorHome}></Route>
         <Route path="/client" component={ClientHome}></Route>
+      </Switch>
       </div>
     );
   }

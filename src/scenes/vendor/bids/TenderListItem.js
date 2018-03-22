@@ -1,5 +1,6 @@
 import React from 'react'
-import { Grid, Card, Button, Statistic, Icon } from 'semantic-ui-react'
+import { Grid, Card, Button, Statistic, Icon, Reveal, Input } from 'semantic-ui-react'
+import { CreateBrowserHistory } from '../../../commonComponents'
 
 const TenderListItem = (props) => {
   const {sub_category, quantity, tenderEnds} = props
@@ -9,7 +10,7 @@ const TenderListItem = (props) => {
   }
   return (
     <Grid.Column style={{marginBottom:15}}>
-      <Card>
+      <Card onClick={() => CreateBrowserHistory.push('/vendor/tender/1')}  title='View Details'>
         <Card.Content>
           <Statistic floated='right'>
             <Statistic.Value>
@@ -30,11 +31,6 @@ const TenderListItem = (props) => {
           <Card.Description>
             This tender elapses in {tenderEnds} days
           </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <div className='ui two buttons'>
-            <Button basic color='green'>Place Bid</Button>
-          </div>
         </Card.Content>
       </Card>
     </Grid.Column>

@@ -3,22 +3,22 @@ import { Grid, Card, Button, Statistic, Icon, Reveal, Input } from 'semantic-ui-
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const TenderListItem = (props) => {
-  const {sub_category, quantity, tenderEnds} = props
+  const {sub_category, quantity, tenderEnds, id, rank} = props
   let name=''
   if(sub_category) {
     name = sub_category.name
   }
   return (
     <Grid.Column style={{marginBottom:15}}>
-      <Card onClick={() => CreateBrowserHistory.push('/vendor/tender/1')}  title='View Details'>
+      <Card onClick={() => CreateBrowserHistory.push(`/vendor/tender/${id}`)}  title='View Details'>
         <Card.Content>
-          <Statistic floated='right'>
+          {rank && <Statistic floated='right'>
             <Statistic.Value>
               <Icon name='star' />
               5
             </Statistic.Value>
             <Statistic.Label>Rank</Statistic.Label>
-          </Statistic>
+          </Statistic>}
           <Card.Header>
             {name}
           </Card.Header>

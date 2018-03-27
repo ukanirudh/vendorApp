@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 import { getAllMainCategoriesDispatch, updateBasicDetailsDispatch,
   updateBankDetailsDispatch, getBasicDetailsDispatch, getBankDetailsDispatch,
    setErrorFlag } from './root-reducers/Vendor_Actions_Reducer'
-import { getTenderDetailsDispatch, getAllSubscribedTendersDispatch } from './root-reducers/Tender_Actions_Reducer'
+import { getTenderDetailsDispatch, getAllSubscribedTendersDispatch, postBidDispatch,
+  getOngoingTendersDispatch } from './root-reducers/Tender_Actions_Reducer'
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -56,14 +57,16 @@ function mapStateToProps(state) {
   //console.log(state.vendorReducer)
   const {tenderReducer, vendorReducer} = state
   const { current_user, main_categories, registrationSuccessStatus, notificationMsg} = vendorReducer
-  const { tender_details, subscribed_category_tenders, isLoading } = tenderReducer
+  const { tender_details, subscribed_category_tenders, on_going_tenders, isLoading, post_bid } = tenderReducer
   return {
     current_user,
     main_categories,
     subscribed_category_tenders,
+    on_going_tenders,
     isLoading,
     registrationSuccessStatus,
     tender_details,
+    post_bid,
     notificationMsg
   };
 }
@@ -79,6 +82,8 @@ function mapDispatchToProps(dispatch) {
       getBasicDetailsDispatch,
       getBankDetailsDispatch,
       getTenderDetailsDispatch,
+      getOngoingTendersDispatch,
+      postBidDispatch,
       setErrorFlag,
       onUpdateBasicDetailsClick: () => dispatch(submit('VendorBasicDetailsForm')),
       onUpdateBankDetailsClick: () => dispatch(submit('VendorBankDetailsForm')),

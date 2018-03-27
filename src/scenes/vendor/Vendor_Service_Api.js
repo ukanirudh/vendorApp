@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 const getMainCategoriesUrl = '/main_categories';
-const getAllSubscribedTendersUrl = '/tenders_main_category';
+const getAllSubscribedTendersUrl = '/potential_tenders';
 const vendorBasicDeatilsUrl='/basic_details';
 const vendorBankDeatilsUrl='/business_details';
-const getTendersDetailsUrl = '/tender_details';
+const getTendersDetailsUrl = '/tender';
+const BidsUrl = '/bid';
+const bidsBulkAction = '/bids'
 
 class AunthenticationAndRegistrationApi {
 
@@ -83,7 +85,7 @@ class AunthenticationAndRegistrationApi {
 
     return axios({
       method: 'GET',
-      url: getTendersDetailsUrl + `${tenderId}`,
+      url: getTendersDetailsUrl + `/${tenderId}`,
       headers: headers
     }).then(function (response) {
       return response;
@@ -92,6 +94,20 @@ class AunthenticationAndRegistrationApi {
     });
   }
 
+  static tenderBidRequest(type, payloadData, statusType) {
+    const headers = this.requestHeaders();
+    let bidsReqUrl = (statusType) ? bidsBulkAction + `/${statusType}` : BidsUrl
+    return axios({
+      method: type,
+      url: bidsReqUrl,
+      headers: headers,
+      data: payloadData
+    }).then(function (response) {
+      return response;
+    }).catch(function (error) {
+      return error.response ;
+    });
+  }
 }
 
 export default AunthenticationAndRegistrationApi;

@@ -1,50 +1,48 @@
 import React, {Component} from 'react'
 import { Segment, Header, Card, Button, Statistic, Input,
    Icon, Grid, List, Transition } from 'semantic-ui-react'
+import TenderBasicDetailsTemplate from './TenderBasicDetailsTemplate'
+import { CreateBrowserHistory } from '../../../commonComponents'
 
-const TenderBasicDetailsTemplate = ({material, quantity, description, elapses_in}) => {
-  return (
-    <Grid>
-      <Grid.Row>
-        <Grid.Column width={5}> Required Material </Grid.Column>
-        <Grid.Column width={5}> {material} </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={5}> Required Quantity </Grid.Column>
-        <Grid.Column width={5}> {quantity} </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={5}> Additional Description/specification </Grid.Column>
-        <Grid.Column width={5}> {description} </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={5}> Tender elapses in </Grid.Column>
-        <Grid.Column width={5}> {elapses_in} days </Grid.Column>
-      </Grid.Row>
-    </Grid>
-  )
-}
 class TenderDetails extends Component {
 
   componentWillMount () {
-    this.setState({visible: false})
+    this.setState({visible: false, tenderDetails: {}, bidValue:'', postBidSuccess: false})
   }
 
   componentDidMount() {
     const {computedMatch:{params}} = this.props
     const tenderId = params.id
-    //const { getTenderDetailsDispatch } = this.props
-    //getTenderDetailsDispatch(tenderId)
+    const { getTenderDetailsDispatch } = this.props
+    getTenderDetailsDispatch(tenderId)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {tender_details, post_bid} = nextProps
+    if(post_bid) {
+      CreateBrowserHistory.push({
+       pathname: "/vendor"
+     })
+    }
+    this.setState({tenderDetails: tender_details})
+  }
+
+  placeBid = () => {
+    const {computedMatch:{params}} = this.props
+    var data = {tenderId: params.id, value: this.state.bidValue}
+    this.props.postBidDispatch(data)
+  }
+
+  onBidChange = (event, data) => {
+    const {name, value} = data
+    this.setState({bidValue: value})
   }
 
   handleVisibility = () => this.setState({ visible: !this.state.visible })
 
   render () {
-    const {sub_category, quantity, tenderEnds, rank} = this.props
-    let name=''
-    if(sub_category) {
-      name = sub_category.name
-    }
+    const {tenderDetails} = this.state
+    const {quantity='', tenderEnds='', rank} = tenderDetails
     return (
       <Segment textAlign='center' style={{marginBottom:15}}>
         <Header as='h2'> Tender Details
@@ -65,7 +63,7 @@ class TenderDetails extends Component {
             </Grid.Column>
             <Grid.Column width={11}>
               <Header as='h2'> Requirement Details </Header>
-              {TenderBasicDetailsTemplate({material: 'Sand', quantity: '32 kgs', description: 'Description', elapses_in: 5})}
+              {TenderBasicDetailsTemplate({material: 'Sand', quantity, description: 'Description', elapses_in: tenderEnds})}
               <Transition.Group animation={'fade left'} duration={500}>
                 {!this.state.visible &&
                   <Grid centered columns={2}>
@@ -78,9 +76,9 @@ class TenderDetails extends Component {
               <Transition.Group animation={'fade right'} duration={500}>
                 {this.state.visible &&
                   <div style={{marginTop:20}}>
-                    <Input style={{marginTop: 10}} type='text' placeholder='Search...' action>
-                      <Button onClick={() => {console.log('here')}} labelPosition='left' icon='cart' color='teal' content='Place it'/>
-                      <input />
+                    <Input name='bid' onChange={this.onBidChange} style={{marginTop: 10}} type='text' placeholder='Search...' action>
+                      <Button onClick={this.placeBid} labelPosition='left' icon='cart' color='teal' content='Place it'/>
+                      <input type='number' />
                       <Button onClick={this.handleVisibility} icon='remove circle' color='red' />
                     </Input>
                   </div>

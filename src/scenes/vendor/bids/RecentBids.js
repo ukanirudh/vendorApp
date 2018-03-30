@@ -6,7 +6,11 @@ class RecentBids extends Component {
   render() {
     const {tenders} = this.props
     var items = [];
-    tenders.map((tenderDetails, i) => items.push( <TenderListItem {...tenderDetails.tender} key={i} /> ))
+    tenders.map((tenderDetails, i) => {
+      const {value, position, attemptsRemaining, id} = tenderDetails
+      const otherDetails = {position, value, attemptsRemaining, bidId: id}
+      items.push( <TenderListItem {...tenderDetails.tender} otherDetails={otherDetails} isTypeBid key={i} /> )
+    })
     return (
       <Segment className='dashboard-bids-container'>
         <Header as='h2' textAlign='center'>

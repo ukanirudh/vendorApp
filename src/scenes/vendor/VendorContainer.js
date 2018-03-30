@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { getAllMainCategoriesDispatch, updateBasicDetailsDispatch,
   updateBankDetailsDispatch, getBasicDetailsDispatch, getBankDetailsDispatch,
    setErrorFlag } from './root-reducers/Vendor_Actions_Reducer'
-import { getTenderDetailsDispatch, getAllSubscribedTendersDispatch, postBidDispatch,
-  getOngoingTendersDispatch } from './root-reducers/Tender_Actions_Reducer'
+import { getTenderDetailsDispatch, getTenderBidDetailsDispatch, getAllSubscribedTendersDispatch,
+  postBidDispatch, getOngoingTendersDispatch } from './root-reducers/Tender_Actions_Reducer'
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -17,6 +17,7 @@ import VendorHomePage from './VendorHome'
 import AllCategoryTenders from './bids/AllCategoryTenders'
 import Profile from './profileInfo/Profile'
 import TenderDetails from './bids/TenderDetails'
+import TenderBidDetailsComp from './bids/TenderBidDetailsComp'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -45,6 +46,7 @@ class VendorContainer extends Component {
         <PropsRoute path='/vendor/Profile' component={Profile} {...this.props} />
         <PropsRoute path='/vendor/tenderlist' component={AllCategoryTenders} {...this.props} />
         <PropsRoute path='/vendor/tender/:id' component={TenderDetails} {...this.props} />
+        <PropsRoute path='/vendor/tender_bids/:id' component={TenderBidDetailsComp} {...this.props} />
         <ToastContainer />
       </Switch>
       </div>
@@ -82,6 +84,7 @@ function mapDispatchToProps(dispatch) {
       getBasicDetailsDispatch,
       getBankDetailsDispatch,
       getTenderDetailsDispatch,
+      getTenderBidDetailsDispatch,
       getOngoingTendersDispatch,
       postBidDispatch,
       setErrorFlag,

@@ -80,12 +80,12 @@ class AunthenticationAndRegistrationApi {
 		});
 	}
 
-  static tenderDetailsRequest(tenderId) {
+  static tenderDetailsRequest(tenderId, isTypeBid) {
     const headers = this.requestHeaders();
-
+    const getDetailsUrl = isTypeBid ? BidsUrl : getTendersDetailsUrl
     return axios({
       method: 'GET',
-      url: getTendersDetailsUrl + `/${tenderId}`,
+      url: getDetailsUrl + `/${tenderId}`,
       headers: headers
     }).then(function (response) {
       return response;

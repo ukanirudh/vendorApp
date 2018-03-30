@@ -4,27 +4,29 @@ import { Segment, Header, Card, Button, Statistic, Input,
 import TenderBasicDetailsTemplate from './TenderBasicDetailsTemplate'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
-class TenderDetails extends Component {
+class TenderBidDetailsComp extends Component {
 
   componentWillMount () {
-    this.setState({visible: false, tenderDetails: {}, bidValue:'', postBidSuccess: false})
+    this.setState({visible: false, tenderDetails: {}, otherDetails: {}, bidValue:'', postBidSuccess: false})
   }
 
   componentDidMount() {
     const {computedMatch:{params}} = this.props
-    const tenderId = params.id
-    const { getTenderDetailsDispatch } = this.props
-    getTenderDetailsDispatch(tenderId)
+    const bidId = params.id
+    const { getTenderBidDetailsDispatch } = this.props
+    getTenderBidDetailsDispatch(bidId)
   }
 
   componentWillReceiveProps(nextProps) {
     const {tender_details, post_bid} = nextProps
+    //console.log(nextProps)
     if(post_bid) {
       CreateBrowserHistory.push({
        pathname: "/vendor"
      })
     }
-    this.setState({tenderDetails: tender_details})
+    const {tender, position, attemptsRemaining, value} = tender_details
+    this.setState({tenderDetails: tender, otherDetails: {position, attemptsRemaining, value}})
   }
 
   placeBid = () => {
@@ -41,12 +43,18 @@ class TenderDetails extends Component {
   handleVisibility = () => this.setState({ visible: !this.state.visible })
 
   render () {
-    const {tenderDetails} = this.state
+    const {tenderDetails, otherDetails} = this.state
     const {quantity='', tenderEnds='', sub_category=''} = tenderDetails
+    const {position, attemptsRemaining, value} = otherDetails
     const subCategoryName = sub_category ? sub_category.name : ''
     return (
       <Segment textAlign='center' style={{marginBottom:15}}>
-        <Header as='h2'> Tender Details </Header>
+        <Header as='h2'> Tender Details
+          {position && <Statistic floated='right'>
+            <Statistic.Value> <Icon name='star' /> {position} </Statistic.Value>
+            <Statistic.Label>Rank</Statistic.Label>
+          </Statistic>}
+        </Header>
         <Grid divided>
           <Grid.Row>
             <Grid.Column  width={5}>
@@ -89,4 +97,4 @@ class TenderDetails extends Component {
 }
 
 
-export default TenderDetails
+export default TenderBidDetailsComp

@@ -46,6 +46,19 @@ export function getTenderDetailsDispatch(tenderId) {
   };
 }
 
+export function getTenderBidDetailsDispatch(tenderId) {
+  return function(dispatch) {
+    return VendorServiceApi.tenderDetailsRequest(tenderId, true).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(getTenderDetails(response.data));
+      else
+        dispatch({ type: "HANDLE_ERROR", payload: response})
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  };
+}
+
 export function postBidDispatch(payload) {
   return function(dispatch) {
     dispatch(setPostBidRequest())

@@ -113,7 +113,7 @@ class ClientServiceApis {
 
 		return axios({
 			method: 'GET',
-			url: getTopThreeBidsUrl'/' + tendorId,
+			url: getTopThreeBidsUrl +'/' + tendorId,
 			headers: headers
 		}).then(function (response) {
 			return response;

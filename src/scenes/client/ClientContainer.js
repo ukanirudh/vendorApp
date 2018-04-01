@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
   getAllSubCategoriesDispatch, getClientAllTendorsDispatch,
-  updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
+  updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,getTopThreeBidsDispatch,
   getBankDetailsDispatch, setErrorFlag } from "./root-reducers/Client_Actions_Reducer";
 import { bindActionCreators } from "redux";
 
@@ -52,12 +52,13 @@ class ClientContainer extends Component {
 //map store state to component state
 function mapStateToProps(state) {
   //console.log(state.clientReducer)
-  const { current_user, main_categories, sub_categories, all_client_tendors, registrationSuccessStatus, notificationMsg} = state.clientReducer
+  const { current_user, main_categories, sub_categories, all_client_tendors, top_three_bids,registrationSuccessStatus, notificationMsg} = state.clientReducer
   return {
     current_user,
     main_categories,
     sub_categories,
     all_client_tendors,
+    top_three_bids,
     registrationSuccessStatus,
     notificationMsg
   };
@@ -74,6 +75,7 @@ function mapDispatchToProps(dispatch) {
     updateBankDetailsDispatch,
     getBasicDetailsDispatch,
     getBankDetailsDispatch,
+    getTopThreeBidsDispatch,
     setErrorFlag,
     onNewTenderClick: () => dispatch(submit('PostTender')),
     onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),

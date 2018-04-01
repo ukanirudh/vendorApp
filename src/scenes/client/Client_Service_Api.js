@@ -6,6 +6,7 @@ const createTendorUrl = '/tender';
 const getClientAllTendersUrl='/client_tenders';
 const clientBasicDeatilsUrl='/basic_details';
 const clientBankDeatilsUrl='/business_details';
+const getTopThreeBidsUrl= '/tender_bids';
 
 class ClientServiceApis {
 
@@ -76,6 +77,7 @@ class ClientServiceApis {
 			return error.response ;
 		});
 	}
+	
 
 	static getAllSubCategories( mainCategoryId ) {
 		const subCatUrl = getSubCategoriesUrl + '/' + mainCategoryId ;
@@ -98,6 +100,20 @@ class ClientServiceApis {
 		return axios({
 			method: 'GET',
 			url: getClientAllTendersUrl,
+			headers: headers
+		}).then(function (response) {
+			return response;
+		}).catch(function (error) {
+			return error.response ;
+		});
+	}
+
+	static getTopThreeBids(tendorId) {
+		const headers = this.requestHeaders();
+
+		return axios({
+			method: 'GET',
+			url: getTopThreeBidsUrl'/' + tendorId,
 			headers: headers
 		}).then(function (response) {
 			return response;

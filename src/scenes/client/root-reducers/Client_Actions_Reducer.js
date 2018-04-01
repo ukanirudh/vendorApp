@@ -7,6 +7,7 @@ const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
+const GET_TOP_THREE_BIDS = 'GET_TOP_THREE_BIDS'
 const SHOW_MESSAGE = 'SHOW_MESSAGE'
 const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
 
@@ -116,6 +117,21 @@ export function getClientAllTendorsDispatch() {
   };
 }
 
+export function getTopThreeBidsDispatch(tendorId) {
+  return function(dispatch) {
+    return ClientServiceApi.getTopThreeBids(tendorId).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(getTopThreeBids(response.data));
+      else
+        console.log("dispatch error::",response);;
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  };
+}
+
+
+
 export function onSetCurrentUserData(userDetails) {
   return {
     type: SET_CURRENT_USER_DATA,
@@ -158,6 +174,13 @@ export function getClientAllTendors(data) {
   };
 }
 
+export function getTopThreeBids(data) {
+  return {
+    type: GET_TOP_THREE_BIDS,
+    payload: data
+  };
+}
+
 export function showMessage(message) {
   return {
     type: SHOW_MESSAGE,
@@ -178,6 +201,7 @@ const INITIAL_STATE = {
   main_categories:[],
   sub_categories:[],
   all_client_tendors:[],
+  top_three_bids:[],
   notificationMsg: '',
   
 }
@@ -203,6 +227,11 @@ export default function reducer(state = INITIAL_STATE, action) {
     case GET_CLIENT_ALL_TENDORS:
        var { data } = action.payload
       return { ...state , all_client_tendors: data };
+
+
+    case GET_TOP_THREE_BIDS:
+       var { data } = action.payload
+      return { ...state , top_three_bids: data };
 
     case SHOW_MESSAGE:
       return {...state, registrationSuccessStatus:true, notificationMsg: action.payload };

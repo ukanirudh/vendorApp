@@ -1,7 +1,5 @@
 import ClientServiceApi from '../Client_Service_Api';
-import { CreateBrowserHistory } from '../../../commonComponents'
 
-const SET_CURRENT_USER_DATA = 'SET_CURRENT_USER_DATA'
 const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
@@ -106,20 +104,15 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
 export function getClientAllTendorsDispatch() {
   return function(dispatch) {
     return ClientServiceApi.getClientAllTendors().then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(getClientAllTendors(response.data));
+      if(response.status === 201 || response.status === 200) {
+        dispatch({type:'SUCCESS_TOAST', payload: 'Tender list retrived'})
+        dispatch(getClientAllTendors(response.data))
+      }
       else
         console.log("dispatch error::",response);;
     }).catch(error => {
       console.log("dispatch person::",error);
     });
-  };
-}
-
-export function onSetCurrentUserData(userDetails) {
-  return {
-    type: SET_CURRENT_USER_DATA,
-    payload: userDetails
   };
 }
 
@@ -178,8 +171,7 @@ const INITIAL_STATE = {
   main_categories:[],
   sub_categories:[],
   all_client_tendors:[],
-  notificationMsg: '',
-  
+  notificationMsg: ''
 }
 
 export default function reducer(state = INITIAL_STATE, action) {

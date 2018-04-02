@@ -1,50 +1,26 @@
-// export function submitLoginDispatch( payload) {
-//
-//   return function(dispatch) {
-//     return AunthenticationAndRegistrationApi.applicantLogin(payload).then(response => {
-//       //console.log("dispatch login suc::",response);
-//       if(response.status === 201 || response.status === 200)
-//         dispatch(submitLogin(response.data));
-//       else
-//         dispatch(handleError(response));
-//     }).catch(error => {
-//       console.log("dispatch person::",error);
-//     });
-//   };
-// }
-
-
-export function handleError(error) {
+export function clearNotificationsMesaage() {
   return {
-    type: "HANDLE_ERROR",
-    payload: error
-  };
-}
-
-export function setErrorFlag(flag) {
-  return {
-    type: "SET_ERROR_FLAG",
-    payload: flag
+    type: 'CLEAR_MESSAGE',
+    payload: ''
   };
 }
 
 const INITIAL_STATE = {
-  registrationSuccessStatus: false,
-  registrationMessage: '',
-  hasError: false
+  toast_message: ''
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
-  case "HANDLE_ERROR":
-  	return { ...state , registrationSuccessStatus: false, hasError: true,
-		registrationMessage: action.payload.data.message }
+  case "SUCCESS_TOAST":
+    //const toast_messages_queue = [...state.toast_messages_queue]
+    //toast_messages_queue.push(action.payload)
+    return {...state, 'toast_message': action.payload}
 
-  case "SET_ERROR_FLAG":
-  	return { ...state , registrationSuccessStatus: false, hasError: action.payload }
+  case "CLEAR_MESSAGE":
+    return {...state, 'toast_message': ''}
 
   default:
-    return state;
+    return {...state};
   }
 }

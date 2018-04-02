@@ -9,6 +9,7 @@ import { createNewTendorDispatch, getAllMainCategoriesDispatch,
   getAllSubCategoriesDispatch, getClientAllTendorsDispatch,
   updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
   getBankDetailsDispatch, setErrorFlag } from "./root-reducers/Client_Actions_Reducer";
+import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
@@ -16,6 +17,7 @@ import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
 import YourTendors from './tendors/YourTendors'
 import Profile from './profileInfo/Profile'
+import Notifications from '../../notificationsModule/Notifications'
 
 const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
@@ -37,29 +39,32 @@ class ClientContainer extends Component {
   componentWillMount() {}
 
   render () {
+    const {toast_message} = this.props
     return (
       <div style={{ padding: '0px 10px' }}>
         <PropsRoute exact path='/client' component={ClientHomePage} {...this.props} />
         <PropsRoute path='/client/newTendor' component={NewTendor} {...this.props} />
         <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
         <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
-        <ToastContainer />
+        <Notifications msg={toast_message} {...this.props} />
       </div>
     )
   }
 }
 
-//map store state to component state
+//map store state to component statetoast_message
 function mapStateToProps(state) {
-  //console.log(state.clientReducer)
-  const { current_user, main_categories, sub_categories, all_client_tendors, registrationSuccessStatus, notificationMsg} = state.clientReducer
+  const {clientReducer, notifications} = state
+  const { current_user, main_categories, sub_categories, all_client_tendors, registrationSuccessStatus, notificationMsg} = clientReducer
+  const { toast_message } = notifications
   return {
     current_user,
     main_categories,
     sub_categories,
     all_client_tendors,
     registrationSuccessStatus,
-    notificationMsg
+    notificationMsg,
+    toast_message
   };
 }
 
@@ -74,6 +79,7 @@ function mapDispatchToProps(dispatch) {
     updateBankDetailsDispatch,
     getBasicDetailsDispatch,
     getBankDetailsDispatch,
+    clearNotificationsMesaage,
     setErrorFlag,
     onNewTenderClick: () => dispatch(submit('PostTender')),
     onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),

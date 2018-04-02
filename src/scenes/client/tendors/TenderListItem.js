@@ -26,8 +26,7 @@ const TenderListItem = (props) => {
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <Button basic color='green'>Accept</Button>
-            <Button basic color='red'>Decline</Button>
+            <Button basic color='green' fluid>View Details</Button>
           </div>
         </Card.Content>
       </Card>

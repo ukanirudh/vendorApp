@@ -5,16 +5,16 @@ const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
-const SHOW_MESSAGE = 'SHOW_MESSAGE'
-const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
     return ClientServiceApi.newTendorRequest(payload).then(response => {
-      if(response.status === 201 || response.status === 200)
+      if(response.status === 201 || response.status === 200) {
         dispatch(onCreateNewTender(response.data))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Your Tender has been posted!'})
+      }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Failed to post your tender!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -52,10 +52,10 @@ export function updateBasicDetailsDispatch(payload) {
     return ClientServiceApi.clientBasicDeatilsResquest('PUT', payload).then(response => {
       if(response.status === 201 || response.status === 200) {
         dispatch(updateClientData(response.data))
-        dispatch(showMessage('Basic Details Updated Successfully'))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Basic Details Updated Successfully'})
       }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Failed to update Basic details!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -65,10 +65,12 @@ export function updateBasicDetailsDispatch(payload) {
 export function updateBankDetailsDispatch(payload) {
   return (dispatch, getState) => {
     return ClientServiceApi.clientBankDeatilsResquest('PUT', payload).then(response => {
-      if(response.status === 201 || response.status === 200)
+      if(response.status === 201 || response.status === 200) {
         dispatch(updateClientData(response.data))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Bank Details Updated Successfully'})
+      }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Failed to update Bank details!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -151,56 +153,30 @@ export function getClientAllTendors(data) {
   };
 }
 
-export function showMessage(message) {
-  return {
-    type: SHOW_MESSAGE,
-    payload: message
-  };
-}
-
-export function setErrorFlag(flag) {
-  return {
-    type: SET_ERROR_FLAG,
-    payload: flag
-  };
-}
-
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: false,
   main_categories:[],
   sub_categories:[],
   all_client_tendors:[],
-  notificationMsg: ''
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case UPDATE_CLIENT_DATA:
-      var { data } = action.payload
-      return {...state, ...{current_user: data}};
+      return {...state, ...{current_user: action.payload.data}};
 
     case ON_CREATE_TENDER:
       return {...state};
 
     case GET_ALL_MAIN_CATEGORIES:
-      var { data } = action.payload
-      return { ...state , main_categories: data };
+      return { ...state , main_categories: action.payload.data };
 
     case GET_ALL_SUB_CATEGORIES:
-      var { data } = action.payload
-      return { ...state , sub_categories: data };
+      return { ...state , sub_categories: action.payload.data };
 
     case GET_CLIENT_ALL_TENDORS:
-       var { data } = action.payload
-      return { ...state , all_client_tendors: data };
-
-    case SHOW_MESSAGE:
-      return {...state, registrationSuccessStatus:true, notificationMsg: action.payload };
-
-    case SET_ERROR_FLAG:
-    	return { ...state , registrationSuccessStatus: action.payload, hasError: action.payload }
+      return { ...state , all_client_tendors: action.payload.data };
 
     default:
       return state;

@@ -6,9 +6,9 @@ class Notifications extends Component {
   componentWillMount() {}
 
   componentWillReceiveProps(nextProps) {
-    const {msg, clearNotificationsMesaage} = nextProps
+    const {msg, clearNotificationsMesaage, toast_type} = nextProps
     if (msg && !toast.isActive(this.toastId)) {
-      this.toastId = toast(msg, { autoClose: false })
+      this.toastId = toast(msg, { type: toast_type, autoClose: 5000 })
       clearNotificationsMesaage()
     }
   }

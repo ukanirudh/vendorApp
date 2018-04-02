@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { Button, Grid, Segment } from 'semantic-ui-react'
 import {EntityForm} from '../../../utils/GenericForm'
 import basicInfoFields from '../constants/basic-info-fields'
-import { toast } from 'react-toastify';
 
 class BasicInfo extends Component {
 
   constructor(props) {
     super(props)
-
     this.CreateForm =
       EntityForm({
           name: 'PostBasicInfo',
@@ -27,25 +25,8 @@ class BasicInfo extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const {current_user, registrationSuccessStatus, notificationMsg} = nextProps
-    if(registrationSuccessStatus) {
-      this.notify(notificationMsg)
-    }
+    const {current_user} = nextProps
     this.setState({currentUserData: current_user})
-  }
-
-  notify = (message) => {
-    const options = {
-      //onOpen: props => console.log(props.foo),
-      onClose: () => {
-        const { props } = this.props
-        const { setErrorFlag } = props
-        setErrorFlag(false)
-      },
-      autoClose: false,
-      type: toast.TYPE.SUCCESS,
-    };
-    return toast(message,options)
   }
 
   renderRoomFormWithSubmit = () => {

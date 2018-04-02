@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Grid, Header, List, Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 
 import { ResponsiveContainer, CreateBrowserHistory, HomePageHeading } from '../../commonComponents'
 import CompletedTendor from './homePageComponents/CompletedTendor'

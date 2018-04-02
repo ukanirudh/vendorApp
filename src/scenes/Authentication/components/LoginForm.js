@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-import { ToastContainer, toast } from 'react-toastify';
-import { connect } from "react-redux";
-import { submitLoginDispatch, setErrorFlag } from "../root-reducers/Login_Actions_Reducer";
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
+import { submitLoginDispatch } from "../root-reducers/Login_Actions_Reducer";
+import {clearNotificationsMesaage} from '../../../notificationsModule/Notifications_Reducer'
+
+import Notifications from '../../../notificationsModule/Notifications'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 class LoginForm extends Component {
@@ -24,22 +26,9 @@ class LoginForm extends Component {
     this.props.submitLoginDispatch(payloadData)
   }
 
-  notify = (message) => {
-    const options = {
-      //onOpen: props => console.log(props.foo),
-      onClose: () => {
-        const { setErrorFlag } = this.props
-        setErrorFlag(false)
-      },
-      autoClose: false,
-      type: toast.TYPE.ERROR,
-    };
-    return toast(message,options)
-  }
-
   componentWillReceiveProps (newProps) {
     //console.log(newProps)
-    const {current_user, registrationSuccessStatus, hasError, registrationMessage, userType} = newProps
+    const { registrationSuccessStatus, userType} = newProps
     if(registrationSuccessStatus) {
       if(userType === 'vendor') {
         CreateBrowserHistory.push({
@@ -51,15 +40,13 @@ class LoginForm extends Component {
         })
       }
     }
-    if(hasError) {
-      this.notify(registrationMessage)
-    }
   }
 
   handleFormValuesChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
     const { username, password } = this.state
+    const {toast_message} = this.props
     return (
       <Grid
         columns={3}
@@ -67,8 +54,8 @@ class LoginForm extends Component {
         style={{ height: '100%', marginTop: 45 }}
         verticalAlign='middle'
       >
+        <Notifications msg={toast_message} {...this.props} />
         <Grid.Row>
-          <ToastContainer />
           <Header as='h2' color='teal' textAlign='center'>
             Log-in to your account
           </Header>
@@ -106,14 +93,15 @@ class LoginForm extends Component {
 
 //map store state to component state
 function mapStateToProps(state) {
-  const { LoginModule } = state
-  const { current_user, registrationSuccessStatus, registrationMessage, hasError } = LoginModule
-  return ({ current_user, registrationSuccessStatus, registrationMessage, hasError })
+  const { LoginModule, notifications } = state
+  const { registrationSuccessStatus } = LoginModule
+  const { toast_message, toast_type } = notifications
+  return ({ registrationSuccessStatus, toast_message, toast_type })
 }
 
 //map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ submitLoginDispatch, setErrorFlag }, dispatch);
+  return bindActionCreators({ submitLoginDispatch, clearNotificationsMesaage }, dispatch);
 }
 
 //conect our component with store state and store dispatch functions

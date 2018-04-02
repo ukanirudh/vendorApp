@@ -90,9 +90,7 @@ class AuthenticationHomePage extends Component {
       <Segment>
         <Header as='h2' icon textAlign='center'>
           <Icon name='users' circular />
-          <Header.Content>
-            You are a ?
-          </Header.Content>
+          <Header.Content> You are a ? </Header.Content>
         </Header>
         <Grid
           style={{ height: '100%', marginTop: 45 }}

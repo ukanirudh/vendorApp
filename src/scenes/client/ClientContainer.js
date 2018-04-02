@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom';
 import {submit} from 'redux-form'
-import { ToastContainer } from 'react-toastify';
 
 /*routing and redux*/
 import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
   getAllSubCategoriesDispatch, getClientAllTendorsDispatch,
   updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
-  getBankDetailsDispatch, setErrorFlag } from "./root-reducers/Client_Actions_Reducer";
+  getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer";
 import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 import { bindActionCreators } from "redux";
 
@@ -55,16 +54,15 @@ class ClientContainer extends Component {
 //map store state to component statetoast_message
 function mapStateToProps(state) {
   const {clientReducer, notifications} = state
-  const { current_user, main_categories, sub_categories, all_client_tendors, registrationSuccessStatus, notificationMsg} = clientReducer
-  const { toast_message } = notifications
+  const { current_user, main_categories, sub_categories, all_client_tendors} = clientReducer
+  const { toast_message, toast_type } = notifications
   return {
     current_user,
     main_categories,
     sub_categories,
     all_client_tendors,
-    registrationSuccessStatus,
-    notificationMsg,
-    toast_message
+    toast_message,
+    toast_type
   };
 }
 
@@ -80,7 +78,6 @@ function mapDispatchToProps(dispatch) {
     getBasicDetailsDispatch,
     getBankDetailsDispatch,
     clearNotificationsMesaage,
-    setErrorFlag,
     onNewTenderClick: () => dispatch(submit('PostTender')),
     onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),
     onUpdateBankDetailsClick: () => dispatch(submit('PostBankInfo')),

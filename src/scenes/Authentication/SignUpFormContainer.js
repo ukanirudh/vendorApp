@@ -25,17 +25,14 @@ class SignUpFormContainer extends Component {
   }
 }
 
-//map store state to component state
 function mapStateToProps(state) {
   const {notifications} = state
   const {toast_message, toast_type} = notifications
   return ({ toast_message, toast_type })
 }
 
-//map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ submitVendorSingUpDispatch, submitClientSingUpDispatch, clearNotificationsMesaage }, dispatch);
 }
 
-//conect our component with store state and store dispatch functions
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpFormContainer);

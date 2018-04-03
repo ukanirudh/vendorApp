@@ -1,6 +1,5 @@
-import React, {Component} from 'react'
-import {pick, isEmpty} from 'lodash'
-import { Form, Button, Dropdown, Checkbox, TextArea } from 'semantic-ui-react'
+import React from 'react'
+import { Form, Dropdown, Checkbox } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 

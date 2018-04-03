@@ -1,6 +1,6 @@
 import React from 'react'
 import { Field } from 'redux-form';
-import { Form, Button } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import InputWithErrors from './InputWithErrors'
 
 const ReduxForm = (props) => {

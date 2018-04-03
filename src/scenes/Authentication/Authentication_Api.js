@@ -1,24 +1,22 @@
 import axios from 'axios';
-import { CreateBrowserHistory } from '../../commonComponents'
 
 class AunthenticationAndRegistrationApi {
 
 	static requestHeaders() {
-	  	return {
-		    'Accept': 'application/json',
-		    'Content-Type': 'application/json'
-		}
+  	return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
 	}
 
 	static applicantLogin( payloadData ) {
 		//var baseUrl = global.devHost ;
 		const signInUrl = '/login';
-		const headers = this.requestHeaders();
 
 		return axios({
 			method: 'POST',
 			url: signInUrl,
-			headers: headers,
+			headers: this.requestHeaders(),
 			data: payloadData
 		}).then(function (response) {
 			return response;
@@ -48,12 +46,12 @@ class AunthenticationAndRegistrationApi {
 	static registerVendor( dataPayload ) {
 		//const baseUrl = global.devHost ;
 		//const registerVendorUrl = '/signup';
-	  const headers = this.requestHeaders();
 	  return axios({
-	       method: 'POST',
-	       url: '/signup',
-	       data: dataPayload
-	    }).then(function (response) {
+      method: 'POST',
+      url: '/signup',
+      headers: this.requestHeaders(),
+      data: dataPayload
+    }).then(function (response) {
 	    return (response)
 	  }).catch(function (error) {
 	    //console.log("error",error.response);
@@ -64,12 +62,12 @@ class AunthenticationAndRegistrationApi {
 	static registerClient (dataPayload) {
 	  //const baseUrl = global.devHost ;
 	  //const registerApplicantUrl = '/signup';
-	  const headers = this.requestHeaders();
 	  return axios({
-	       method: 'POST',
-	       url: '/signup',
-	       data: dataPayload
-	    }).then(function (response) {
+      method: 'POST',
+      url: '/signup',
+      headers: this.requestHeaders(),
+      data: dataPayload
+    }).then(function (response) {
 	    return (response)
 	  }).catch(function (error) {
 	    //console.log("error",error.response);

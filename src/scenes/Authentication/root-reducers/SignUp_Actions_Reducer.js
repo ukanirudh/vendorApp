@@ -3,11 +3,12 @@ import AunthenticationAndRegistrationApi from '../Authentication_Api';
 export function submitVendorSingUpDispatch(dataPayload) {
   return function(dispatch) {
     return AunthenticationAndRegistrationApi.registerVendor(dataPayload).then(response => {
-      //console.log("dispatch login suc::",response);
-      if(response.status === 201 || response.status === 200)
-        dispatch(vendorSingUp(response));
-      else
-        dispatch({ type: "HANDLE_ERROR", payload: response });
+      if(response.status === 201 || response.status === 200) {
+        dispatch(vendorSingUp(response))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Sign up Successful! Please verify your email via link sent your registered email'})
+      } else {
+        dispatch({type:'ERROR_TOAST', payload: response.data.message})
+      }
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -17,11 +18,12 @@ export function submitVendorSingUpDispatch(dataPayload) {
 export function submitClientSingUpDispatch(dataPayload) {
   return function(dispatch) {
     return AunthenticationAndRegistrationApi.registerClient(dataPayload).then(response => {
-      //console.log("dispatch login suc::",response);
-      if(response.status === 201 || response.status === 200)
-        dispatch(clientSingUp(response));
-      else
-        dispatch({ type: "HANDLE_ERROR", payload: response });
+      if(response.status === 201 || response.status === 200) {
+        dispatch(clientSingUp(response))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Sign up Successful! Please verify your email via link sent your registered email'})
+      } else {
+        dispatch({type:'ERROR_TOAST', payload: response.data.message})
+      }
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -51,14 +53,8 @@ export default function SingupReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case "VENDOR_SIGNUP":
-    //console.log(action.payload);
-    	return { ...state , registrationSuccessStatus: action.payload.status };
-
 		case "CLIENT_SIGNUP":
-			console.log(action.payload);
-				return { ...state , registrationSuccessStatus: action.payload.status };
-
     default:
-      return state;
+      return {...state}
   }
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import ReduxForm from './ReduxForm'
 import validate from './postTenderValidation'

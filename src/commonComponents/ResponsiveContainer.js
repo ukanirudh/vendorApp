@@ -5,7 +5,7 @@ import MobileContainer from './MobileContainer'
 import DesktopContainer from './DesktopContainer'
 
 const ResponsiveContainer = (props) => {
-  const { children, HomePageHeading='', AppHeaderProps, headerPrimaryContentProps } = props
+  const { children, HomePageHeading='', headerPrimaryContentProps } = props
   return (
     <div>
       <DesktopContainer {...props}>{children}</DesktopContainer>

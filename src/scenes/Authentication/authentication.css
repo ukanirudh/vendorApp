@@ -4,14 +4,6 @@ body > div > div > div.login-form {
   height: 100%;
 }
 
-.login-form-grid {
-  /*max-width: 450px;*/
-}
-
-.user-type-grid {
-  /*height: 100px;*/
-}
-
 .user-type-content {
   height: inherit;
   background: #4B79A1 !important;  /* fallback for old browsers */

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Segment, Header, Button, Icon, Grid, List } from 'semantic-ui-react'
+import { Segment, Header, Icon, Grid, List } from 'semantic-ui-react'
 import TenderBasicDetailsTemplate from './TenderBasicDetailsTemplate'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 

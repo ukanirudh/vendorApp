@@ -4,7 +4,7 @@ import { CreateBrowserHistory } from '../../../commonComponents'
 
 const viewTenderDetails = (tenderId) => {
   CreateBrowserHistory.push({
-   pathname: '/client/tenderDetails/' + `${tenderId}`
+   pathname: `/client/tenderDetails/${tenderId}`
   })
 }
 

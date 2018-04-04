@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import {submit} from 'redux-form'
 
 /*routing and redux*/
@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import { createNewTendorDispatch, getAllMainCategoriesDispatch,
   getAllSubCategoriesDispatch, getClientAllTendorsDispatch,
   updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
-  getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer";
+  getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer"
+import {getTenderDetailsDispatch} from './root-reducers/Tender_Actions_Reducer'
 import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 import { bindActionCreators } from "redux";
 
@@ -15,37 +16,26 @@ import { bindActionCreators } from "redux";
 import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
 import YourTendors from './tendors/YourTendors'
+import TenderDetails from './tendors/TenderDetails'
 import Profile from './profileInfo/Profile'
+import {PropsRoute} from '../../utils/PropsRouteComponent'
 import Notifications from '../../notificationsModule/Notifications'
 
-const renderMergedProps = (component, ...rest) => {
-  const finalProps = Object.assign({}, ...rest);
-  return (
-    React.createElement(component, finalProps)
-  );
-}
-
-const PropsRoute = ({ component, ...rest }) => {
-  return (
-    <Route {...rest} render={routeProps => {
-      return renderMergedProps(component, routeProps, rest);
-    }}/>
-  );
-}
-
 class ClientContainer extends Component {
-
   componentWillMount() {}
 
   render () {
     const {toast_message} = this.props
     return (
       <div style={{ padding: '0px 10px' }}>
-        <PropsRoute exact path='/client' component={ClientHomePage} {...this.props} />
-        <PropsRoute path='/client/newTendor' component={NewTendor} {...this.props} />
-        <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
-        <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
-        <Notifications msg={toast_message} {...this.props} />
+        <Switch>
+          <PropsRoute exact path='/client' component={ClientHomePage} {...this.props} />
+          <PropsRoute path='/client/newTendor' component={NewTendor} {...this.props} />
+          <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
+          <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
+          <PropsRoute path='/client/tenderDetails/:id' component={TenderDetails} {...this.props} />
+          <Notifications msg={toast_message} {...this.props} />
+        </Switch>
       </div>
     )
   }
@@ -53,14 +43,16 @@ class ClientContainer extends Component {
 
 //map store state to component statetoast_message
 function mapStateToProps(state) {
-  const {clientReducer, notifications} = state
+  const {clientReducer, tenderReducer, notifications} = state
   const { current_user, main_categories, sub_categories, all_client_tendors} = clientReducer
   const { toast_message, toast_type } = notifications
+  const { tender_details } = tenderReducer
   return {
     current_user,
     main_categories,
     sub_categories,
     all_client_tendors,
+    tender_details,
     toast_message,
     toast_type
   };
@@ -78,6 +70,7 @@ function mapDispatchToProps(dispatch) {
     getBasicDetailsDispatch,
     getBankDetailsDispatch,
     clearNotificationsMesaage,
+    getTenderDetailsDispatch,
     onNewTenderClick: () => dispatch(submit('PostTender')),
     onUpdateBasicDetailsClick: () => dispatch(submit('PostBasicInfo')),
     onUpdateBankDetailsClick: () => dispatch(submit('PostBankInfo')),

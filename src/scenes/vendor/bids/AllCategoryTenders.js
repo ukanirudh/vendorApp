@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import { Container, Grid, Header, Pagination, Dimmer, Loader, Segment } from 'semantic-ui-react'
 import TenderListItem from './TenderListItem'
+import noItemsContent from '../../../commonUsageComponents/NoItemsDisplay'
 
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
@@ -34,25 +35,15 @@ class AllCategoryTenders extends Component {
     categoryTenders.map((tender, i) => items.push( <TenderListItem {...tender} key={i} /> ))
 
     return (
-    <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={this.props.location} >
+    <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/vendor'} >
       <Segment>
-        <Header
-          as='h2'
-          content='All Potential Tenders.'
-          style={{
-            fontSize: '1.7em',
-            fontWeight: 'normal',
-            marginTop: '1.5em',
-          }}
-        />
+        <Header as='h2' content='All Potential Tenders.' className='list-page-header' />
         <Dimmer active={this.state.isLoading}>
           <Loader indeterminate>Loading the Tenders</Loader>
         </Dimmer>
         <Container>
           <Grid columns={4}>
-            <Grid.Row>
-              {items}
-            </Grid.Row>
+            <Grid.Row> {items.length ? items : noItemsContent()} </Grid.Row>
           </Grid>
         </Container>
         <Pagination

@@ -3,16 +3,16 @@ import { Grid, Card, Button } from 'semantic-ui-react'
 
 const TopThreeBidsListItem = (props) => {
   const {id, value, position,attemptsRemaining,tenderId,vendorId,createdAt,updatedAt} = props
-  let position=''
+  let name=''
   if(position) {
-    position = position
+    name = position
   }
   return (
     <Grid.Column style={{marginBottom:15}}>
       <Card>
         <Card.Content>
           <Card.Header>
-            {position}
+            {name}
           </Card.Header>
           <Card.Meta>
             <div className="track" >

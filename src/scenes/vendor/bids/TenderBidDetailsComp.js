@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Segment, Header, Card, Button, Statistic, Input, Label, Icon, Grid, List } from 'semantic-ui-react'
+import { Segment, Header, Button, Statistic, Input, Label, Icon, Grid, List } from 'semantic-ui-react'
 import TenderBasicDetailsTemplate from './TenderBasicDetailsTemplate'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 
@@ -44,7 +44,7 @@ class TenderBidDetailsComp extends Component {
   }
 
   onBidChange = (event, data) => {
-    const {name, value} = data
+    const {value} = data
     this.setState({bidValue: value})
   }
 

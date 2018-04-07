@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Container, Grid, Header, Icon } from 'semantic-ui-react'
+import { Button, Container, Header, Icon } from 'semantic-ui-react'
 
 class HomepageHeading extends Component {
 

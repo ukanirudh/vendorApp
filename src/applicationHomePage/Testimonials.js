@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import Slider from 'react-slick'
-
-import {
-  Grid, Image, Header, Item
-} from 'semantic-ui-react'
+import {Header, Item} from 'semantic-ui-react'
 import img2 from '../assets/images/image.png'
+
 export default class Testimonials extends Component {
   render() {
     const settings = {

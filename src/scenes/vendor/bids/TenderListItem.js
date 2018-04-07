@@ -1,10 +1,10 @@
 import React from 'react'
-import { Grid, Card, Button, Statistic, Icon, Reveal, Input } from 'semantic-ui-react'
+import { Grid, Card, Statistic, Icon } from 'semantic-ui-react'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const TenderListItem = (props) => {
   const {sub_category, quantity, tenderEnds, id, otherDetails, isTypeBid} = props
-  const {position='', value='', bidId, attemptsRemaining=0} = otherDetails ? otherDetails : {}
+  const {position='', bidId} = otherDetails ? otherDetails : {}
   const name = sub_category ? sub_category.name : ''
   const tenderDetailsUrl = (isTypeBid) ? `/vendor/tender_bids/${bidId}` : `/vendor/tender/${id}`
   return (

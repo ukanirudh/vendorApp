@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
-import { Container, Grid, Header, Card,
-  Button, Pagination, Dimmer, Loader, Segment } from 'semantic-ui-react'
+import { Container, Grid, Header, Pagination, Dimmer, Loader, Segment } from 'semantic-ui-react'
 import TenderListItem from './TenderListItem'
 
 const AppHeaderProps = {
@@ -14,10 +13,6 @@ const AppHeaderProps = {
 }
 
 class AllCategoryTenders extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.setState({ categoryTenders:[], isLoading: false })
   }

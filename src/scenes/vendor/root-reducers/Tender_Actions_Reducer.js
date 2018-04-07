@@ -149,20 +149,15 @@ const INITIAL_STATE = {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-
     case GET_ALL_SUBSCRIBED_CATEGORY_TENDER:
       var { data } = action.payload
       return { ...state , subscribed_category_tenders: isEmpty(data) ? [] : data, isLoading: false };
 
     case GET_TENDER_DETAILS:
-      //console.log(action.payload)
-      var { data } = action.payload
-      return { ...state , tender_details: data };
+      return { ...state , tender_details: action.payload.data };
 
     case ONGOING_TENDERS:
-      //console.log(action.payload)
-      var { data } = action.payload
-      return { ...state , on_going_tenders: data };
+      return { ...state , on_going_tenders: action.payload.data };
 
     case POST_BID_REQUEST:
       return { ...state, post_bid: action.payload }

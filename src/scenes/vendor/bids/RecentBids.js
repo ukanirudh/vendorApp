@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, Button, Segment, Header } from 'semantic-ui-react'
+import { Grid, Segment, Header } from 'semantic-ui-react'
 import TenderListItem from './TenderListItem'
 
 class RecentBids extends Component {
@@ -10,6 +10,7 @@ class RecentBids extends Component {
       const {value, position, attemptsRemaining, id} = tenderDetails
       const otherDetails = {position, value, attemptsRemaining, bidId: id}
       items.push( <TenderListItem {...tenderDetails.tender} otherDetails={otherDetails} isTypeBid key={i} /> )
+      return items
     })
     return (
       <Segment className='dashboard-bids-container'>

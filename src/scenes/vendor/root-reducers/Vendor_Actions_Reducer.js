@@ -1,8 +1,6 @@
 import VendorServiceApi from '../Vendor_Service_Api';
-import {isEmpty} from 'lodash'
 
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
-const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const UPDATE_VENDOR_DATA = 'UPDATE_VENDOR_DATA'
 
 export function getAllMainCategoriesDispatch() {
@@ -96,15 +94,11 @@ const INITIAL_STATE = {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-
     case UPDATE_VENDOR_DATA:
-      var { data } = action.payload
-      return {...state, ...{current_user: data}};
+      return {...state, ...{current_user: action.payload.data}};
 
     case GET_ALL_MAIN_CATEGORIES:
-      //console.log(action.payload)
-      var { data } = action.payload
-      return { ...state , main_categories: data };
+      return { ...state , main_categories: action.payload.data };
 
     default:
       return state;

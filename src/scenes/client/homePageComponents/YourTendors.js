@@ -36,7 +36,7 @@ class YourTendors extends Component {
           Your TENDERS
         </Header>
         <Grid container centered doubling columns={3}>
-          <Grid.Row>
+          <Grid.Row  >
             {items}
           </Grid.Row>
         </Grid>

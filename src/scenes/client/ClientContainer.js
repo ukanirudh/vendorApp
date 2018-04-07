@@ -15,6 +15,7 @@ import { bindActionCreators } from "redux";
 import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
 import YourTendors from './tendors/YourTendors'
+import TopThreeBids from './tendors/TopThreeBids'
 import Profile from './profileInfo/Profile'
 
 const renderMergedProps = (component, ...rest) => {
@@ -43,6 +44,7 @@ class ClientContainer extends Component {
         <PropsRoute path='/client/newTendor' component={NewTendor} {...this.props} />
         <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
         <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
+        <PropsRoute path='/client/TopThreeBids/:tenderId' component={TopThreeBids} {...this.props} />
         <ToastContainer />
       </div>
     )

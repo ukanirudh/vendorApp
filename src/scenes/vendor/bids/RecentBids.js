@@ -16,7 +16,7 @@ class RecentBids extends Component {
         <Header as='h2' textAlign='center'>
           3 MOST RECENT BIDS
         </Header>
-        <Grid container centered doubling columns={3}>
+        <Grid container centered doubling columns={3} >
           {items}
         </Grid>
       </Segment>

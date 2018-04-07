@@ -1,15 +1,16 @@
 import React from 'react'
 import { Grid, Card, Button } from 'semantic-ui-react'
-
+import { CreateBrowserHistory } from '../../../commonComponents'
 const TenderListItem = (props) => {
-  const {sub_category, quantity, tenderEnds} = props
+const {sub_category, quantity, tenderEnds,id,tenderId} = props
   let name=''
   if(sub_category) {
     name = sub_category.name
   }
+const bidDetailsUrl ='/client/TopThreeBids/${tenderId}'
   return (
     <Grid.Column style={{marginBottom:15}}>
-      <Card>
+      <Card onClick={() => CreateBrowserHistory.push({pathname: bidDetailsUrl})}  title='View Details'>
         <Card.Content>
           <Card.Header>
             {name}

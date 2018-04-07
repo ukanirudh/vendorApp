@@ -101,6 +101,7 @@ class ClientServiceApis {
 			method: 'GET',
 			url: getClientAllTendersUrl,
 			headers: headers
+			
 		}).then(function (response) {
 			return response;
 		}).catch(function (error) {

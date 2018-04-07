@@ -10,10 +10,12 @@ const ONGOING_TENDERS = 'ONGOING_TENDERS'
 export function getAllSubscribedTendersDispatch( mainCategoryId ) {
   return function(dispatch) {
     return VendorServiceApi.getAllSubscribedTenders(mainCategoryId).then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(getAllSubscribedTenders(response.data));
+      if(response.status === 201 || response.status === 200) {
+        dispatch({type:'SUCCESS_TOAST', payload: 'Tender list retrived'})
+        dispatch(getAllSubscribedTenders(response.data))
+      }
       else
-        dispatch({type: "HANDLE_ERROR", payload: response});
+        dispatch({type: "HANDLE_ERROR", payload: response})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -23,8 +25,10 @@ export function getAllSubscribedTendersDispatch( mainCategoryId ) {
 export function getOngoingTendersDispatch( type, statusType ) {
   return function(dispatch) {
     return VendorServiceApi.tenderBidRequest(type, {}, statusType).then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(getOngoingTenders(response.data));
+      if(response.status === 201 || response.status === 200) {
+        dispatch({type:'SUCCESS_TOAST', payload: 'Tender list retrived'})
+        dispatch(getOngoingTenders(response.data))
+      }
       else
         dispatch({type: "HANDLE_ERROR", payload: response});
     }).catch(error => {

@@ -33,8 +33,8 @@ class ClientContainer extends Component {
           <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
           <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
           <PropsRoute path='/client/tenderDetails/:id' component={TenderDetails} {...this.props} />
-          <Notifications msg={toast_message} {...this.props} />
         </Switch>
+        <Notifications msg={toast_message} {...this.props} />
       </div>
     )
   }

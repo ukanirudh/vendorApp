@@ -7,9 +7,9 @@ import TenderListItem from './TenderListItem'
 const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
-    // CreateBrowserHistory.push({
-    //   pathname: "/profile"
-    // })
+    CreateBrowserHistory.push({
+      pathname: "/profile"
+    })
   },
 }
 

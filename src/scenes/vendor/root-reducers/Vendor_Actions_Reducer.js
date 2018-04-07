@@ -1,12 +1,9 @@
 import VendorServiceApi from '../Vendor_Service_Api';
 import {isEmpty} from 'lodash'
-import { CreateBrowserHistory } from '../../../commonComponents'
 
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const UPDATE_VENDOR_DATA = 'UPDATE_VENDOR_DATA'
-const SHOW_MESSAGE = 'SHOW_MESSAGE'
-const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
 
 export function getAllMainCategoriesDispatch() {
   return function(dispatch) {
@@ -14,7 +11,7 @@ export function getAllMainCategoriesDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(getAllMainCategories(response.data));
       else
-        dispatch(handleError(response));
+        dispatch({type:'ERROR_TOAST', payload: 'Something went wrong!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -27,7 +24,7 @@ export function getBasicDetailsDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(updateVendorData(response.data))
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Something went wrong!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -40,7 +37,7 @@ export function getBankDetailsDispatch() {
       if(response.status === 201 || response.status === 200)
         dispatch(updateVendorData(response.data))
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Something went wrong!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -52,10 +49,10 @@ export function updateBasicDetailsDispatch(payload) {
     return VendorServiceApi.vendorBasicDeatilsResquest('PUT', payload).then(response => {
       if(response.status === 201 || response.status === 200) {
         dispatch(updateVendorData(response.data))
-        dispatch(showMessage('Basic Details Updated Successfully'))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Basic Details Updated Successfully'})
       }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Something went wrong!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -65,10 +62,12 @@ export function updateBasicDetailsDispatch(payload) {
 export function updateBankDetailsDispatch(payload) {
   return (dispatch, getState) => {
     return VendorServiceApi.vendorBankDeatilsResquest('PUT', payload).then(response => {
-      if(response.status === 201 || response.status === 200)
+      if(response.status === 201 || response.status === 200) {
+        dispatch({type:'SUCCESS_TOAST', payload: 'Bank Details Updated Successfully'})
         dispatch(updateVendorData(response.data))
+      }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Something went wrong!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -83,13 +82,6 @@ export function updateVendorData(clientDetails) {
   };
 }
 
-export function showMessage(message) {
-  return {
-    type: SHOW_MESSAGE,
-    payload: message
-  };
-}
-
 export function getAllMainCategories(data) {
   return {
     type: GET_ALL_MAIN_CATEGORIES,
@@ -97,25 +89,9 @@ export function getAllMainCategories(data) {
   };
 }
 
-export function setErrorFlag(flag) {
-  return {
-    type: SET_ERROR_FLAG,
-    payload: flag
-  };
-}
-
-export function handleError(error) {
-  return {
-    type: "HANDLE_ERROR",
-    payload: error
-  };
-}
-
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: false,
-  main_categories:[],
-  notificationMsg: ''
+  main_categories:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -129,17 +105,6 @@ export default function reducer(state = INITIAL_STATE, action) {
       //console.log(action.payload)
       var { data } = action.payload
       return { ...state , main_categories: data };
-
-    case SHOW_MESSAGE:
-      return {...state, registrationSuccessStatus:true, notificationMsg: action.payload };
-
-   case SET_ERROR_FLAG:
-      return { ...state , registrationSuccessStatus: action.payload, hasError: action.payload }
-
-    case "HANDLE_ERROR":
-    //console.log(action.payload);
-    	return { ...state , registrationSuccessStatus: action.payload.status,
-			errorMessage: action.payload.data.message, errorSummary: action.payload.statusText}
 
     default:
       return state;

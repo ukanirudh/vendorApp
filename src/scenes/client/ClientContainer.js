@@ -44,7 +44,7 @@ class ClientContainer extends Component {
         <PropsRoute path='/client/newTendor' component={NewTendor} {...this.props} />
         <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
         <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
-        <PropsRoute path='/client/TopThreeBids/:tenderId' component={TopThreeBids} {...this.props} />
+        <PropsRoute path='/client/TopThreeBids/:id' component={TopThreeBids} {...this.props} />
         <ToastContainer />
       </div>
     )

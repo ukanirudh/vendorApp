@@ -7,7 +7,7 @@ const {sub_category, quantity, tenderEnds,id,tenderId} = props
   if(sub_category) {
     name = sub_category.name
   }
-const bidDetailsUrl ='/client/TopThreeBids/${tenderId}'
+const bidDetailsUrl =`/client/TopThreeBids/${id}`
   return (
     <Grid.Column style={{marginBottom:15}}>
       <Card onClick={() => CreateBrowserHistory.push({pathname: bidDetailsUrl})}  title='View Details'>

@@ -19,10 +19,10 @@ class TopThreeBids extends Component {
   }
 
   componentDidMount() {
-    const {tenderId:tenderId} = this.props
-    this.setState({isLoading:true})
+    const {computedMatch:{params}} = this.props
+    const id = params.id
     const { getTopThreeBidsDispatch } = this.props
-    getTopThreeBidsDispatch(tenderId)
+    getTopThreeBidsDispatch(id)
   }
 
   componentWillReceiveProps (newProps) {

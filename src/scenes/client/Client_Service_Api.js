@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const getMainCategoriesUrl = '/main_categories';
-const getSubCategoriesUrl = '/sub_categories';
-const createTendorUrl = '/tender';
-const getClientAllTendersUrl='/client_tenders';
-const clientBasicDeatilsUrl='/basic_details';
-const clientBankDeatilsUrl='/business_details';
+const getMainCategoriesUrl = '/main_categories'
+const getSubCategoriesUrl = '/sub_categories'
+const createTendorUrl = '/tender'
+const getClientAllTendersUrl='/client_tenders'
+const clientBasicDeatilsUrl='/basic_details'
+const clientBankDeatilsUrl='/business_details'
+const getTendersDetailsUrl = '/tender'
 const getTopThreeBidsUrl= '/tender_bids';
 
 class ClientServiceApis {
@@ -77,7 +78,6 @@ class ClientServiceApis {
 			return error.response ;
 		});
 	}
-	
 
 	static getAllSubCategories( mainCategoryId ) {
 		const subCatUrl = getSubCategoriesUrl + '/' + mainCategoryId ;
@@ -101,7 +101,6 @@ class ClientServiceApis {
 			method: 'GET',
 			url: getClientAllTendersUrl,
 			headers: headers
-			
 		}).then(function (response) {
 			return response;
 		}).catch(function (error) {
@@ -122,6 +121,20 @@ class ClientServiceApis {
 			return error.response ;
 		});
 	}
+
+  static getTendorsDetails(tenderId) {
+    const headers = this.requestHeaders();
+
+    return axios({
+      method: 'GET',
+      url: getTendersDetailsUrl + `/${tenderId}`,
+      headers: headers
+    }).then(function (response) {
+      return response;
+    }).catch(function (error) {
+      return error.response ;
+    });
+  }
 
 }
 

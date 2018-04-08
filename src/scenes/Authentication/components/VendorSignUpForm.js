@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-
-import { connect } from "react-redux";
-import { submitVendorSingUpDispatch } from "../root-reducers/SignUp_Actions_Reducer";
-import { bindActionCreators } from "redux";
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 class VendorSignUpForm extends Component {
 
   componentWillMount() {
-    this.setState({
-      full_name: '', username: '', password: '', phone: '', confimPassword:''
-    })
+    this.setState({ full_name: '', username: '', password: '', phone: '', confimPassword:'' })
   }
 
   onVendorRegistration = () => {
@@ -22,7 +16,7 @@ class VendorSignUpForm extends Component {
       phoneNumber: phone,
       type:'vendor'
     }
-    this.props.submitVendorSingUpDispatch( data );
+    this.props.submitVendorSingUpDispatch(data)
   }
 
   handleFormValuesChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -89,15 +83,4 @@ class VendorSignUpForm extends Component {
   }
 }
 
-//map store state to component state
-function mapStateToProps(state) {
-  return { current_user_profile: state.current_user_profile };
-}
-
-//map store dispatch function to component props
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ submitVendorSingUpDispatch }, dispatch);
-}
-
-//conect our component with store state and store dispatch functions
-export default connect(mapStateToProps, mapDispatchToProps)(VendorSignUpForm);
+export default VendorSignUpForm

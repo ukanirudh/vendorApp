@@ -5,62 +5,28 @@ import { CreateBrowserHistory } from '../../commonComponents'
 class AuthenticationHomePage extends Component {
 
   componentWillMount = () => {
-    this.setState({
-      vendorActionsVisible: false,
-      clientActionsVisible: false
+    this.setState({ vendorActionsVisible: false, clientActionsVisible: false })
+  }
+
+  signupRouteHandler = (userType) => {
+    CreateBrowserHistory.push({
+      pathname: `/authorization/signup/${userType}`
     })
   }
 
-  vendorLogin = () => {
+  loginRouteHandler = (userType) => {
     CreateBrowserHistory.push({
       pathname: "/authorization/login",
-      search: "?type=vendor"
+      search: `?type=${userType}`
     })
   }
 
-  vendorSignup = () => {
-    CreateBrowserHistory.push({
-      pathname: "/authorization/signup/vendor"
-    })
-  }
-
-  clientLogin = () => {
-    CreateBrowserHistory.push({
-      pathname: "/authorization/login",
-      search: "?type=client"
-    })
-  }
-
-  clientSignup = () => {
-    CreateBrowserHistory.push({
-      pathname: "/authorization/signup/client"
-    })
-  }
-
-  vendorContent = () => {
+  showMappingUserContent = (userType) => {
     return (
       <div>
-        <Header as='h2' inverted>Vendor</Header>
-        <Button color='blue' onClick={this.vendorLogin}>
-          Login in
-        </Button>
-        <Button color='blue' onClick={this.vendorSignup}>
-          Sign Up
-        </Button>
-      </div>
-    )
-  }
-
-  clientContent = () => {
-    return (
-      <div>
-        <Header as='h2' inverted>Client</Header>
-        <Button color='blue' onClick={this.clientLogin}>
-          Login in
-        </Button>
-        <Button color='blue' onClick={this.clientSignup}>
-          Sign Up
-        </Button>
+        <Header as='h2' inverted>{userType === 'client' ? 'Cleint' : 'Vendor'}</Header>
+        <Button color='blue' onClick={() => this.loginRouteHandler(userType)}> Login in </Button>
+        <Button color='blue' onClick={() => this.signupRouteHandler(userType)}> Sign Up </Button>
       </div>
     )
   }
@@ -81,7 +47,8 @@ class AuthenticationHomePage extends Component {
   handleShow = (currentActionUser) => {
     this.handleFilterState(currentActionUser, true)
   }
-  handleHide = ( currentActionUser ) => {
+
+  handleHide = (currentActionUser) => {
     this.handleFilterState(currentActionUser, false)
   }
 
@@ -90,9 +57,7 @@ class AuthenticationHomePage extends Component {
       <Segment>
         <Header as='h2' icon textAlign='center'>
           <Icon name='users' circular />
-          <Header.Content>
-            You are a ?
-          </Header.Content>
+          <Header.Content> You are a ? </Header.Content>
         </Header>
         <Grid
           style={{ height: '100%', marginTop: 45 }}
@@ -106,13 +71,11 @@ class AuthenticationHomePage extends Component {
               onMouseEnter={ () => this.handleShow('vendor')}
               onMouseLeave={ () => this.handleHide('vendor')}>
               <Dimmer active={this.state.vendorActionsVisible}>
-                {this.vendorContent()}
+                {this.showMappingUserContent('vendor')}
               </Dimmer>
                 <Header as='h3' icon textAlign='center'>
                   <Icon name='building' circular />
-                  <Header.Content>
-                    Vendor
-                  </Header.Content>
+                  <Header.Content> Vendor </Header.Content>
                 </Header>
               </Dimmer.Dimmable>
             </Grid.Column>
@@ -121,10 +84,10 @@ class AuthenticationHomePage extends Component {
               className='user-type-content'
               as={Segment}
               dimmed={this.state.clientActionsVisible}
-              onMouseEnter={ () => this.handleShow('client')}
-              onMouseLeave={ () => this.handleHide('client')} >
+              onMouseEnter={() => this.handleShow('client')}
+              onMouseLeave={() => this.handleHide('client')} >
               <Dimmer active={this.state.clientActionsVisible}>
-                {this.clientContent()}
+                {this.showMappingUserContent('client')}
               </Dimmer>
                 <Header as='h3' icon textAlign='center'>
                   <Icon name='user' circular />

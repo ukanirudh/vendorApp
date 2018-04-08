@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Grid, Header, Button, Pagination } from 'semantic-ui-react'
+import { Container, Grid, Header, Pagination } from 'semantic-ui-react'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import TenderListItem from './TenderListItem'
 

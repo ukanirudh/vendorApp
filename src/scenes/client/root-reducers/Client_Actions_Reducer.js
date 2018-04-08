@@ -1,28 +1,9 @@
 import ClientServiceApi from '../Client_Service_Api';
-import { CreateBrowserHistory } from '../../../commonComponents'
 
-const SET_CURRENT_USER_DATA = 'SET_CURRENT_USER_DATA'
-const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
-const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
 const GET_TOP_THREE_BIDS = 'GET_TOP_THREE_BIDS'
-const SHOW_MESSAGE = 'SHOW_MESSAGE'
-const SET_ERROR_FLAG = 'SET_ERROR_FLAG'
-
-export function createNewTendorDispatch(payload) {
-  return (dispatch, getState) => {
-    return ClientServiceApi.newTendorRequest(payload).then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(onCreateNewTender(response.data))
-      else
-        console.log("dispatch error::",response);;
-    }).catch(error => {
-      console.log("dispatch person::",error);
-    });
-  }
-}
 
 export function getBasicDetailsDispatch() {
   return (dispatch, getState) => {
@@ -55,10 +36,10 @@ export function updateBasicDetailsDispatch(payload) {
     return ClientServiceApi.clientBasicDeatilsResquest('PUT', payload).then(response => {
       if(response.status === 201 || response.status === 200) {
         dispatch(updateClientData(response.data))
-        dispatch(showMessage('Basic Details Updated Successfully'))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Basic Details Updated Successfully'})
       }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Failed to update Basic details!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -68,10 +49,12 @@ export function updateBasicDetailsDispatch(payload) {
 export function updateBankDetailsDispatch(payload) {
   return (dispatch, getState) => {
     return ClientServiceApi.clientBankDeatilsResquest('PUT', payload).then(response => {
-      if(response.status === 201 || response.status === 200)
+      if(response.status === 201 || response.status === 200) {
         dispatch(updateClientData(response.data))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Bank Details Updated Successfully'})
+      }
       else
-        console.log("dispatch error::",response);;
+        dispatch({type:'ERROR_TOAST', payload: 'Failed to update Bank details!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -104,19 +87,6 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
   };
 }
 
-export function getClientAllTendorsDispatch() {
-  return function(dispatch) {
-    return ClientServiceApi.getClientAllTendors().then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(getClientAllTendors(response.data));
-      else
-        console.log("dispatch error::",response);;
-    }).catch(error => {
-      console.log("dispatch person::",error);
-    });
-  };
-}
-
 export function getTopThreeBidsDispatch(tendorId) {
   return function(dispatch) {
     return ClientServiceApi.getTopThreeBids(tendorId).then(response => {
@@ -130,26 +100,10 @@ export function getTopThreeBidsDispatch(tendorId) {
   };
 }
 
-
-
-export function onSetCurrentUserData(userDetails) {
-  return {
-    type: SET_CURRENT_USER_DATA,
-    payload: userDetails
-  };
-}
-
 export function updateClientData(clientDetails) {
   return {
     type: UPDATE_CLIENT_DATA,
     payload: clientDetails
-  };
-}
-
-export function onCreateNewTender(user) {
-  return {
-    type: ON_CREATE_TENDER,
-    payload: user
   };
 }
 
@@ -167,13 +121,6 @@ export function getAllSubCategories(data) {
   };
 }
 
-export function getClientAllTendors(data) {
-  return {
-    type: GET_CLIENT_ALL_TENDORS,
-    payload: data
-  };
-}
-
 export function getTopThreeBids(data) {
   return {
     type: GET_TOP_THREE_BIDS,
@@ -181,63 +128,26 @@ export function getTopThreeBids(data) {
   };
 }
 
-export function showMessage(message) {
-  return {
-    type: SHOW_MESSAGE,
-    payload: message
-  };
-}
-
-export function setErrorFlag(flag) {
-  return {
-    type: SET_ERROR_FLAG,
-    payload: flag
-  };
-}
-
 const INITIAL_STATE = {
   current_user: {},
-  registrationSuccessStatus: false,
   main_categories:[],
   sub_categories:[],
-  all_client_tendors:[],
-  top_three_bids:[],
-  notificationMsg: '',
-  
+  top_three_bids:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-
     case UPDATE_CLIENT_DATA:
-      var { data } = action.payload
-      return {...state, ...{current_user: data}};
-
-    case ON_CREATE_TENDER:
-      return {...state};
+      return {...state, ...{current_user: action.payload.data}};
 
     case GET_ALL_MAIN_CATEGORIES:
-      var { data } = action.payload
-      return { ...state , main_categories: data };
+      return { ...state , main_categories: action.payload.data };
 
     case GET_ALL_SUB_CATEGORIES:
-      var { data } = action.payload
-      return { ...state , sub_categories: data };
-
-    case GET_CLIENT_ALL_TENDORS:
-       var { data } = action.payload
-      return { ...state , all_client_tendors: data };
-
+      return { ...state , sub_categories: action.payload.data };
 
     case GET_TOP_THREE_BIDS:
-       var { data } = action.payload
-      return { ...state , top_three_bids: data };
-
-    case SHOW_MESSAGE:
-      return {...state, registrationSuccessStatus:true, notificationMsg: action.payload };
-
-    case SET_ERROR_FLAG:
-    	return { ...state , registrationSuccessStatus: action.payload, hasError: action.payload }
+      return { ...state, top_three_bids: action.payload.data };
 
     default:
       return state;

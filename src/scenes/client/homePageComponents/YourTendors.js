@@ -6,17 +6,16 @@ import TenderListItem from '../tendors/TenderListItem'
 class YourTendors extends Component {
 
   componentWillMount() {
-    this.setState({ tenders:[], isLoading: false })
+    this.setState({ tenders:[] })
   }
 
   componentDidMount() {
-    this.setState({isLoading:true})
     this.props.getClientAllTendorsDispatch()
   }
 
   componentWillReceiveProps (newProps) {
-    const { all_client_tendors, isLoading } = newProps
-    this.setState({ tenders:all_client_tendors, isLoading })
+    const { all_client_tendors } = newProps
+    this.setState({ tenders:all_client_tendors })
   }
 
   showAllTenders = () => {

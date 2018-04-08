@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Grid, Segment } from 'semantic-ui-react'
-import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import {EntityForm} from '../../../utils/GenericForm'
 import bankInfoFields from '../constants/bank-details-fields'
 

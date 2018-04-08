@@ -1,79 +1,64 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom';
-import {submit} from 'redux-form'
-import { ToastContainer } from 'react-toastify';
+import { Switch } from 'react-router-dom';
+import { submit } from 'redux-form'
 
 /*routing and redux*/
 import { connect } from "react-redux";
-import { getAllMainCategoriesDispatch, updateBasicDetailsDispatch,
-  updateBankDetailsDispatch, getBasicDetailsDispatch, getBankDetailsDispatch,
-   setErrorFlag } from './root-reducers/Vendor_Actions_Reducer'
+import { getAllMainCategoriesDispatch, updateBasicDetailsDispatch, updateBankDetailsDispatch,
+  getBasicDetailsDispatch, getBankDetailsDispatch} from './root-reducers/Vendor_Actions_Reducer'
 import { getTenderDetailsDispatch, getTenderBidDetailsDispatch, getAllSubscribedTendersDispatch,
   postBidDispatch, getOngoingTendersDispatch } from './root-reducers/Tender_Actions_Reducer'
+  import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 import { bindActionCreators } from "redux";
 
 /*Imported components*/
+import {PropsRoute} from '../../utils/PropsRouteComponent'
+import Notifications from '../../notificationsModule/Notifications'
 import VendorHomePage from './VendorHome'
 import AllCategoryTenders from './bids/AllCategoryTenders'
 import Profile from './profileInfo/Profile'
 import TenderDetails from './bids/TenderDetails'
 import TenderBidDetailsComp from './bids/TenderBidDetailsComp'
 
-const renderMergedProps = (component, ...rest) => {
-  const finalProps = Object.assign({}, ...rest);
-  return (
-    React.createElement(component, finalProps)
-  );
-}
-
-const PropsRoute = ({ component, ...rest }) => {
-  return (
-    <Route {...rest} render={routeProps => {
-      return renderMergedProps(component, routeProps, rest);
-    }}/>
-  );
-}
-
 class VendorContainer extends Component {
-
   componentWillMount() {}
 
   render () {
+    const {toast_message} = this.props
     return (
       <div style={{ padding: '0px 10px' }}>
-      <Switch>
-        <PropsRoute exact path="/vendor" component={VendorHomePage} {...this.props}></PropsRoute>
-        <PropsRoute path='/vendor/Profile' component={Profile} {...this.props} />
-        <PropsRoute path='/vendor/tenderlist' component={AllCategoryTenders} {...this.props} />
-        <PropsRoute path='/vendor/tender/:id' component={TenderDetails} {...this.props} />
-        <PropsRoute path='/vendor/tender_bids/:id' component={TenderBidDetailsComp} {...this.props} />
-        <ToastContainer />
-      </Switch>
+        <Switch>
+          <PropsRoute exact path="/vendor" component={VendorHomePage} {...this.props}></PropsRoute>
+          <PropsRoute path='/vendor/Profile' component={Profile} {...this.props} />
+          <PropsRoute path='/vendor/tenderlist' component={AllCategoryTenders} {...this.props} />
+          <PropsRoute path='/vendor/tender/:id' component={TenderDetails} {...this.props} />
+          <PropsRoute path='/vendor/tender_bids/:id' component={TenderBidDetailsComp} {...this.props} />
+        </Switch>
+        <Notifications msg={toast_message} {...this.props} />
       </div>
     )
   }
 }
 
-//map store state to component state
 function mapStateToProps(state) {
   //console.log(state.vendorReducer)
-  const {tenderReducer, vendorReducer} = state
-  const { current_user, main_categories, registrationSuccessStatus, notificationMsg} = vendorReducer
-  const { tender_details, subscribed_category_tenders, on_going_tenders, isLoading, post_bid } = tenderReducer
+  const {tenderReducer, vendorReducer, notifications} = state
+  const {current_user, main_categories} = vendorReducer
+  const {tender_details, subscribed_category_tenders, on_going_tenders, isLoading, post_bid} = tenderReducer
+  const {toast_message, toast_type} = notifications
   return {
     current_user,
     main_categories,
     subscribed_category_tenders,
     on_going_tenders,
     isLoading,
-    registrationSuccessStatus,
     tender_details,
     post_bid,
-    notificationMsg
+    toast_message,
+    toast_type
   };
 }
 
-//map store dispatch function to component props
 function mapDispatchToProps(dispatch) {
    const actions = bindActionCreators(Object.assign({},
     {
@@ -87,7 +72,7 @@ function mapDispatchToProps(dispatch) {
       getTenderBidDetailsDispatch,
       getOngoingTendersDispatch,
       postBidDispatch,
-      setErrorFlag,
+      clearNotificationsMesaage,
       onUpdateBasicDetailsClick: () => dispatch(submit('VendorBasicDetailsForm')),
       onUpdateBankDetailsClick: () => dispatch(submit('VendorBankDetailsForm')),
     }), dispatch)
@@ -98,5 +83,4 @@ function mapDispatchToProps(dispatch) {
   })
 }
 
-//conect our component with store state and store dispatch functions
 export default connect(mapStateToProps, mapDispatchToProps)(VendorContainer);

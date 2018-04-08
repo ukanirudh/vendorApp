@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Message, Segment,Checkbox} from 'semantic-ui-react'
-import { connect } from "react-redux";
-import { submitClientSingUpDispatch } from "../root-reducers/SignUp_Actions_Reducer";
-import { bindActionCreators } from "redux";
-
+import { Button, Form, Grid, Header, Segment,Checkbox} from 'semantic-ui-react'
 
 class ClientSignUpForm extends Component {
   onClientSignUp = () => {
       const { name, username, password, phone } = this.state
-      //console.log(name, username, password, phone)
       const data = {
       username,
       password,
@@ -19,24 +14,15 @@ class ClientSignUpForm extends Component {
     this.props.submitClientSingUpDispatch( data );
   }
 
-  handleChangeForTerms = () => {
-       this.setState({
-      checked: !this.state.checked
-    })
-  }
-
+  handleChangeForTerms = () => this.setState({ checked: !this.state.checked })
 
   componentWillMount() {
-    this.setState({
-
-      name: '', username: '',password: '',phone: '', confimPassword:'',checked: false,
-    })
+    this.setState({ name: '', username: '',password: '',phone: '', confimPassword:'',checked: false})
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    //console.log(this.props)
     const { name= '', username= '',password= '',confimPassword='',phone= '',checked= false} = this.state
     return (
       <Grid
@@ -46,9 +32,7 @@ class ClientSignUpForm extends Component {
         verticalAlign='middle'
       >
         <Grid.Row>
-          <Header as='h2' color='teal' textAlign='center'>
-            Cliet signup
-          </Header>
+          <Header as='h2' color='teal' textAlign='center'> Cliet signup </Header>
         </Grid.Row>
         <Grid.Column className='login-form-grid'>
           <Form size='large'>
@@ -117,20 +101,4 @@ class ClientSignUpForm extends Component {
   }
 }
 
-//map store state to component state
-function mapStateToProps(state) {
-  return { current_user_profile: state.current_user_profile };
-}
-
-
-
-//map store dispatch function to component props
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ submitClientSingUpDispatch }, dispatch);
-}
-
-
-
-//conect our component with store state and store dispatch functions
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClientSignUpForm);
+export default ClientSignUpForm;

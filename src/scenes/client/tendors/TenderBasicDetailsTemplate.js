@@ -8,16 +8,12 @@ const TenderBasicDetailsTemplate = (props) => {
   forEach(props, (tenderFieldValue, tenderFieldKey) => {
     items.push(
       <Grid.Row key={tenderFieldKey}>
-        <Grid.Column width={5}> {TenderDetailsFeilds[tenderFieldKey].label} </Grid.Column>
-        <Grid.Column width={5}> {tenderFieldValue} </Grid.Column>
+        <Grid.Column width={7}> {TenderDetailsFeilds[tenderFieldKey].label} </Grid.Column>
+        <Grid.Column width={7}> {tenderFieldValue} </Grid.Column>
       </Grid.Row>
     )
   })
-  return (
-    <Grid>
-      {items}
-    </Grid>
-  )
+  return (<Grid>{items}</Grid>)
 }
 
 export default TenderBasicDetailsTemplate

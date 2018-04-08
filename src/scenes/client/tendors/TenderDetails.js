@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Segment, Header, Icon, Grid, List } from 'semantic-ui-react'
 import TenderBasicDetailsTemplate from './TenderBasicDetailsTemplate'
+import TopThreeBids from './TopThreeBids'
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 
 const AppHeaderProps = {
@@ -31,7 +32,7 @@ class TenderDetails extends Component {
 
   render () {
     const {tenderDetails} = this.state
-    const {quantity='', tenderEnds='', sub_category=''} = tenderDetails
+    const {quantity='', tenderEnds='', sub_category='', id} = tenderDetails
     const subCategoryName = sub_category ? sub_category.name : ''
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'} >
@@ -39,7 +40,7 @@ class TenderDetails extends Component {
           <Header as='h2'> Tender Details </Header>
           <Grid divided>
             <Grid.Row>
-              <Grid.Column  width={5}>
+              <Grid.Column width={5}>
                 <Header as='h2'> Details uploaded by Client </Header>
                 <List size={'huge'}>
                   <List.Item> <Icon name='check' color='green' /> Bank Statement  </List.Item>
@@ -47,9 +48,13 @@ class TenderDetails extends Component {
                   <List.Item> <Icon name='check' color='green' /> Semantic UI2  </List.Item>
                 </List>
               </Grid.Column>
-              <Grid.Column width={11}>
+              <Grid.Column width={7}>
                 <Header as='h2'> Requirement Details </Header>
                 {TenderBasicDetailsTemplate({material: subCategoryName, quantity, description: 'Description', elapses_in: tenderEnds})}
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Header as='h2'> Top Bids </Header>
+                {id && <TopThreeBids tenderId={id} {...this.props} />}
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -58,6 +63,5 @@ class TenderDetails extends Component {
     )
   }
 }
-
 
 export default TenderDetails

@@ -1,63 +1,34 @@
 import React, { Component } from 'react';
-import { Container, Grid, Header, Button, Pagination } from 'semantic-ui-react'
-import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
+import {Container, Grid} from 'semantic-ui-react'
 import TopThreeBidsListItem from './TopThreeBidsListItem'
 
-const AppHeaderProps = {
-  'headerRightActionText': 'Profile',
-  'headerRightAction': () => {
-    CreateBrowserHistory.push({
-      pathname: "/client/Profile"
-    })
-  },
-}
-
 class TopThreeBids extends Component {
-
   componentWillMount() {
-    this.setState({ tenders:[], isLoading: false })
+    this.setState({ topBids:[] })
   }
 
   componentDidMount() {
-    const {computedMatch:{params}} = this.props
-    const id = params.id
-    const { getTopThreeBidsDispatch } = this.props
-    getTopThreeBidsDispatch(id)
+    const {getTopThreeBidsDispatch, tenderId} = this.props
+    getTopThreeBidsDispatch(tenderId)
   }
 
   componentWillReceiveProps (newProps) {
-    const { top_three_bids, isLoading } = newProps
-    this.setState({ tenders:top_three_bids, isLoading })
+    const { top_three_bids } = newProps
+    this.setState({ topBids: top_three_bids })
   }
 
-
   render() {
-    const {tenders=[]} = this.state
+    const {topBids=[]} = this.state
     var items = [];
-    tenders.map((tender, i) => items.push( <TopThreeBidsListItem {...tender} key={i} /> ))
+    topBids.map((topBid, i) => items.push( <TopThreeBidsListItem {...topBid} key={i} /> ))
 
     return (
-      <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'}>
-        <div>
-          <Header
-            as='h2'
-            content='Top Three Bids'
-            style={{
-              fontSize: '1.7em',
-              fontWeight: 'normal',
-              marginTop: '1.5em',
-            }}
-          />
-          <Container>
-            <Grid columns={4}>
-              <Grid.Row>
-                {items}
-              </Grid.Row>
-            </Grid>
-          </Container>
-        </div>
-      </ResponsiveContainer>
-    );
+      <Container>
+        <Grid>
+          <Grid.Row stretched> {items} </Grid.Row>
+        </Grid>
+      </Container>
+    )
   }
 }
 

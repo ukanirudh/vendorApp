@@ -6,8 +6,9 @@ import {submit} from 'redux-form'
 import { connect } from "react-redux";
 import { getAllMainCategoriesDispatch, getAllSubCategoriesDispatch,
   updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
-  getBankDetailsDispatch, getTopThreeBidsDispatch } from "./root-reducers/Client_Actions_Reducer"
-import {getTenderDetailsDispatch, createNewTendorDispatch, getClientAllTendorsDispatch} from './root-reducers/Tender_Actions_Reducer'
+  getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer"
+import {getTenderDetailsDispatch, createNewTendorDispatch, getClientAllTendorsDispatch,
+  getTopThreeBidsDispatch} from './root-reducers/Tender_Actions_Reducer'
 import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 import { bindActionCreators } from "redux";
 
@@ -45,9 +46,9 @@ class ClientContainer extends Component {
 //map store state to component statetoast_message
 function mapStateToProps(state) {
   const {clientReducer, tenderReducer, notifications} = state
-  const { current_user, main_categories, sub_categories, all_client_tendors} = clientReducer
+  const { current_user, main_categories, sub_categories} = clientReducer
   const { toast_message, toast_type } = notifications
-  const { tender_details, all_client_tendors } = tenderReducer
+  const { tender_details, all_client_tendors, top_three_bids } = tenderReducer
   return {
     current_user,
     main_categories,

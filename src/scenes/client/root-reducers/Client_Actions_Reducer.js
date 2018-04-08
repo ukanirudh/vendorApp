@@ -3,7 +3,6 @@ import ClientServiceApi from '../Client_Service_Api';
 const GET_ALL_MAIN_CATEGORIES = 'GET_ALL_MAIN_CATEGORIES'
 const GET_ALL_SUB_CATEGORIES = 'GET_ALL_SUB_CATEGORIES'
 const UPDATE_CLIENT_DATA = 'UPDATE_CLIENT_DATA'
-const GET_TOP_THREE_BIDS = 'GET_TOP_THREE_BIDS'
 
 export function getBasicDetailsDispatch() {
   return (dispatch, getState) => {
@@ -87,19 +86,6 @@ export function getAllSubCategoriesDispatch( mainCategoryId ) {
   };
 }
 
-export function getTopThreeBidsDispatch(tendorId) {
-  return function(dispatch) {
-    return ClientServiceApi.getTopThreeBids(tendorId).then(response => {
-      if(response.status === 201 || response.status === 200)
-        dispatch(getTopThreeBids(response.data));
-      else
-        console.log("dispatch error::",response);;
-    }).catch(error => {
-      console.log("dispatch person::",error);
-    });
-  };
-}
-
 export function updateClientData(clientDetails) {
   return {
     type: UPDATE_CLIENT_DATA,
@@ -121,18 +107,10 @@ export function getAllSubCategories(data) {
   };
 }
 
-export function getTopThreeBids(data) {
-  return {
-    type: GET_TOP_THREE_BIDS,
-    payload: data
-  };
-}
-
 const INITIAL_STATE = {
   current_user: {},
   main_categories:[],
-  sub_categories:[],
-  top_three_bids:[]
+  sub_categories:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -145,9 +123,6 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case GET_ALL_SUB_CATEGORIES:
       return { ...state , sub_categories: action.payload.data };
-
-    case GET_TOP_THREE_BIDS:
-      return { ...state, top_three_bids: action.payload.data };
 
     default:
       return state;

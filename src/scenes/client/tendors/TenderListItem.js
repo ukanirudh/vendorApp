@@ -3,9 +3,9 @@ import { Grid, Card, Button } from 'semantic-ui-react'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const viewTenderDetails = (tenderId) => {
-  CreateBrowserHistory.push({
-   pathname: `/client/tenderDetails/${tenderId}`
-  })
+  // CreateBrowserHistory.push({
+  //  pathname: `/client/tenderDetails/${tenderId}`
+  // })
 }
 
 const TenderListItem = (props) => {

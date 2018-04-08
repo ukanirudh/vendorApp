@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker';
 import { Button, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
-
 import { ResponsiveContainer, CreateBrowserHistory } from '../../../commonComponents'
 import {EntityForm} from '../../../utils/GenericForm'
 import newTenderFields from '../constants/new-tender-fields'
@@ -18,9 +17,8 @@ const AppHeaderProps = {
 }
 
 class NewTendor extends Component {
-
   componentWillMount() {
-    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[] })
+    this.setState({ mainCategorySelected:'', subCategorySelected:'', mainCategories:[], subCategories:[], endDate: moment().add(7, "days") })
   }
 
   componentDidMount() {
@@ -33,8 +31,10 @@ class NewTendor extends Component {
     this.setState({ mainCategories:main_categories, subCategories:sub_categories })
   }
 
+  handleDateChange = (date) => this.setState({endDate: date})
+
   renderRoomFormWithSubmit = () => {
-    const {mainCategorySelected, subCategorySelected } = this.state
+    const {mainCategorySelected, subCategorySelected} = this.state
     const { onNewTenderRequest, onNewTenderClick } = this.props
     const CreateForm =
     EntityForm({
@@ -54,35 +54,24 @@ class NewTendor extends Component {
         </div>
         <div style={{'marginBottom': 10}} className='form ui'>
           <DatePicker
+            selected={this.state.endDate}
+            onChange={this.handleDateChange}
             dateFormat="LL"
             minDate={moment().add(7, "days")}
             maxDate={moment().add(14, "days")}
             placeholderText={'End Date'} />
         </div>
         <Button fluid primary size='large' onClick={onNewTenderClick}> Post Tender </Button>
-        {/*<Button secondary size='large' onClick={this.onCancel}>Cancel</Button>*/}
       </Segment>
     )
   }
 
-  renderMainCategoryOption = () => {
-    const { mainCategories } = this.state
-    var mainCategoriesOptions = []
-    forEach(mainCategories, function(mainCategory) {
-      mainCategoriesOptions.push({ key: mainCategory.id, value: mainCategory.id, text: mainCategory.name })
+  renderCategoryOption = (categories) => {
+    var categoryOptions = []
+    forEach(categories, function(category) {
+      categoryOptions.push({ key: category.id, value: category.id, text: category.name })
     });
-
-    return mainCategoriesOptions
-  }
-
-  renderSubCategoryOption = () => {
-    const { subCategories } = this.state
-    var subCategoriesOptions = []
-    forEach(subCategories, function(subCategory) {
-      subCategoriesOptions.push({ key: subCategory.id, value: subCategory.id, text: subCategory.name })
-    });
-
-    return subCategoriesOptions
+    return categoryOptions
   }
 
   onSelectMainCategory = (event, {name, value}) => {
@@ -95,36 +84,27 @@ class NewTendor extends Component {
     this.setState({subCategorySelected:value})
   }
 
-  onCancel = () => {
-    CreateBrowserHistory.push({
-      pathname: "/client",
-    })
-  }
-
   render() {
-    const {mainCategorySelected, subCategorySelected} = this.state
+    const {mainCategorySelected, subCategorySelected, mainCategories, subCategories} = this.state
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'} >
         <Grid
           columns={3}
           centered
           style={{ height: '100%', marginTop: 45 }}
-          verticalAlign='middle'
-        >
+          verticalAlign='middle' >
           <Grid.Row>
-            <Header as='h2' color='teal' textAlign='center'>
-              New Tendor
-            </Header>
+            <Header as='h2' color='teal' textAlign='center'> New Tendor </Header>
           </Grid.Row>
           <Grid.Row centered columns={3}>
             <Grid.Column>
-              <Dropdown placeholder='Category' fluid search selection onChange={this.onSelectMainCategory} options={this.renderMainCategoryOption()} />
+              <Dropdown placeholder='Category' fluid search selection onChange={this.onSelectMainCategory} options={this.renderCategoryOption(mainCategories)} />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             { ( mainCategorySelected ) ?
               <Grid.Column>
-                <Dropdown placeholder='Sub-Category' fluid search selection onChange={this.onSelectSubCategory} options={this.renderSubCategoryOption()} />
+                <Dropdown placeholder='Sub-Category' fluid search selection onChange={this.onSelectSubCategory} options={this.renderCategoryOption(subCategories)} />
               </Grid.Column> : ''
             }
           </Grid.Row>

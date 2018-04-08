@@ -3,9 +3,9 @@ import { Grid, Card, Button } from 'semantic-ui-react'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
 const viewTenderDetails = (tenderId) => {
-  // CreateBrowserHistory.push({
-  //  pathname: `/client/tenderDetails/${tenderId}`
-  // })
+  CreateBrowserHistory.push({
+   pathname: `/client/tenderDetails/${tenderId}`
+  })
 }
 
 const TenderListItem = (props) => {
@@ -14,10 +14,9 @@ const TenderListItem = (props) => {
   if(sub_category) {
     name = sub_category.name
   }
-  const bidDetailsUrl =`/client/TopThreeBids/${id}`
   return (
     <Grid.Column style={{marginBottom:15}}>
-      <Card onClick={() => CreateBrowserHistory.push({pathname: bidDetailsUrl})}  title='View Details'>
+      <Card title='View Details'>
         <Card.Content>
           <Card.Header> {name} </Card.Header>
           <Card.Meta>

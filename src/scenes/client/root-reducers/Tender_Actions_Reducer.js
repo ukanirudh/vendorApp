@@ -3,6 +3,7 @@ import ClientServiceApi from '../Client_Service_Api'
 const ON_CREATE_TENDER = 'ON_CREATE_TENDER'
 const GET_CLIENT_ALL_TENDORS = 'GET_CLIENT_ALL_TENDORS'
 const ON_GET_TENDER_DETAILS = 'ON_GET_TENDER_DETAILS'
+const GET_TOP_THREE_BIDS = 'GET_TOP_THREE_BIDS'
 
 export function createNewTendorDispatch(payload) {
   return (dispatch, getState) => {
@@ -48,6 +49,19 @@ export function getTenderDetailsDispatch(tenderId) {
   }
 }
 
+export function getTopThreeBidsDispatch(tendorId) {
+  return function(dispatch) {
+    return ClientServiceApi.getTopThreeBids(tendorId).then(response => {
+      if(response.status === 201 || response.status === 200)
+        dispatch(getTopThreeBids(response.data));
+      else
+        console.log("dispatch error::",response);;
+    }).catch(error => {
+      console.log("dispatch person::",error);
+    });
+  };
+}
+
 export function onCreateNewTender(user) {
   return {
     type: ON_CREATE_TENDER,
@@ -69,9 +83,17 @@ export function onGetTenderDetails(tenderDetails) {
   };
 }
 
+export function getTopThreeBids(data) {
+  return {
+    type: GET_TOP_THREE_BIDS,
+    payload: data
+  };
+}
+
 const INITIAL_STATE = {
   tender_details: {},
-  all_client_tendors:[]
+  all_client_tendors:[],
+  top_three_bids:[]
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -84,6 +106,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case GET_CLIENT_ALL_TENDORS:
       return { ...state , all_client_tendors: action.payload.data }
+
+    case GET_TOP_THREE_BIDS:
+      return { ...state, top_three_bids: action.payload.data };  
 
     default:
       return state;

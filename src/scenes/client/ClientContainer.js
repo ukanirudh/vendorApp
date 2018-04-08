@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import { getAllMainCategoriesDispatch, getAllSubCategoriesDispatch,
   updateBasicDetailsDispatch, updateBankDetailsDispatch, getBasicDetailsDispatch,
   getBankDetailsDispatch } from "./root-reducers/Client_Actions_Reducer"
-import {getTenderDetailsDispatch, createNewTendorDispatch, getClientAllTendorsDispatch} from './root-reducers/Tender_Actions_Reducer'
+import {getTenderDetailsDispatch, createNewTendorDispatch, getClientAllTendorsDispatch,
+  getTopThreeBidsDispatch} from './root-reducers/Tender_Actions_Reducer'
 import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 import { bindActionCreators } from "redux";
 
@@ -15,6 +16,7 @@ import { bindActionCreators } from "redux";
 import ClientHomePage from './ClientHome'
 import NewTendor from './tendors/NewTendor'
 import YourTendors from './tendors/YourTendors'
+import TopThreeBids from './tendors/TopThreeBids'
 import TenderDetails from './tendors/TenderDetails'
 import Profile from './profileInfo/Profile'
 import {PropsRoute} from '../../utils/PropsRouteComponent'
@@ -33,6 +35,7 @@ class ClientContainer extends Component {
           <PropsRoute path='/client/yourTendors' component={YourTendors} {...this.props} />
           <PropsRoute path='/client/Profile' component={Profile} {...this.props} />
           <PropsRoute path='/client/tenderDetails/:id' component={TenderDetails} {...this.props} />
+          <PropsRoute path='/client/TopThreeBids/:id' component={TopThreeBids} {...this.props} />
         </Switch>
         <Notifications msg={toast_message} {...this.props} />
       </div>
@@ -45,12 +48,13 @@ function mapStateToProps(state) {
   const {clientReducer, tenderReducer, notifications} = state
   const { current_user, main_categories, sub_categories} = clientReducer
   const { toast_message, toast_type } = notifications
-  const { tender_details, all_client_tendors } = tenderReducer
+  const { tender_details, all_client_tendors, top_three_bids } = tenderReducer
   return {
     current_user,
     main_categories,
     sub_categories,
     all_client_tendors,
+    top_three_bids,
     tender_details,
     toast_message,
     toast_type
@@ -68,6 +72,7 @@ function mapDispatchToProps(dispatch) {
     updateBankDetailsDispatch,
     getBasicDetailsDispatch,
     getBankDetailsDispatch,
+    getTopThreeBidsDispatch,
     clearNotificationsMesaage,
     getTenderDetailsDispatch,
     onNewTenderClick: () => dispatch(submit('PostTender')),

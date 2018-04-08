@@ -115,7 +115,6 @@ const INITIAL_STATE = {
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-
     case UPDATE_CLIENT_DATA:
       return {...state, ...{current_user: action.payload.data}};
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Header, Button } from 'semantic-ui-react'
 import { CreateBrowserHistory } from '../../../commonComponents'
+import noItemsContent from '../../../commonUsageComponents/NoItemsDisplay'
 import TenderListItem from '../tendors/TenderListItem'
 
 class YourTendors extends Component {
@@ -31,17 +32,13 @@ class YourTendors extends Component {
 
     return (
       <Segment className='dashboard-bids-container'>
-        <Header as='h2' textAlign='center'>
-          Your TENDERS
-        </Header>
+        <Header as='h2' textAlign='center'> Your TENDERS </Header>
         <Grid container centered doubling columns={3}>
-          <Grid.Row  >
-            {items}
-          </Grid.Row>
+          <Grid.Row > {items.length ? items : noItemsContent()} </Grid.Row>
         </Grid>
         <Grid>
           <Grid.Column floated='right' width={5}>
-            <Button onClick={this.showAllTenders}> Show All </Button>
+            {items.length ? <Button onClick={this.showAllTenders}> Show All </Button> : ''}
           </Grid.Column>
         </Grid>
       </Segment>

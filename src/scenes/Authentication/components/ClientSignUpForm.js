@@ -17,13 +17,18 @@ class ClientSignUpForm extends Component {
   handleChangeForTerms = () => this.setState({ checked: !this.state.checked })
 
   componentWillMount() {
-    this.setState({ name: '', username: '',password: '',phone: '', confimPassword:'',checked: false})
+    this.setState({ name: '', username: '',password: '',phone: '', confimPassword:'',checked: false, isLoading: false})
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {isInProgress} = nextProps
+    this.setState({isLoading: isInProgress})
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { name= '', username= '',password= '',confimPassword='',phone= '',checked= false} = this.state
+    const { name = '', username = '', password = '', confimPassword ='', phone = '', checked = false, isLoading} = this.state
     return (
       <Grid
         columns={3}
@@ -92,7 +97,7 @@ class ClientSignUpForm extends Component {
               control={Checkbox}
               label={<label>I agree to the Terms and Conditions</label>}
               />
-              <Button disabled = {! this.state.checked} color='teal' fluid size='large' onClick={this.onClientSignUp}  >Sign Up!</Button>
+              <Button loading={isLoading} disabled={!checked} color='teal' fluid size='large' onClick={this.onClientSignUp}  >Sign Up!</Button>
             </Segment>
           </Form>
         </Grid.Column>

@@ -4,9 +4,14 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 class VendorSignUpForm extends Component {
 
   componentWillMount() {
-    this.setState({ full_name: '', username: '', password: '', phone: '', confimPassword:'' })
+    this.setState({ full_name: '', username: '', password: '', phone: '', confimPassword:'', isLoading: false })
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {isInProgress} = nextProps
+    this.setState({isLoading: isInProgress})
+  }
+  
   onVendorRegistration = () => {
     const { username='', password='',full_name='', phone= ''} = this.state
     const data = {
@@ -22,7 +27,7 @@ class VendorSignUpForm extends Component {
   handleFormValuesChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { full_name='', username='', password='', phone='' } = this.state
+    const { full_name='', username='', password='', phone='', isLoading } = this.state
     return (
         <Grid
           columns={3}
@@ -74,7 +79,7 @@ class VendorSignUpForm extends Component {
                   placeholder='Password'
                   onChange={this.handleFormValuesChange}
                 />
-                <Button color='teal' fluid size='large' onClick={this.onVendorRegistration}>Send registration request</Button>
+                <Button loading={isLoading} color='teal' fluid size='large' onClick={this.onVendorRegistration}>Send registration request</Button>
               </Segment>
             </Form>
           </Grid.Column>

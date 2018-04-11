@@ -26,9 +26,10 @@ class SignUpFormContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const {notifications} = state
+  const {notifications, SignUpModule} = state
+  const {isInProgress} = SignUpModule
   const {toast_message, toast_type} = notifications
-  return ({ toast_message, toast_type })
+  return ({ toast_message, toast_type, isInProgress })
 }
 
 function mapDispatchToProps(dispatch) {

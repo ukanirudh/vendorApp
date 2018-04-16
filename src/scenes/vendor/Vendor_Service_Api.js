@@ -96,7 +96,7 @@ class AunthenticationAndRegistrationApi {
 
   static tenderBidRequest(type, payloadData, statusType) {
     const headers = this.requestHeaders();
-    let bidsReqUrl = (statusType) ? bidsBulkAction + `/${statusType}` : BidsUrl
+    let bidsReqUrl = (statusType) ? `${bidsBulkAction}/${statusType}` : BidsUrl
     return axios({
       method: type,
       url: bidsReqUrl,

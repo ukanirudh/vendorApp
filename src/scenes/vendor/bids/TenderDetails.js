@@ -39,7 +39,7 @@ class TenderDetails extends Component {
   placeBid = () => {
     const {computedMatch:{params}} = this.props
     var data = {tenderId: params.id, value: this.state.bidValue}
-    this.props.postBidDispatch(data)
+    this.props.postBidDispatch('POST', data)
   }
 
   onBidChange = (event, data) => {

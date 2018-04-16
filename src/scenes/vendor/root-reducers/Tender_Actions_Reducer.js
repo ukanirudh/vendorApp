@@ -1,5 +1,4 @@
 import VendorServiceApi from '../Vendor_Service_Api';
-import {isEmpty} from 'lodash'
 
 const GET_ALL_SUBSCRIBED_CATEGORY_TENDER = 'GET_ALL_SUBSCRIBED_CATEGORY_TENDER'
 const GET_TENDER_DETAILS = 'GET_TENDER_DETAILS'
@@ -63,12 +62,13 @@ export function getTenderBidDetailsDispatch(tenderId) {
   };
 }
 
-export function postBidDispatch(payload) {
+export function postBidDispatch(type, payload) {
   return function(dispatch) {
     dispatch(setPostBidRequest())
-    return VendorServiceApi.tenderBidRequest('POST', payload).then(response => {
+    return VendorServiceApi.tenderBidRequest(type, payload).then(response => {
       if(response.status === 201 || response.status === 200) {
         dispatch(postBid(response.data))
+        dispatch({type:'SUCCESS_TOAST', payload: 'Your bid details are updated'})
         dispatch(setPostBidRequestSuccess())
       }
       else
@@ -151,7 +151,7 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_ALL_SUBSCRIBED_CATEGORY_TENDER:
       var { data } = action.payload
-      return { ...state , subscribed_category_tenders: isEmpty(data) ? [] : data, isLoading: false };
+      return { ...state , subscribed_category_tenders: data, isLoading: false };
 
     case GET_TENDER_DETAILS:
       return { ...state , tender_details: action.payload.data };
@@ -163,6 +163,8 @@ export default function reducer(state = INITIAL_STATE, action) {
       return { ...state, post_bid: action.payload }
 
     case POST_BID:
+      const {value, position} = action.payload.data
+      Object.assign(state.tender_details, {value, position})
       return { ...state }
 
     default:

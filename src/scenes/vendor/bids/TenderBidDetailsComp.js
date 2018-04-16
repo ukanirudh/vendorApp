@@ -28,19 +28,15 @@ class TenderBidDetailsComp extends Component {
   componentWillReceiveProps(nextProps) {
     const {tender_details, post_bid} = nextProps
     //console.log(nextProps)
-    if(post_bid) {
-      CreateBrowserHistory.push({
-       pathname: "/vendor"
-     })
-    }
     const {tender, position, attemptsRemaining, value} = tender_details
     this.setState({tenderDetails: tender, otherDetails: {position, attemptsRemaining, value}, bidValue: value})
   }
 
   placeBid = () => {
     const {computedMatch:{params}} = this.props
-    var data = {tenderId: params.id, value: this.state.bidValue}
-    this.props.postBidDispatch(data)
+    const {tenderDetails: {id}} = this.state
+    var data = {bidId: params.id, value: this.state.bidValue, tenderId: id}
+    this.props.postBidDispatch('PUT', data)
   }
 
   onBidChange = (event, data) => {
@@ -75,16 +71,16 @@ class TenderBidDetailsComp extends Component {
               <Grid.Column width={11}>
                 <Header as='h2'> Requirement Details </Header>
                 {TenderBasicDetailsTemplate({material: subCategoryName, quantity, description: 'Description', elapses_in: tenderEnds})}
-                {attemptsRemaining >= 1 &&
+                {attemptsRemaining >= 1 ?
                   <div style={{marginTop:20}}>
                     <Header as='h3'>Your previous Bid value is : Rs {value}</Header>
                     <Header as='h3'>You can still update your Bid</Header>
                     <Input name='bid' onChange={this.onBidChange} style={{marginTop: 10}} type='number' placeholder='Search...'>
-                      <Label>$</Label>
+                      <Button onClick={this.placeBid} labelPosition='left' icon='cart' color='teal' content='Update your new Bid'/>
                       <input type='number' value={bidValue}/>
-                      <Button onClick={this.placeBid} labelPosition='left' icon='cart' color='teal' content='Place a new Bid'/>
                     </Input>
-                  </div>
+                  </div> :
+                  <Header as='h3'>Your Final Bid value is : Rs {value}</Header>
                 }
               </Grid.Column>
             </Grid.Row>

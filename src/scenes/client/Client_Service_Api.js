@@ -65,13 +65,9 @@ class ClientServiceApis {
 	}
 
 	static getAllMainCategories() {
-		//var baseUrl = global.devHost ;
-		const headers = this.requestHeaders();
-
 		return axios({
 			method: 'GET',
-			url: getMainCategoriesUrl,
-			headers: headers
+			url: getMainCategoriesUrl
 		}).then(function (response) {
 			return response;
 		}).catch(function (error) {

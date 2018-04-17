@@ -1,8 +1,9 @@
 const newTenderFields = [
   {
     key: 'description',
-    placeholder: 'Specify any particular requirements that you have...',
+    placeholder: 'Specify any particular requirements that you have',
     inputType:'textarea',
+    required: true,
     rows: 3
   },
   {

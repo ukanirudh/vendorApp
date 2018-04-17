@@ -1,10 +1,13 @@
 const validate = values => {
   const errors = {}
   if (!values.quantity) {
-    errors.quantity = 'Required'
+    errors.quantity = 'Quantity needs to be specified'
   }
   if (!values.email) {
     errors.email = 'Required'
+  }
+  if (!values.description) {
+    errors.description = 'Description is Mandatory'
   }
   if (!values.phoneNumber) {
     errors.phoneNumber = 'Required'

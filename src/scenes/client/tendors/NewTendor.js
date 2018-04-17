@@ -34,12 +34,13 @@ class NewTendor extends Component {
   handleDateChange = (date) => this.setState({endDate: date})
 
   renderRoomFormWithSubmit = () => {
-    const {mainCategorySelected, subCategorySelected} = this.state
+    const {mainCategorySelected, subCategorySelected, endDate} = this.state
+    const endDateInUtc = endDate.toISOString() // 'tenderEnds'
     const { onNewTenderRequest, onNewTenderClick } = this.props
     const CreateForm =
     EntityForm({
         name: 'PostTender',
-        onUpdate: (values) => onNewTenderRequest({...values, 'duration': 3, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
+        onUpdate: (values) => onNewTenderRequest({...values, 'duration': endDateInUtc, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
         fields: newTenderFields
       })
     return (

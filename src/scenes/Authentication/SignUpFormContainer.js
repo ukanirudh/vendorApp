@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { submitVendorSingUpDispatch, submitClientSingUpDispatch } from './root-reducers/SignUp_Actions_Reducer'
+import { submitVendorSingUpDispatch, submitClientSingUpDispatch, getAllMainCategoriesDispatch } from './root-reducers/SignUp_Actions_Reducer'
 import {clearNotificationsMesaage} from '../../notificationsModule/Notifications_Reducer'
 
 /*Imported components*/
@@ -27,13 +27,14 @@ class SignUpFormContainer extends Component {
 
 function mapStateToProps(state) {
   const {notifications, SignUpModule} = state
-  const {isInProgress} = SignUpModule
+  const {isInProgress, main_categories} = SignUpModule
   const {toast_message, toast_type} = notifications
-  return ({ toast_message, toast_type, isInProgress })
+  return ({ toast_message, toast_type, main_categories, isInProgress })
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ submitVendorSingUpDispatch, submitClientSingUpDispatch, clearNotificationsMesaage }, dispatch);
+  return bindActionCreators({ submitVendorSingUpDispatch, submitClientSingUpDispatch,
+    clearNotificationsMesaage, getAllMainCategoriesDispatch }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUpFormContainer);

@@ -1,33 +1,42 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment, Dropdown } from 'semantic-ui-react'
+import {forEach} from 'lodash'
 
 class VendorSignUpForm extends Component {
 
   componentWillMount() {
-    this.setState({ full_name: '', username: '', password: '', phone: '', confimPassword:'', isLoading: false })
+    this.setState({ full_name: '', username: '', password: '', phoneNumber: '',
+     confimPassword:'', isLoading: false, mainCategoryId:'', mainCategories:[], })
+  }
+
+  componentDidMount() {
+    const { getAllMainCategoriesDispatch } = this.props
+    getAllMainCategoriesDispatch()
   }
 
   componentWillReceiveProps(nextProps) {
-    const {isInProgress} = nextProps
-    this.setState({isLoading: isInProgress})
+    const {main_categories, isInProgress} = nextProps
+    this.setState({isLoading: isInProgress, mainCategories: main_categories})
   }
-  
+
+  renderCategoryOption = (categories) => {
+    var categoryOptions = []
+    forEach(categories, function(category) {
+      categoryOptions.push({ key: category.id, value: category.id, text: category.name })
+    });
+    return categoryOptions
+  }
+
   onVendorRegistration = () => {
-    const { username='', password='',full_name='', phone= ''} = this.state
-    const data = {
-      username,
-      password,
-      name: full_name,
-      phoneNumber: phone,
-      type:'vendor'
-    }
+    const { username='', password='',full_name='', phoneNumber= '', mainCategoryId} = this.state
+    const data = { username, password, name: full_name, phoneNumber, mainCategoryId, type:'vendor' }
     this.props.submitVendorSingUpDispatch(data)
   }
 
   handleFormValuesChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { full_name='', username='', password='', phone='', isLoading } = this.state
+    const { full_name='', username='', password='', phoneNumber='', isLoading, mainCategories } = this.state
     return (
         <Grid
           columns={3}
@@ -36,9 +45,7 @@ class VendorSignUpForm extends Component {
           verticalAlign='middle'
         >
           <Grid.Row>
-            <Header as='h2' color='teal' textAlign='center'>
-              Vendor Sign up
-            </Header>
+            <Header as='h2' color='teal' textAlign='center'> Vendor Sign up </Header>
           </Grid.Row>
           <Grid.Column className='login-form-grid'>
             <Form size='large'>
@@ -65,8 +72,8 @@ class VendorSignUpForm extends Component {
                   fluid
                 icon='phone'
                 iconPosition='left'
-                name='phone'
-                value={phone}
+                name='phoneNumber'
+                value={phoneNumber}
                 placeholder='Phone Number'
                 onChange={this.handleFormValuesChange}
                 />
@@ -79,6 +86,7 @@ class VendorSignUpForm extends Component {
                   placeholder='Password'
                   onChange={this.handleFormValuesChange}
                 />
+                <Dropdown name='mainCategoryId' placeholder='Main Category' fluid search selection onChange={this.handleFormValuesChange} options={this.renderCategoryOption(mainCategories)} />
                 <Button loading={isLoading} color='teal' fluid size='large' onClick={this.onVendorRegistration}>Send registration request</Button>
               </Segment>
             </Form>

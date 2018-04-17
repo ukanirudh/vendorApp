@@ -1,4 +1,5 @@
 import axios from 'axios';
+const getMainCategoriesUrl = '/main_categories'
 
 class AunthenticationAndRegistrationApi {
 
@@ -74,6 +75,18 @@ class AunthenticationAndRegistrationApi {
 	    return error.response ;
 	  });
 	}
+
+  static getAllMainCategories() {
+    return axios({
+      method: 'GET',
+      url: getMainCategoriesUrl,
+      headers: this.requestHeaders()
+    }).then(function (response) {
+      return response;
+    }).catch(function (error) {
+      return error.response ;
+    });
+  }
 }
 
 export default AunthenticationAndRegistrationApi;

@@ -14,14 +14,14 @@ const AppFooter = () => (
           <Grid.Column width={3}>
             <Header inverted as='h4' content='Know Us Better' />
             <List link inverted>
-              <List.Item> <Link to='/about'>About Us</Link></List.Item>
-              <List.Item as='a'>Our vision</List.Item>
+              <List.Item><Link to='/about'>About Us</Link></List.Item>
+              <List.Item as='a'><Link to='/ourvision'>Our Vision</Link></List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={3}>
             <Header inverted as='h4' content='Contact Us' />
             <List link inverted>
-              <List.Item as='a'>Reach Us</List.Item>
+              <List.Item as='a'><Link to='/reachus'>Reach Us</Link></List.Item>
               <List.Item as='a'>Call Us</List.Item>
             </List>
           </Grid.Column>

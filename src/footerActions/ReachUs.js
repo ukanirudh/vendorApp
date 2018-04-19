@@ -1,7 +1,6 @@
 import React from 'react'
 import { ResponsiveContainer, CreateBrowserHistory } from '../commonComponents'
-import { Container, Header } from 'semantic-ui-react'
-
+import { Container, Header, Card } from 'semantic-ui-react'
 const AppHeaderProps = {
   'headerRightActionText': 'Login/Signup',
   'headerRightAction': () => {
@@ -11,15 +10,24 @@ const AppHeaderProps = {
   },
 }
 
+const items = [
+  {
+    header: 'Headquarters',
+    meta: 'Open since 2018',
+    description: 'Number#, Street number, cross road, street name, city, state.'
+  }
+]
+
 const ReachUs = (props) => {
   const {location} = props
   const containerProps = {location, AppHeaderProps}
   return (
     <ResponsiveContainer {...containerProps}>
-      <Container text style={{ marginTop: '7em' }}>
-        <Header as='h1'>Semantic UI React Fixed Template</Header>
-        <p>This is a basic fixed menu template using fixed size containers.</p>
-        <p>A text container is used for the main container, which is useful for single column layouts.</p>
+      <Container style={{marginTop: '3em'}}>
+        <Header as='h1'>Reach Us</Header>
+        <p>You are always welcome to visit us.</p>
+        <Card.Group centered items={items} />
+        <Header as='h3'>You can also email us @ www.example.com, and we will make sure that you get a quick response</Header>
       </Container>
     </ResponsiveContainer>
   )

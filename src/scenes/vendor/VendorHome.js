@@ -29,7 +29,7 @@ class VendorHome extends Component {
   render() {
     return (
       <ResponsiveContainer HomePageHeading={HomePageHeading} headerPrimaryContentProps={headerPrimaryContentProps} AppHeaderProps={AppHeaderProps} location={this.props.location} >
-        <Segment style={{ padding: '4em 0em' }} vertical>
+        <Segment className='vendor_home_container' vertical>
           <RecentBids {...this.props} />
           <CompletedBids {...this.props} />
         </Segment>

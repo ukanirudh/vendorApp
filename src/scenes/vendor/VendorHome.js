@@ -26,26 +26,12 @@ const headerPrimaryContentProps = {
 }
 
 class VendorHome extends Component {
-  componentWillMount() {
-    this.setState({onGoingTenders:[]})
-  }
-
-  componentDidMount() {
-    const {getOngoingTendersDispatch} = this.props
-    getOngoingTendersDispatch('GET', 'onGoing')
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {on_going_tenders} = nextProps
-    this.setState({onGoingTenders: on_going_tenders})
-  }
-
   render() {
     return (
       <ResponsiveContainer HomePageHeading={HomePageHeading} headerPrimaryContentProps={headerPrimaryContentProps} AppHeaderProps={AppHeaderProps} location={this.props.location} >
         <Segment style={{ padding: '4em 0em' }} vertical>
-          <RecentBids tenders={this.state.onGoingTenders} />
-          <CompletedBids />
+          <RecentBids {...this.props} />
+          <CompletedBids {...this.props} />
         </Segment>
       </ResponsiveContainer>
     )

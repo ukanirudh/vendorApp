@@ -5,6 +5,7 @@ const GET_TENDER_DETAILS = 'GET_TENDER_DETAILS'
 const POST_BID = 'POST_BID'
 const POST_BID_REQUEST = 'Request/POST_BID'
 const ONGOING_TENDERS = 'ONGOING_TENDERS'
+const COMPLETED_TENDERS = 'COMPLETED_TENDERS'
 
 export function getAllSubscribedTendersDispatch( mainCategoryId ) {
   return function(dispatch) {
@@ -25,11 +26,12 @@ export function getOngoingTendersDispatch( type, statusType ) {
   return function(dispatch) {
     return VendorServiceApi.tenderBidRequest(type, {}, statusType).then(response => {
       if(response.status === 201 || response.status === 200) {
-        dispatch({type:'SUCCESS_TOAST', payload: 'Tender list retrived'})
-        dispatch(getOngoingTenders(response.data))
+        if (statusType === 'onGoing') {
+          dispatch(getOngoingTenders(response.data))
+        } else dispatch(getCompletedTenders(response.data))
       }
       else
-        dispatch({type: "HANDLE_ERROR", payload: response});
+        dispatch({type:'ERROR_TOAST', payload: 'Unable to retrive the bids details!'})
     }).catch(error => {
       console.log("dispatch person::",error);
     });
@@ -119,6 +121,13 @@ export function getOngoingTenders(data) {
   };
 }
 
+export function getCompletedTenders(data) {
+  return {
+    type: COMPLETED_TENDERS,
+    payload: data
+  };
+}
+
 export function postBid(data) {
   return {
     type: POST_BID,
@@ -144,7 +153,8 @@ const INITIAL_STATE = {
   tender_details: {},
   post_bid: false,
   subscribed_category_tenders: [],
-  on_going_tenders: []
+  on_going_tenders: [],
+  completed_tenders: []
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -158,6 +168,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 
     case ONGOING_TENDERS:
       return { ...state , on_going_tenders: action.payload.data };
+
+    case COMPLETED_TENDERS:
+      return { ...state , completed_tenders: action.payload.data };
 
     case POST_BID_REQUEST:
       return { ...state, post_bid: action.payload }

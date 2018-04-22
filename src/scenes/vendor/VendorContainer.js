@@ -44,13 +44,15 @@ function mapStateToProps(state) {
   //console.log(state.vendorReducer)
   const {tenderReducer, vendorReducer, notifications} = state
   const {current_user, main_categories} = vendorReducer
-  const {tender_details, subscribed_category_tenders, on_going_tenders, isLoading, post_bid} = tenderReducer
+  const {tender_details, subscribed_category_tenders, on_going_tenders, completed_tenders,
+    isLoading, post_bid} = tenderReducer
   const {toast_message, toast_type} = notifications
   return {
     current_user,
     main_categories,
     subscribed_category_tenders,
     on_going_tenders,
+    completed_tenders,
     isLoading,
     tender_details,
     post_bid,

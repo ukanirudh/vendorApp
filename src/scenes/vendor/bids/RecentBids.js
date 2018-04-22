@@ -4,8 +4,21 @@ import TenderListItem from './TenderListItem'
 import noItemsContent from '../../../commonUsageComponents/NoItemsDisplay'
 
 class RecentBids extends Component {
+  componentWillMount() {
+    this.setState({tenders: []})
+  }
+  componentDidMount() {
+    const {getOngoingTendersDispatch} = this.props
+    getOngoingTendersDispatch('GET', 'onGoing')
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {on_going_tenders} = nextProps
+    this.setState({tenders: on_going_tenders})
+  }
+
   render() {
-    const {tenders} = this.props
+    const {tenders} = this.state
     var items = [];
     tenders.map((tenderDetails, i) => {
       const {value, position, attemptsRemaining, id} = tenderDetails

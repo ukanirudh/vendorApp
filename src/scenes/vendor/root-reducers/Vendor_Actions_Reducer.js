@@ -72,6 +72,7 @@ export function updateBankDetailsDispatch(payload) {
   }
 }
 
+
 export function updateVendorData(clientDetails) {
   return {
     type: UPDATE_VENDOR_DATA,

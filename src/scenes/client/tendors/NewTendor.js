@@ -40,7 +40,7 @@ class NewTendor extends Component {
     const CreateForm =
     EntityForm({
         name: 'PostTender',
-        onUpdate: (values) => onNewTenderRequest({...values, 'duration': endDateInUtc, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
+        onUpdate: (values) => onNewTenderRequest({...values, 'tenderEnds': endDateInUtc, 'mainCategoryId':mainCategorySelected, 'subCategoryId':subCategorySelected }),
         fields: newTenderFields
       })
     return (

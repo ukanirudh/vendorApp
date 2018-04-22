@@ -20,7 +20,7 @@ const items = [
 
 const ReachUs = (props) => {
   const {location} = props
-  const containerProps = {location, AppHeaderProps}
+  const containerProps = {location: '/', AppHeaderProps}
   return (
     <ResponsiveContainer {...containerProps}>
       <Container style={{marginTop: '3em'}}>

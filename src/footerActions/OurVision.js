@@ -13,7 +13,7 @@ const AppHeaderProps = {
 
 const OurVision = (props) => {
   const {location} = props
-  const containerProps = {location, AppHeaderProps}
+  const containerProps = {location: '/', AppHeaderProps}
   return (
     <ResponsiveContainer {...containerProps}>
       <Container text style={{ marginTop: '7em' }}>

@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Button, Container, Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 import { ResponsiveContainer, CreateBrowserHistory, HomePageHeading } from '../commonComponents'
 import Testimonials from './Testimonials'
-
+import homeImg from '../assets/images/image.png'
 const headerPrimaryContentProps = {
     'headerText':'We connect the Vendors and Clients with the best deals',
-    'primaryActionText':'Get Started',
+    'primaryActionText':'Singup Now',
     'primaryActionRoute':() => {
       CreateBrowserHistory.push({
         pathname: "/authorization"
@@ -24,8 +24,7 @@ const AppHeaderProps = {
 
 class ApplicationHomePage extends Component {
   render() {
-    const {location} = this.props
-    const props = {location, AppHeaderProps, headerPrimaryContentProps, HomePageHeading}
+    const props = {location: '/', AppHeaderProps, headerPrimaryContentProps, HomePageHeading}
     return (
     <ResponsiveContainer {...props} >
       <Segment style={{ padding: '8em 0em' }} vertical>
@@ -39,30 +38,18 @@ class ApplicationHomePage extends Component {
               </p>
               <Header as='h3' style={{ fontSize: '2em' }}>We Make Bananas That Can Dance</Header>
               <p style={{ fontSize: '1.33em' }}>
-                Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.
+                Yes thats right, you thought it was the stuff of dreams, but even bananas can be bioengineered.
               </p>
             </Grid.Column>
             <Grid.Column floated='right' width={6}>
-              <Image
-                bordered
-                rounded
-                size='large'
-                src='/assets/images/wireframe/white-image.png'
-              />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column textAlign='center'>
-              <Button size='huge'>Check Them Out</Button>
+              <Image bordered rounded size='large' src={homeImg} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </Segment>
-      <Segment style={{ padding: '0em', background: 'blanchedalmond' }} vertical>
-      <Header as='h3' style={{ fontSize: '2em' }}>Our Testimonials</Header>
-        <Container>
-          <Testimonials />
-        </Container>
+      <Segment style={{ padding: '0em', background: 'cadetblue' }} vertical>
+        <Header as='h3' style={{ fontSize: '2em' }}>Our Testimonials</Header>
+        <Container> <Testimonials /> </Container>
       </Segment>
       <Segment style={{ padding: '8em 0em' }} vertical>
         <Container text>

@@ -60,8 +60,10 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
 
     case "SUBMIT_LOGIN":
-      const { token } = action.payload.data
+      const { token, maincategory, canPostTender = false } = action.payload.data
       localStorage.setItem("authToken", token)
+      localStorage.setItem("mainCategory", JSON.stringify(maincategory))
+      localStorage.setItem("canPostTender", canPostTender)
       return {...state, current_user: token, registrationSuccessStatus: true }
 
     case "LOG_OUT":

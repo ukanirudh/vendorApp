@@ -4,7 +4,7 @@ import { Button, Container, Header, Icon } from 'semantic-ui-react'
 class HomepageHeading extends Component {
 
   render () {
-    const { headerProps: {headerText='', primaryActionText='', primaryActionRoute} } = this.props
+    const { headerProps: {headerText='', primaryActionText='', primaryActionRoute, optionDisabled} } = this.props
     return (
       <Container text>
         <Header
@@ -17,7 +17,7 @@ class HomepageHeading extends Component {
             marginTop: this.props.mobile ? '0.5em' : '1.5em',
           }}
         />
-        <Button primary size='huge' onClick={primaryActionRoute}>
+        <Button disabled={optionDisabled} primary size='huge' onClick={primaryActionRoute}>
           {primaryActionText}
           <Icon name='right arrow' />
         </Button>

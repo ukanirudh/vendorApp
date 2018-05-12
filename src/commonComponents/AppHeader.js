@@ -31,9 +31,8 @@ class AppHeader extends Component {
                 Project Name
               </Menu.Item>
               <Menu.Item  active><Link to={location}>Home</Link></Menu.Item>
-              <Menu.Item as='a'>Work</Menu.Item>
-              <Menu.Item as='a'>Company</Menu.Item>
-              <Menu.Item as='a'>Careers</Menu.Item>
+              <Menu.Item><Link to='/reachus'>Policies</Link></Menu.Item>
+              <Menu.Item><Link to='/reachus'>Reach Us</Link></Menu.Item>
               <Menu.Item position='right'>
                 <Button as='a' inverted={!fixed} onClick={headerRightAction}>{headerRightActionText}</Button>
               </Menu.Item>

@@ -17,6 +17,7 @@ const AppHeaderProps = {
 const headerPrimaryContentProps = {
   'headerText':'Request a tendor now and get noticed by all our big vendors.',
   'primaryActionText':'Place a new Tender',
+  'optionDisabled': !(localStorage.getItem('canPostTender') === 'true'),
   'primaryActionRoute':() => {
     CreateBrowserHistory.push({
       pathname: "/client/newTendor"

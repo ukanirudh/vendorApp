@@ -20,11 +20,10 @@ export function createNewTendorDispatch(payload) {
   }
 }
 
-export function getClientAllTendorsDispatch() {
+export function getClientAllTendorsDispatch(params) {
   return function(dispatch) {
-    return ClientServiceApi.getClientAllTendors().then(response => {
+    return ClientServiceApi.getClientAllTendors(params).then(response => {
       if(response.status === 201 || response.status === 200) {
-        dispatch({type:'SUCCESS_TOAST', payload: 'Tender list retrived'})
         dispatch(getClientAllTendors(response.data))
       }
       else
@@ -93,7 +92,8 @@ export function getTopThreeBids(data) {
 const INITIAL_STATE = {
   tender_details: {},
   all_client_tendors:[],
-  top_three_bids:[]
+  top_three_bids:[],
+  totalPages: 1
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -105,10 +105,10 @@ export default function reducer(state = INITIAL_STATE, action) {
       return {...state}
 
     case GET_CLIENT_ALL_TENDORS:
-      return { ...state , all_client_tendors: action.payload.data }
+      return { ...state , all_client_tendors: action.payload.data, totalPages: action.payload.total_count }
 
     case GET_TOP_THREE_BIDS:
-      return { ...state, top_three_bids: action.payload.data };  
+      return { ...state, top_three_bids: action.payload.data }
 
     default:
       return state;

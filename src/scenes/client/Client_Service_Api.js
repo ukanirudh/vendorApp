@@ -90,13 +90,17 @@ class ClientServiceApis {
 		});
 	}
 
-	static getClientAllTendors() {
+	static getClientAllTendors(params) {
+    const {page} = params
 		const headers = this.requestHeaders();
 
 		return axios({
 			method: 'GET',
 			url: getClientAllTendersUrl,
-			headers: headers
+			headers: headers,
+      params: {
+        page
+      }
 		}).then(function (response) {
 			return response;
 		}).catch(function (error) {

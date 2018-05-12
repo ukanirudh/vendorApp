@@ -48,7 +48,7 @@ function mapStateToProps(state) {
   const {clientReducer, tenderReducer, notifications} = state
   const { current_user, main_categories, sub_categories} = clientReducer
   const { toast_message, toast_type } = notifications
-  const { tender_details, all_client_tendors, top_three_bids } = tenderReducer
+  const { tender_details, all_client_tendors, top_three_bids, totalPages } = tenderReducer
   return {
     current_user,
     main_categories,
@@ -56,6 +56,7 @@ function mapStateToProps(state) {
     all_client_tendors,
     top_three_bids,
     tender_details,
+    totalPages,
     toast_message,
     toast_type
   };

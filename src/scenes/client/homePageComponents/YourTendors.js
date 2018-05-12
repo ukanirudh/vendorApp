@@ -11,7 +11,7 @@ class YourTendors extends Component {
   }
 
   componentDidMount() {
-    this.props.getClientAllTendorsDispatch()
+    this.props.getClientAllTendorsDispatch({page: 1})
   }
 
   componentWillReceiveProps (newProps) {

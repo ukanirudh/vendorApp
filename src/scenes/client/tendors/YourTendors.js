@@ -15,20 +15,25 @@ const AppHeaderProps = {
 class YourTendors extends Component {
 
   componentWillMount() {
-    this.setState({ tenders:[], isLoading: false })
+    this.setState({ tenders:[], isLoading: false, page: 1, totalPages: 1 })
   }
 
   componentDidMount() {
     const { getClientAllTendorsDispatch } = this.props
     this.setState({isLoading:true})
-    getClientAllTendorsDispatch()
+    getClientAllTendorsDispatch({page: 1})
   }
 
   componentWillReceiveProps (newProps) {
-    const { all_client_tendors, isLoading } = newProps
-    this.setState({ tenders:all_client_tendors, isLoading })
+    const { all_client_tendors, isLoading, totalPages } = newProps
+    this.setState({ tenders:all_client_tendors, isLoading, totalPages })
   }
 
+  onPageChange = (event, data) => {
+    const { getClientAllTendorsDispatch } = this.props
+    const {activePage: page} = data
+    getClientAllTendorsDispatch({page})
+  }
 
   render() {
     const {tenders=[]} = this.state
@@ -60,7 +65,8 @@ class YourTendors extends Component {
             lastItem={null}
             pointing
             secondary
-            totalPages={3}
+            onPageChange={this.onPageChange}
+            totalPages={Math.ceil(this.state.totalPages/15)}
           />
         </div>
       </ResponsiveContainer>

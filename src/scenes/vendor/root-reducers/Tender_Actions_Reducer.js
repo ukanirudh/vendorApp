@@ -7,11 +7,11 @@ const POST_BID_REQUEST = 'Request/POST_BID'
 const ONGOING_TENDERS = 'ONGOING_TENDERS'
 const COMPLETED_TENDERS = 'COMPLETED_TENDERS'
 
-export function getAllSubscribedTendersDispatch( mainCategoryId ) {
+export function getAllSubscribedTendersDispatch(mainCategoryId) {
   return function(dispatch) {
-    return VendorServiceApi.getAllSubscribedTenders(mainCategoryId).then(response => {
+    const mainCategoryIdParam = JSON.parse(localStorage.getItem('mainCategory'))
+    return VendorServiceApi.getAllSubscribedTenders(mainCategoryIdParam.id).then(response => {
       if(response.status === 201 || response.status === 200) {
-        dispatch({type:'SUCCESS_TOAST', payload: 'Tender list retrived'})
         dispatch(getAllSubscribedTenders(response.data))
       }
       else

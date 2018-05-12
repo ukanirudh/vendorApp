@@ -41,7 +41,8 @@ class AunthenticationAndRegistrationApi {
 			url: getAllSubscribedTendersUrl,
 			headers: headers,
 			params:{
-				mainCategoryId
+				mainCategoryId,
+        page: 1
 			}
 		}).then(function (response) {
 			return response;
@@ -96,12 +97,16 @@ class AunthenticationAndRegistrationApi {
 
   static tenderBidRequest(type, payloadData, statusType) {
     const headers = this.requestHeaders();
-    let bidsReqUrl = (statusType) ? `${bidsBulkAction}/${statusType}` : BidsUrl
+    let bidsReqUrl = (statusType) ? bidsBulkAction : BidsUrl
     return axios({
       method: type,
       url: bidsReqUrl,
       headers: headers,
-      data: payloadData
+      data: payloadData,
+      params: {
+        page: 1,
+        status: statusType
+      }
     }).then(function (response) {
       return response;
     }).catch(function (error) {

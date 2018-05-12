@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import moment from 'moment'
 import { Segment, Header, Icon, Grid, List } from 'semantic-ui-react'
 import TenderBasicDetailsTemplate from './TenderBasicDetailsTemplate'
 import TopThreeBids from './TopThreeBids'
@@ -32,7 +33,7 @@ class TenderDetails extends Component {
 
   render () {
     const {tenderDetails} = this.state
-    const {quantity='', tenderEnds='', sub_category='', id} = tenderDetails
+    const {quantity='', tenderEnds='', sub_category='', id, description} = tenderDetails
     const subCategoryName = sub_category ? sub_category.name : ''
     return (
       <ResponsiveContainer AppHeaderProps={AppHeaderProps} location={'/client'} >
@@ -50,7 +51,7 @@ class TenderDetails extends Component {
               </Grid.Column>
               <Grid.Column width={7}>
                 <Header as='h2'> Requirement Details </Header>
-                {TenderBasicDetailsTemplate({material: subCategoryName, quantity, description: 'Description', elapses_in: tenderEnds})}
+                {TenderBasicDetailsTemplate({ material: subCategoryName, quantity, description, elapses_in: moment(tenderEnds).format('dddd, MMMM Do YYYY') })}
               </Grid.Column>
               <Grid.Column width={4}>
                 <Header as='h2'> Top Bids </Header>

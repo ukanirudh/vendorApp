@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { Grid, Card, Button } from 'semantic-ui-react'
 import { CreateBrowserHistory } from '../../../commonComponents'
 
@@ -9,7 +10,7 @@ const viewTenderDetails = (tenderId) => {
 }
 
 const TenderListItem = (props) => {
-  const {sub_category, quantity, tenderEnds, id} = props
+  const {sub_category, quantity, tenderEnds, id, description} = props
   let name=''
   if(sub_category) {
     name = sub_category.name
@@ -22,10 +23,11 @@ const TenderListItem = (props) => {
           <Card.Meta>
             <div className="track" >
               <p className="title">Quantity: {quantity}</p>
-              <p className="title">Tender Duration : {tenderEnds}</p>
+              <p className="title">{description}</p>
+              <p className="title">Tender Duration : {moment(tenderEnds).format('dddd, MMMM Do YYYY')}</p>
             </div>
           </Card.Meta>
-          <Card.Description> This tender elapses in {tenderEnds} days </Card.Description>
+          <Card.Description> This tender elapses in {moment(tenderEnds).format('dddd, MMMM Do YYYY')} days </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>

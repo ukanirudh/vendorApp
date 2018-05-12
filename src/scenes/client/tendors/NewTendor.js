@@ -35,7 +35,7 @@ class NewTendor extends Component {
 
   renderRoomFormWithSubmit = () => {
     const {mainCategorySelected, subCategorySelected, endDate} = this.state
-    const endDateInUtc = endDate.toISOString() // 'tenderEnds'
+    const endDateInUtc = moment(endDate).format('YYYY-MM-DD')
     const { onNewTenderRequest, onNewTenderClick } = this.props
     const CreateForm =
     EntityForm({
@@ -81,9 +81,7 @@ class NewTendor extends Component {
     getAllSubCategoriesDispatch(value)
   }
 
-  onSelectSubCategory = (event, { name, value }) => {
-    this.setState({subCategorySelected:value})
-  }
+  onSelectSubCategory = (event, { name, value }) => this.setState({subCategorySelected:value})
 
   render() {
     const {mainCategorySelected, subCategorySelected, mainCategories, subCategories} = this.state

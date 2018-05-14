@@ -33,7 +33,7 @@ class AunthenticationAndRegistrationApi {
 		});
 	}
 
-	static getAllSubscribedTenders( mainCategoryId ) {
+	static getAllSubscribedTenders(mainCategoryId, page) {
 		const headers = this.requestHeaders();
 
 		return axios({
@@ -42,7 +42,7 @@ class AunthenticationAndRegistrationApi {
 			headers: headers,
 			params:{
 				mainCategoryId,
-        page: 1
+        page
 			}
 		}).then(function (response) {
 			return response;

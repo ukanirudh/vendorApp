@@ -15,18 +15,27 @@ const AppHeaderProps = {
 
 class AllCategoryTenders extends Component {
   componentWillMount() {
-    this.setState({ categoryTenders:[], isLoading: false })
+    this.setState({ categoryTenders:[], isLoading: false, page: 1, totalPages: 1})
   }
 
   componentDidMount() {
     const { getAllSubscribedTendersDispatch } = this.props
+    const {page} = this.state
     this.setState({isLoading:true})
-    getAllSubscribedTendersDispatch(3)
+    const mainCategoryIdParam = JSON.parse(localStorage.getItem('mainCategory'))
+    getAllSubscribedTendersDispatch({mainCategoryId: mainCategoryIdParam.id, page})
   }
 
   componentWillReceiveProps (newProps) {
-    const { subscribed_category_tenders, isLoading } = newProps
-    this.setState({ categoryTenders:subscribed_category_tenders, isLoading })
+    const { subscribed_category_tenders, isLoading, totalPages } = newProps
+    this.setState({ categoryTenders:subscribed_category_tenders, isLoading, totalPages })
+  }
+
+  onPageChange = (event, data) => {
+    const {getAllSubscribedTendersDispatch} = this.props
+    const {activePage: page} = data
+    const mainCategoryIdParam = JSON.parse(localStorage.getItem('mainCategory'))
+    getAllSubscribedTendersDispatch({mainCategoryId: mainCategoryIdParam.id, page})
   }
 
   render() {
@@ -52,7 +61,8 @@ class AllCategoryTenders extends Component {
           lastItem={null}
           pointing
           secondary
-          totalPages={3} />
+          onPageChange={this.onPageChange}
+          totalPages={Math.ceil(this.state.totalPages/15)} />
       </Segment>
     </ResponsiveContainer>
     );

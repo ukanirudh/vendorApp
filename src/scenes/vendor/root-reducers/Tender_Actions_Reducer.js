@@ -7,10 +7,9 @@ const POST_BID_REQUEST = 'Request/POST_BID'
 const ONGOING_TENDERS = 'ONGOING_TENDERS'
 const COMPLETED_TENDERS = 'COMPLETED_TENDERS'
 
-export function getAllSubscribedTendersDispatch(mainCategoryId) {
+export function getAllSubscribedTendersDispatch({mainCategoryId, page}) {
   return function(dispatch) {
-    const mainCategoryIdParam = JSON.parse(localStorage.getItem('mainCategory'))
-    return VendorServiceApi.getAllSubscribedTenders(mainCategoryIdParam.id).then(response => {
+    return VendorServiceApi.getAllSubscribedTenders(mainCategoryId, page).then(response => {
       if(response.status === 201 || response.status === 200) {
         dispatch(getAllSubscribedTenders(response.data))
       }
@@ -154,14 +153,15 @@ const INITIAL_STATE = {
   post_bid: false,
   subscribed_category_tenders: [],
   on_going_tenders: [],
-  completed_tenders: []
+  completed_tenders: [],
+  totalPages: 1
 }
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_ALL_SUBSCRIBED_CATEGORY_TENDER:
-      var { data } = action.payload
-      return { ...state , subscribed_category_tenders: data, isLoading: false };
+      var { data, total_count } = action.payload
+      return { ...state , subscribed_category_tenders: data, isLoading: false, totalPages: total_count };
 
     case GET_TENDER_DETAILS:
       return { ...state , tender_details: action.payload.data };

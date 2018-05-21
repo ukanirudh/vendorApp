@@ -8,7 +8,7 @@ const AppHeaderProps = {
   'headerRightActionText': 'Profile',
   'headerRightAction': () => {
     CreateBrowserHistory.push({
-      pathname: "/profile"
+      pathname: "/vendor/Profile"
     })
   },
 }

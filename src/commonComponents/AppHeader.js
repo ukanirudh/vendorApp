@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Segment, Image, Menu, Button, Visibility } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import logo from '../assets/images/sky-logo.jpg'
 
 class AppHeader extends Component {
   state = {}
@@ -25,7 +26,7 @@ class AppHeader extends Component {
               <Menu.Item as='a' header>
                 <Image
                   size='mini'
-                  src='/logo.png'
+                  src={logo}
                   style={{ marginRight: '1.5em' }}
                 />
                 Project Name
